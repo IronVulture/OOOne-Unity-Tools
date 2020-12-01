@@ -3,7 +3,7 @@
     using System;
     using UnityEngine;
 
-    public class AlonerAutoOrderInLayer : MonoBehaviour
+    public class AutoOrderInLayer : MonoBehaviour
     {
         SpriteRenderer spriteRenderer;
         public Transform pivot;
