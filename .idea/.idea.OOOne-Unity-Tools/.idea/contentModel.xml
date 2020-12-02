@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Git\OOOne-Unity-Tools" t="IncludeRecursive">
+      <e p="Assets" t="Include">
+        <e p="Plugins" t="Include">
+          <e p="OOOneUnityTools" t="Include">
+            <e p="Editor" t="Include">
+              <e p="AnimatiorOverrideAutoFill.cs" t="Include" />
+              <e p="OOOne.Tools.asmdef" t="Include" />
+              <e p="OOOneToolsMenuPaths.cs" t="Include" />
+              <e p="SlectionUtility.cs" t="Include" />
+            </e>
+            <e p="Runtime" t="Include">
+              <e p="AutoOrderInLayer.cs" t="Include" />
+              <e p="OOOne.Tools.Runtime.asmdef" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="OOOne-Unity-Tools.sln" t="IncludeFlat" />
+      <e p="OOOne.Tools.Editor.csproj" t="IncludeRecursive" />
+      <e p="OOOne.Tools.Runtime.csproj" t="IncludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+    </e>
+    <e p="C:\Users\CY\AppData\Local\JetBrains\Rider2020.1\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\CY\AppData\Local\JetBrains\Rider2020.1\resharper-host\Local\Transient\ReSharperHost\v201\SolutionCaches\_OOOne-Unity-Tools.2102174343.00" t="ExcludeRecursive" />
+    <e p="C:\Users\CY\AppData\Roaming\JetBrains\Rider2020.1\scratches" t="IncludeRecursive" />
+  </component>
+</project>
