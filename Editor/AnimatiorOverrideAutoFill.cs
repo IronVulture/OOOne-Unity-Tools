@@ -69,7 +69,45 @@
 
         private static string ExtractAnimNameFromClipName(string clipName)
         {
-            string[] possiblePrefixes = new string[] { "Hero_Archer", "Hero_Grey_PM", "HeroMechanic_PM", "Actor_Monster_SmallBug", "Soldier_006_Sniper" };
+            string[] possiblePrefixes = new string[]
+            {
+                "Actor_Soldier_Berserker",
+                "Actor_Soldier_ShieldBearer",
+                "Actor_Soldier_Ranger",
+                "Actor_Soldier_Medic",
+                "Actor_Soldier_Grenadier",
+                "Actor_Soldier_Sniper",
+                "Actor_Soldier_SmallBug",
+                "Actor_Monster_SmallBug",
+                "Actor_Monster_MeatBug",
+                "Actor_Monster_NailBug",
+                "Actor_Monster_ShieldBug",
+                "Actor_Monster_PunchBug",
+                "Actor_Monster_QueenBug",
+                "Actor_Monster_Squid",
+                "Actor_Monster_ShieldClam",
+                "Actor_Monster_FloatClam",
+                "Actor_Monster_SquidKing",
+                "Actor_Monster_CanonWorm",
+                "Actor_Monster_WormLord",
+                "Actor_Monster_FlyBug",
+                "Actor_Monster_SpeedBug",
+                "Actor_Monster_HeavyBug",
+                "Actor_Monster_KingBug",
+                "Actor_Monster_InkBomb",
+                "Actor_Monster_SpikeWorm",
+                "Actor_Monster_HeavyClam",
+                "Actor_Monster_SmallLizard",
+                "Actor_Monster_JumpLizard",
+                "Actor_Monster_FlameLizard",
+                "Actor_Monster_SlugBomb",
+                "Actor_Monster_BurningMonkey",
+                "Actor_Monster_ResonanceMonkey",
+                "Actor_Monster_BigLizard",
+                "Actor_Monster_TransformMonkey",
+                "Actor_Monster_Mushroom",
+                "Actor_Monster_MonkeyLord"
+            };
             foreach (string prefix in possiblePrefixes)
             {
                 if (clipName.Contains(prefix))
