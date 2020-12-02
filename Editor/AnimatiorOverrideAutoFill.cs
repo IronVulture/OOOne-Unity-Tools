@@ -71,13 +71,13 @@
         {
             string[] possiblePrefixes = new string[]
             {
+                "Actor_AutoFillReference",
                 "Actor_Soldier_Berserker",
                 "Actor_Soldier_ShieldBearer",
                 "Actor_Soldier_Ranger",
                 "Actor_Soldier_Medic",
                 "Actor_Soldier_Grenadier",
                 "Actor_Soldier_Sniper",
-                "Actor_Soldier_SmallBug",
                 "Actor_Monster_SmallBug",
                 "Actor_Monster_MeatBug",
                 "Actor_Monster_NailBug",
@@ -107,6 +107,7 @@
                 "Actor_Monster_TransformMonkey",
                 "Actor_Monster_Mushroom",
                 "Actor_Monster_MonkeyLord"
+                
             };
             foreach (string prefix in possiblePrefixes)
             {
