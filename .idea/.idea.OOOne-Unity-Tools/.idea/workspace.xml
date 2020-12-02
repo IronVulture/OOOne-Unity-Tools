@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9ae8b53a-72d2-4753-9d3e-2506fcc5f418" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OOOne-Unity-Tools/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OOOne-Unity-Tools/.idea/indexLayout.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.OOOne-Unity-Tools/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.OOOne-Unity-Tools/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Plugins/OOOneUnityTools/Editor/AnimatiorOverrideAutoFill.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/OOOneUnityTools/Editor/AnimatiorOverrideAutoFill.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Plugins/OOOneUnityTools/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Plugins/OOOneUnityTools/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +20,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assets/Plugins/OOOneUnityTools/package.json" />
         <option value="$PROJECT_DIR$/Assets/Plugins/OOOneUnityTools/Editor/AnimatiorOverrideAutoFill.cs" />
+        <option value="$PROJECT_DIR$/Assets/Plugins/OOOneUnityTools/package.json" />
       </list>
     </option>
   </component>
@@ -66,7 +64,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1606889086405</updated>
-      <workItem from="1606889092938" duration="21000" />
+      <workItem from="1606889092938" duration="68000" />
     </task>
     <servers />
   </component>
