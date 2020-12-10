@@ -9,14 +9,19 @@ namespace OOOneUnityTools.Editor
     {
         public static void CreatTestPngByPath(string path, string fileName)
         {
-            string fullPath = path + @"\" + fileName + ".png";
-
+            string fullPathBeforeParse = path + "/" + fileName + ".png";
+            Debug.Log($"{fullPathBeforeParse}");
+            string fullPathAfterParse = fullPathBeforeParse.Replace("/", @"\");
             Texture2D testTexture = new Texture2D(10, 10);
             testTexture.Apply();
             var Bytes = testTexture.EncodeToPNG();
-            File.WriteAllBytes(fullPath, Bytes);
+            File.WriteAllBytes(fullPathAfterParse, Bytes);
             AssetDatabase.Refresh();
         }
 
+        public static void DeleteFileWithMetaByPath()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
