@@ -23,6 +23,7 @@ namespace Tests
             folderPath = Application.dataPath;
             assetPath = "Assets/" + fileName + ".png";
         }
+
         [Test]
         public void DeleteTestsPngFromPathTests()
         {
@@ -41,8 +42,6 @@ namespace Tests
             var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(assetPath);
             Assert.IsNotNull(texture2D);
             FileUtility.DeleteFileWithMetaByPath(folderPath, fileName);
-            //FileUtility.DeleteFileWithMetaByPath();
-
         }
 
 
