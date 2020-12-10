@@ -1,9 +1,5 @@
 using NUnit.Framework;
-<<<<<<< refs/remotes/origin/feature/在資料夾內找單個或多個指定類型的檔案
 using OOOneUnityTools.Editor;
-=======
-using Plugins.OOOneUnityTools.Editor;
->>>>>>> feat : add FileUtility and Tests
 using UnityEngine;
 
 namespace OOOneTools.Editor.Tests
