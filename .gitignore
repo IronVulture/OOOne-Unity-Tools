@@ -63,12 +63,10 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
-.idea/
+.idea/*
 Plugins/Editor/JetBrains
 Plugins/Editor/JetBrains.meta
 Exe/
-Assets/Plugins/Editor
-Assets/Plugins/Editor.meta
 Assets/Plugins/Editor/JetBrains/JetBrains.Rider.Unity.Editor.Plugin.Repacked.dll
 Assets/StreamingAssets/build_info.txt.meta
 Assets/StreamingAssets/build_info.txt
@@ -80,7 +78,6 @@ Assets/Plugins/DarkTonic/MasterAudio/OtherPackages.meta
 Logs/
 Assets/StreamingAssets.meta
 Assets/StreamingAssets/build_info.txt
-ProjectSettings/ProjectVersion.txt
 Assets/Plugins/Zenject/OptionalExtras/Signals/Zenject-Signals.csproj.meta
 Assets/Plugins/Zenject/OptionalExtras/ReflectionBaking/Zenject-ReflectionBaking.csproj.meta
 Assets/StreamingAssets/build_info
