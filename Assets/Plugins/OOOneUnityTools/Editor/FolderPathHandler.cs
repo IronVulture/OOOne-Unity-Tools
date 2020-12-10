@@ -8,5 +8,22 @@ namespace OOOneTools.Editor
         {
             return AssetDatabase.IsValidFolder(folderPath);
         }
+
+        public void CreateFolderIfNotExist(string targetFolderPath)
+        {
+            string[] folderNames = targetFolderPath.Split('/');
+            string rebuiltFolderPath = "";
+            for (int i = 0; i < folderNames.Length; i++)
+            {
+                if (i != 0)
+                    rebuiltFolderPath += "/";
+                if(!IsFolderExist(rebuiltFolderPath + folderNames[i]))
+                AssetDatabase.CreateFolder(rebuiltFolderPath, folderNames[i]);
+
+
+            }
+
+        }
+
     }
 }

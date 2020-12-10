@@ -11,6 +11,7 @@ namespace OOOneTools.Editor.Tests
         private string _targetFolderPath;
         private FolderPathHandler _folderPathHandler;
 
+        [SetUp]
         private void SetUp()
         {
             _folderPathHandler = new FolderPathHandler();
@@ -20,8 +21,14 @@ namespace OOOneTools.Editor.Tests
         [Test]
         public void FolderPathExist()
         {
-            SetUp();
+            Assert.AreEqual(true, _folderPathHandler.IsFolderExist(_targetFolderPath));
+        }
 
+        [Test]
+        public void CreateFolderIfNotExist()
+        {
+            Assert.AreEqual(false, _folderPathHandler.IsFolderExist(_targetFolderPath));
+            _folderPathHandler.CreateFolderIfNotExist(_targetFolderPath);
             Assert.AreEqual(true, _folderPathHandler.IsFolderExist(_targetFolderPath));
         }
 
