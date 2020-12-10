@@ -1,18 +1,28 @@
+#region
+
 using NUnit.Framework;
 using OOOneUnityTools.Editor;
-using UnityEngine;
+
+#endregion
 
 namespace OOOneTools.Editor.Tests
 {
     public class FileUtilityTests
     {
+        private FileUtility _fileUtility;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _fileUtility = new FileUtility();
+        }
+
         [Test]
         public void Get_All_OverrideController_By_Folder()
         {
-            var fileUtility = new FileUtility();
-            var folderPath  = "Assets/XX";
-            var hasFile = fileUtility.TryGetAllOverrideControllerByFolder(folderPath
-                                                                          , out AnimatorOverrideController[] overrideControllers);
+            var folderPath = "Assets/TTTT";
+            var hasFile = _fileUtility.TryGetAllOverrideControllerByFolder(folderPath
+                                                                           , out var overrideControllers);
             Assert.AreEqual(true , hasFile);
             Assert.NotNull(overrideControllers);
         }
