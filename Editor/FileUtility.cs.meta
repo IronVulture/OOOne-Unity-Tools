@@ -1,3 +1,8 @@
 ﻿fileFormatVersion: 2
+<<<<<<< refs/remotes/origin/feature/在資料夾內找單個或多個指定類型的檔案
 guid: 6f86d4c7ec364387984a99cab7faf9ea
 timeCreated: 1607595169
+=======
+guid: 13fbc27c2f71478b999e45382ec94551
+timeCreated: 1607596839
+>>>>>>> feat : add FileUtility and Tests
