@@ -1,10 +1,12 @@
+using UnityEditor;
+
 namespace OOOneTools.Editor
 {
     public class FolderPathHandler
     {
-        public bool IsFolderExist()
+        public bool IsFolderExist(string folderPath)
         {
-            return true;
+            return AssetDatabase.IsValidFolder(folderPath);
         }
     }
 }
