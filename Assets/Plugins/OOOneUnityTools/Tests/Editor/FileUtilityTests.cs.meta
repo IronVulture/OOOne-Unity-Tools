@@ -1,3 +1,17 @@
+<<<<<<< refs/remotes/origin/feature/在資料夾內找單個或多個指定類型的檔案
 ﻿fileFormatVersion: 2
 guid: 5e494133f71744ffbf31309a67750b85
 timeCreated: 1607594588
+=======
+fileFormatVersion: 2
+guid: 5e494133f71744ffbf31309a67750b85
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+>>>>>>> feat : add FileUtility and Tests
