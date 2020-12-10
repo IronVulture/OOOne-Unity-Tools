@@ -1,19 +1,30 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using NUnit.Framework;
-using Plugins.OOOneUnityTools.Tests.Editor;
-using UnityEngine;
-using UnityEngine.TestTools;
+﻿using NUnit.Framework;
 
 namespace OOOneTools.Editor.Tests
 {
     public class FileReadWriteTest
     {
+        private FileHandler _fileHandler;
+        private string _filePathWithExt;
+
+        [SetUp]
+        private void SetUp()
+        {
+            _fileHandler = new FileHandler();
+            _filePathWithExt = "Asset/TestFolder/yabai.anim";
+        }
+
         [Test]
         public void FileExist()
         {
-            var fileHandler = new FileHandler();
-            Assert.AreEqual(false, fileHandler.TryGetFile());
+            Assert.AreEqual(false, _fileHandler.TryGetFile(_filePathWithExt));
+        }
+
+
+        [Test]
+        public void CreateAnimationClipFile()
+        {
+
         }
     }
 }
