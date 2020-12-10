@@ -14,6 +14,10 @@ namespace Tests
         private string fileName;
         private string folderPath;
         private string assetPath;
+        private string pngPathBeforeParse;
+        private string pngPathAfterParse;
+        private string metaPathBeforeParse;
+        private string metaPathAfterParse;
 
 
         [SetUp]
@@ -22,6 +26,10 @@ namespace Tests
             fileName = "apple";
             folderPath = Application.dataPath;
             assetPath = "Assets/" + fileName + ".png";
+            pngPathBeforeParse = folderPath + "/" + fileName + ".png";
+            pngPathAfterParse = pngPathBeforeParse.Replace("/", @"\");
+            metaPathBeforeParse = folderPath + "/" + fileName + ".meta";
+            metaPathAfterParse = metaPathBeforeParse.Replace("/", @"\");
         }
 
         [Test]
@@ -30,7 +38,10 @@ namespace Tests
             FileUtility.CreatTestPngByPath(folderPath, fileName);
             FileUtility.DeleteFileWithMetaByPath(folderPath, fileName);
             var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(assetPath);
-            Assert.IsNull(texture2D);
+            var metaFileExist = File.Exists(metaPathAfterParse);
+            var pngFileExist = File.Exists(pngPathAfterParse);
+            Assert.IsFalse(metaFileExist);
+            Assert.IsFalse(pngFileExist);
         }
 
 
