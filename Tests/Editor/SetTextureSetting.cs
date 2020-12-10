@@ -11,25 +11,40 @@ namespace Tests
 {
     public class SetTextureSetting
     {
+        private string fileName = "apple";
+        private string unityFolderPath;
+        private string cSharpFolderPath;
+        private string unityFullPath;
+        private string metaFullPath;
+        private string cSharpFullPath;
+
+        [SetUp]
+        public void SetUp()
+        {
+            unityFolderPath = Application.dataPath;
+            cSharpFolderPath =  unityFolderPath.Replace("/",@"\");
+            unityFullPath = unityFolderPath + fileName + ".png";
+            metaFullPath = unityFolderPath + fileName + ".meta";
+            cSharpFullPath = cSharpFolderPath + @"\" + fileName + ".png";
+        }
         // A Test behaves as an ordinary method
         [Test]
         public void CreateTestPNGFileToPathTests()
         {
-            const string fileName = "apple";
-            var unityFolderPath = Application.dataPath;
-            var cSharpFolderPath =  unityFolderPath.Replace("/",@"\");
-            var unityFullPath = "Assets/" + fileName + ".png";
-            var metaFullPath = "Assets/" + fileName + ".meta";
-            var cSharpFullPath = cSharpFolderPath + @"\" + fileName + ".png";
             FileUtility.CreatTestPngByPath(cSharpFolderPath, fileName);
             var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(unityFullPath);
             Assert.IsNotNull(texture2D);
+            FileUtility.DeleteFileWithMetaByPath();
             File.Delete(unityFullPath);
             File.Delete(metaFullPath);
             AssetDatabase.Refresh();
         }
 
+        [Test]
+        public void DeleteTestsPngFromPathTests()
+        {
 
+        }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
         // `yield return null;` to skip a frame.
