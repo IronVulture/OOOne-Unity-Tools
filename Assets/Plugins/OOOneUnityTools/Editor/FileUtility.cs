@@ -19,9 +19,15 @@ namespace OOOneUnityTools.Editor
             AssetDatabase.Refresh();
         }
 
-        public static void DeleteFileWithMetaByPath()
+        public static void DeleteFileWithMetaByPath(string folderPath, string fileName)
         {
-            throw new System.NotImplementedException();
+            string pngPathBeforeParse = folderPath + "/" + fileName + ".png";
+            string pngPathAfterParse = pngPathBeforeParse.Replace("/", @"\");
+            string metaPathBeforeParse = folderPath + "/" + fileName + ".meta";
+            string metaPathAfterParse = metaPathBeforeParse.Replace("/", @"\");
+            File.Delete(pngPathAfterParse);
+            File.Delete(metaPathAfterParse);
+            AssetDatabase.Refresh();
         }
     }
 }
