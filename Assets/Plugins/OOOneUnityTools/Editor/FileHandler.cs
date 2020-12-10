@@ -1,8 +1,8 @@
-namespace Plugins.OOOneUnityTools.Tests.Editor
+namespace OOOneTools.Editor
 {
     public class FileHandler
     {
-        public bool TryGetFile()
+        public bool TryGetFile(string filePath)
         {
             return false;
         }
