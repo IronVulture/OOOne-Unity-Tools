@@ -11,40 +11,40 @@ namespace Tests
 {
     public class SetTextureSetting
     {
-        private string fileName = "apple";
-        private string unityFolderPath;
-        private string cSharpFolderPath;
-        private string unityFullPath;
-        private string metaFullPath;
-        private string cSharpFullPath;
+        private string fileName;
+        private string folderPath;
+        private string assetPath;
+
 
         [SetUp]
         public void SetUp()
         {
-            unityFolderPath = Application.dataPath;
-            cSharpFolderPath =  unityFolderPath.Replace("/",@"\");
-            unityFullPath = unityFolderPath + fileName + ".png";
-            metaFullPath = unityFolderPath + fileName + ".meta";
-            cSharpFullPath = cSharpFolderPath + @"\" + fileName + ".png";
+            fileName = "apple";
+            folderPath = Application.dataPath;
+            assetPath = "Assets/" + fileName + ".png";
         }
+        [Test]
+        public void DeleteTestsPngFromPathTests()
+        {
+            FileUtility.CreatTestPngByPath(folderPath, fileName);
+            FileUtility.DeleteFileWithMetaByPath(folderPath, fileName);
+            var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(assetPath);
+            Assert.IsNull(texture2D);
+        }
+
+
         // A Test behaves as an ordinary method
         [Test]
         public void CreateTestPNGFileToPathTests()
         {
-            FileUtility.CreatTestPngByPath(cSharpFolderPath, fileName);
-            var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(unityFullPath);
+            FileUtility.CreatTestPngByPath(folderPath, fileName);
+            var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(assetPath);
             Assert.IsNotNull(texture2D);
-            FileUtility.DeleteFileWithMetaByPath();
-            File.Delete(unityFullPath);
-            File.Delete(metaFullPath);
-            AssetDatabase.Refresh();
-        }
-
-        [Test]
-        public void DeleteTestsPngFromPathTests()
-        {
+            FileUtility.DeleteFileWithMetaByPath(folderPath, fileName);
+            //FileUtility.DeleteFileWithMetaByPath();
 
         }
+
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
         // `yield return null;` to skip a frame.
