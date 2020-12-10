@@ -8,13 +8,22 @@ namespace OOOneTools.Editor.Tests
 {
     public class FolderPathTest
     {
+        private string _targetFolderPath;
+        private FolderPathHandler _folderPathHandler;
+
+        private void SetUp()
+        {
+            _folderPathHandler = new FolderPathHandler();
+            _targetFolderPath = "Asset/TestFolder";
+        }
+
         [Test]
         public void FolderPathExist()
         {
-            FolderPathHandler folderPathHandler = new FolderPathHandler();
-            Assert.AreEqual(true, folderPathHandler.IsFolderExist());
-        }
+            SetUp();
 
+            Assert.AreEqual(true, _folderPathHandler.IsFolderExist(_targetFolderPath));
+        }
 
     }
 }
