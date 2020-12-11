@@ -9,16 +9,18 @@ namespace Plugins.OOOneUnityTools.Editor
     {
         public static void CreateUnityFolder(string path)
         {
-            string parentFolderPath = "Assets";
-            var fullPath = $"{parentFolderPath}/{path}";
-            string assetFolder = "Assets";
-            fullPath = fullPath.Substring(assetFolder.Length);
-            fullPath = Application.dataPath + fullPath;
+            var fullPath = $"{Application.dataPath}/{path}";
             if (CSharpFileUtility.IsFolderExist(fullPath) == false)
             {
                 Directory.CreateDirectory(fullPath);
                 AssetDatabase.Refresh();
             }
+        }
+
+
+        public static void DeleteUnityFolder(string childPath)
+        {
+
         }
     }
 }
