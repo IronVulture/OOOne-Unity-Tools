@@ -24,6 +24,17 @@ namespace Plugins.OOOneUnityTools.Editor
             AssetDatabase.Refresh();
         }
 
+        public static void CreateAnimationClips(string childPath, string fileName)
+        {
+            if (IsUnityFolderExist(childPath) == false)
+                CreateUnityFolder(childPath);
+
+            var animationClip = new AnimationClip();
+            var path = $"Assets/{childPath}/{fileName}.anim";
+            AssetDatabase.CreateAsset(animationClip, path);
+            AssetDatabase.Refresh();
+        }
+
         public static void CreateAnimationOverride(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false)
@@ -50,5 +61,6 @@ namespace Plugins.OOOneUnityTools.Editor
         {
             return CSharpFileUtility.IsFolderExist("Assets/" + childPath);
         }
+
     }
 }

@@ -67,15 +67,14 @@ namespace OOOneTools.Editor.Tests
             Assert.AreEqual(true, IsFileInPath("overrideController"));
             DeleteUnityFolderUseChild();
         }
-        //
-        // [Test]
-        // public void CreateAnimationClipIfNoExist()
-        //
-        // {
-        //     var isFileInPath = CSharpFileUtility.IsFileInPath(folderPath, fileName, "anim");
-        //
-        //     Assert.AreEqual(true, isFileInPath);
-        // }
+
+        [Test]
+        public void CreateAnimationClipIfFolderNoExists()
+        {
+            UnityFileUtility.CreateAnimationClips(_childPath, _fileName);
+            Assert.AreEqual(true, IsFileInPath("anim"));
+            DeleteUnityFolderUseChild();
+        }
 
         private void CreateAnimationOverride() => UnityFileUtility.CreateAnimationOverride(_childPath, _fileName);
 
