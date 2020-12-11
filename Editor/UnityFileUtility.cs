@@ -6,15 +6,16 @@ namespace Plugins.OOOneUnityTools.Editor
 {
     public class UnityFileUtility
     {
-        public static void CreateUnityFolder(string parentFolderPath, string childPath)
+        public static void CreateUnityFolder(string path)
         {
-            var fullPath = $"{parentFolderPath}/{childPath}";
+            string parentFolderPath = "Assets";
+            var fullPath = $"{parentFolderPath}/{path}";
             string assetFolder = "Assets";
             fullPath = fullPath.Substring(assetFolder.Length);
             fullPath = Application.dataPath + fullPath;
             if (!CSharpFileUtility.IsFolderExist(fullPath))
             {
-                AssetDatabase.CreateFolder(parentFolderPath, childPath);
+                AssetDatabase.CreateFolder(parentFolderPath, path);
             }
         }
     }
