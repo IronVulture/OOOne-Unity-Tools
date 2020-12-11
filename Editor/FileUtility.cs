@@ -8,21 +8,21 @@ namespace OOOneUnityTools.Editor
     {
         public static void CreatTestPngByPath(string path, string fileName)
         {
-            string fullPathBeforeParse = path + "/" + fileName + ".png";
-            string fullPathAfterParse = ParsePathUnityToCsharp(fullPathBeforeParse);
-            Texture2D testTexture = new Texture2D(10, 10);
+            var fullPathBeforeParse = path + "/" + fileName + ".png";
+            var fullPathAfterParse = ParsePathUnityToCsharp(fullPathBeforeParse);
+            var testTexture = new Texture2D(10, 10);
             testTexture.Apply();
             var Bytes = testTexture.EncodeToPNG();
             File.WriteAllBytes(fullPathAfterParse, Bytes);
             AssetDatabase.Refresh();
         }
 
-        public static void DeleteFileWithMetaByPath(string folderPath, string fileName)
+        public static void DeleteFileWithMetaByPath(string folderPath, string fileName, string fileExtension)
         {
-            string pngPathBeforeParse = folderPath + "/" + fileName + ".png";
-            string pngPathAfterParse = ParsePathUnityToCsharp(pngPathBeforeParse);
-            string metaPathBeforeParse = folderPath + "/" + fileName + ".meta";
-            string metaPathAfterParse = ParsePathUnityToCsharp(metaPathBeforeParse);
+            var pngPathBeforeParse = folderPath + "/" + fileName + fileExtension;
+            var pngPathAfterParse = ParsePathUnityToCsharp(pngPathBeforeParse);
+            var metaPathBeforeParse = folderPath + "/" + fileName + ".meta";
+            var metaPathAfterParse = ParsePathUnityToCsharp(metaPathBeforeParse);
             File.Delete(pngPathAfterParse);
             File.Delete(metaPathAfterParse);
             AssetDatabase.Refresh();
