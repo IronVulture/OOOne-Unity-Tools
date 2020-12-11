@@ -24,6 +24,19 @@ namespace Plugins.OOOneUnityTools.Editor
             AssetDatabase.Refresh();
         }
 
+        public static void CreateAnimationOverride(string childPath, string fileName)
+        {
+            if (IsUnityFolderExist(childPath) == false)
+            {
+                CreateUnityFolder(childPath);
+                var overrideController = new AnimatorOverrideController();
+                var path = $"Assets/{childPath}/{fileName}.overrideController";
+                AssetDatabase.CreateAsset(overrideController, path);
+            }
+
+            AssetDatabase.Refresh();
+        }
+
         private static string GetAssetsPath(string childPath)
         {
             return "Assets/" + childPath;

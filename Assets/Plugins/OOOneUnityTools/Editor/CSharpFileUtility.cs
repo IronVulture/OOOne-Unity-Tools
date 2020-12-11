@@ -1,5 +1,5 @@
 using System;
-    using System.IO;
+using System.IO;
 
 namespace OOOneTools.Editor
 {
@@ -16,7 +16,7 @@ namespace OOOneTools.Editor
             return beforeParse.Replace("/", @"\");
         }
 
-        public static bool IsFileInPath(string folderPath,string fileName , string FileExtension)
+        public static bool IsFileInPath(string folderPath, string fileName, string FileExtension)
         {
             var newFolderPath = ParseSlashToCsharp(folderPath);
             var fullPath = GetFullPath(fileName, FileExtension, newFolderPath);

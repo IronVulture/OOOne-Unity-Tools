@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO;
 using NUnit.Framework;
 using Plugins.OOOneUnityTools.Editor;
 using UnityEditor;
@@ -48,6 +49,17 @@ namespace OOOneTools.Editor.Tests
             UnityFileUtility.CreateUnityFolder(_childPath);
             UnityFileUtility.DeleteUnityFolder(_childPath);
             Assert.AreEqual(false, UnityFileUtility.IsUnityFolderExist(_childPath));
+        }
+
+        [Test]
+        public void CreateAnimationOverrideIfNoExists()
+        {
+            var fileName = "WEjhdfjgh";
+            UnityFileUtility.CreateAnimationOverride(_childPath, fileName);
+            var folderPath = $@"{Application.dataPath}\{_childPath}";
+            var isFileInPath = CSharpFileUtility.IsFileInPath(folderPath, fileName, "overrideController");
+            Assert.AreEqual(true, isFileInPath);
+            UnityFileUtility.DeleteUnityFolder(_childPath);
         }
     }
 }
