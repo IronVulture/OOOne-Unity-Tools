@@ -11,32 +11,17 @@ namespace OOOne.Editor.Tests
 {
     public class SetTextureSetting
     {
-        private string fileName;
-        private string absoluteFolderPath;
-        private string unityAssetsFolderPath;
-        private string pngPathBeforeParse;
-        private string pngPathAfterParse;
-        private string metaPathBeforeParse;
-        private string metaPathAfterParse;
-        private string fileExtension;
-        private string targetPath;
-        private string unityFullPath;
-
+        private string _fileName;
+        private string _absoluteFolderPath;
+        private string _pngFileExtension;
 
         [SetUp]
         public void SetUp()
         {
-            fileName = "apple";
-            fileExtension = ".png";
-            unityAssetsFolderPath = "Assets/";
-            absoluteFolderPath = Application.dataPath;
-            unityFullPath = unityAssetsFolderPath + fileName + fileExtension;
-            pngPathBeforeParse = absoluteFolderPath + "/" + fileName + fileExtension;
-            pngPathAfterParse = FileUtility.ParsePathUnityToCsharp(pngPathBeforeParse);
+            _fileName = "apple";
+            _pngFileExtension = ".png";
+            _absoluteFolderPath = Application.dataPath;
         }
-
-
-
 
         [Test]
         public void ParsePathUnityToCsharpTests()
@@ -51,8 +36,12 @@ namespace OOOne.Editor.Tests
         [Test]
         public void DeleteTestsPngFromPathTests()
         {
-            FileUtility.CreatTestPngByPath(absoluteFolderPath, fileName);
-            FileUtility.DeleteFileWithMetaByPath(absoluteFolderPath, fileName, ".png");
+            var metaPathBeforeParse = _absoluteFolderPath + "/" + _fileName + ".meta";
+            var metaPathAfterParse = FileUtility.ParsePathUnityToCsharp(metaPathBeforeParse);
+            var pngPathBeforeParse = _absoluteFolderPath + "/" + _fileName + _pngFileExtension;
+            var pngPathAfterParse = FileUtility.ParsePathUnityToCsharp(pngPathBeforeParse);
+            FileUtility.CreatTestPngByPath(_absoluteFolderPath, _fileName);
+            FileUtility.DeleteFileWithMetaByPath(_absoluteFolderPath, _fileName, ".png");
             var metaFileExist = File.Exists(metaPathAfterParse);
             var pngFileExist = File.Exists(pngPathAfterParse);
             Assert.IsFalse(metaFileExist);
@@ -64,10 +53,12 @@ namespace OOOne.Editor.Tests
         [Test]
         public void CreateTestPNGFileToPathTests()
         {
-            FileUtility.CreatTestPngByPath(absoluteFolderPath, fileName);
+            var unityAssetsFolderPath = "Assets/";
+            var unityFullPath = unityAssetsFolderPath + _fileName + _pngFileExtension;
+            FileUtility.CreatTestPngByPath(_absoluteFolderPath, _fileName);
             var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(unityFullPath);
             Assert.IsNotNull(texture2D);
-            FileUtility.DeleteFileWithMetaByPath(absoluteFolderPath, fileName, ".png");
+            FileUtility.DeleteFileWithMetaByPath(_absoluteFolderPath, _fileName, ".png");
         }
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
