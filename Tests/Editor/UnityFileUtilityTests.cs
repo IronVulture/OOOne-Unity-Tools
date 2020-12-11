@@ -71,10 +71,21 @@ namespace OOOneTools.Editor.Tests
         [Test]
         public void CreateAnimationClipIfFolderNoExists()
         {
-            UnityFileUtility.CreateAnimationClips(_childPath, _fileName);
+            CreateAnimationClip();
             Assert.AreEqual(true, IsFileInPath("anim"));
             DeleteUnityFolderUseChild();
         }
+
+        [Test]
+        public void CreateAnimationClipIfFolderExists()
+        {
+            CreateUnityFolderUseChild();
+            CreateAnimationClip();
+            Assert.AreEqual(true, IsFileInPath("anim"));
+            DeleteUnityFolderUseChild();
+        }
+
+        private void CreateAnimationClip() => UnityFileUtility.CreateAnimationClip(_childPath, _fileName);
 
         private void CreateAnimationOverride() => UnityFileUtility.CreateAnimationOverride(_childPath, _fileName);
 
