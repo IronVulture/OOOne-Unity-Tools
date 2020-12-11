@@ -49,11 +49,10 @@ namespace OOOne.Editor.Tests
         }
 
 
-        // A Test behaves as an ordinary method
         [Test]
         public void CreateTestPNGFileToPathTests()
         {
-            var unityAssetsFolderPath = "Assets/";
+            const string unityAssetsFolderPath = "Assets/";
             var unityFullPath = unityAssetsFolderPath + _fileName + _pngFileExtension;
             FileUtility.CreatTestPngByPath(_absoluteFolderPath, _fileName);
             var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(unityFullPath);
@@ -61,14 +60,5 @@ namespace OOOne.Editor.Tests
             FileUtility.DeleteFileWithMetaByPath(_absoluteFolderPath, _fileName, ".png");
         }
 
-        // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
-        // `yield return null;` to skip a frame.
-        [UnityTest]
-        public IEnumerator SetTextureSettingWithEnumeratorPasses()
-        {
-            // Use the Assert class to test conditions.
-            // Use yield to skip a frame.
-            yield return null;
-        }
     }
 }
