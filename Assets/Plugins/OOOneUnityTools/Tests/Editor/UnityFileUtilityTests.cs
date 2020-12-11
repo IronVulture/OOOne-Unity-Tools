@@ -9,31 +9,31 @@ namespace OOOneTools.Editor.Tests
 {
     public class UnityFileUtilityTests
     {
-        private string _parentFolderPath;
         private string _childPath;
-        private string _fullPath;
 
         [SetUp]
         public void SetUp()
         {
-            _parentFolderPath = "Assets";
             _childPath = "QWERT";
-            _fullPath = _parentFolderPath + "/" + _childPath;
         }
 
         [Test]
-        public void CreateUnityFolderIfNotExistTests()
+        public void CreateUnityFolderIfNotExist()
         {
-            UnityFileUtility.CreateUnityFolder(_parentFolderPath, _childPath);
-            Assert.IsTrue(CSharpFileUtility.IsFolderExist(_fullPath));
+            UnityFileUtility.CreateUnityFolder(_childPath);
+            Assert.IsTrue(IsUnityFolderExist(_childPath));
         }
 
         [Test]
-        public void DontCreateFolderIfExistTest()
+        public void DontCreateFolderIfExist()
         {
-            UnityFileUtility.CreateUnityFolder(_parentFolderPath, _childPath);
-            Assert.IsFalse(CSharpFileUtility.IsFolderExist(_fullPath + " 1"));
+            UnityFileUtility.CreateUnityFolder(_childPath);
+            Assert.IsFalse(IsUnityFolderExist(_childPath + " 1"));
+        }
 
+        private bool IsUnityFolderExist(string childPath)
+        {
+            return CSharpFileUtility.IsFolderExist("Assets/" + childPath);
         }
     }
 }
