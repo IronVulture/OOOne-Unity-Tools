@@ -12,25 +12,31 @@ namespace Tests
     public class SetTextureSetting
     {
         private string fileName;
-        private string folderPath;
-        private string assetPath;
+        private string absoluteFolderPath;
+        private string unityAssetsFolderPath;
         private string pngPathBeforeParse;
         private string pngPathAfterParse;
         private string metaPathBeforeParse;
         private string metaPathAfterParse;
+        private string fileExtension;
+        private string targetPath;
+        private string unityFullPath;
 
 
         [SetUp]
         public void SetUp()
         {
             fileName = "apple";
-            folderPath = Application.dataPath;
-            assetPath = "Assets/" + fileName + ".png";
-            pngPathBeforeParse = folderPath + "/" + fileName + ".png";
+            fileExtension = ".png";
+            unityAssetsFolderPath = "Assets/";
+            absoluteFolderPath = Application.dataPath;
+            unityFullPath = unityAssetsFolderPath + fileName + fileExtension;
+            pngPathBeforeParse = absoluteFolderPath + "/" + fileName + fileExtension;
             pngPathAfterParse = FileUtility.ParsePathUnityToCsharp(pngPathBeforeParse);
-            metaPathBeforeParse = folderPath + "/" + fileName + ".meta";
-            metaPathAfterParse = FileUtility.ParsePathUnityToCsharp(metaPathBeforeParse);
         }
+
+
+
 
         [Test]
         public void ParsePathUnityToCsharpTests()
@@ -45,9 +51,8 @@ namespace Tests
         [Test]
         public void DeleteTestsPngFromPathTests()
         {
-            FileUtility.CreatTestPngByPath(folderPath, fileName);
-            FileUtility.DeleteFileWithMetaByPath(folderPath, fileName, ".png");
-            var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(assetPath);
+            FileUtility.CreatTestPngByPath(absoluteFolderPath, fileName);
+            FileUtility.DeleteFileWithMetaByPath(absoluteFolderPath, fileName, ".png");
             var metaFileExist = File.Exists(metaPathAfterParse);
             var pngFileExist = File.Exists(pngPathAfterParse);
             Assert.IsFalse(metaFileExist);
@@ -59,12 +64,11 @@ namespace Tests
         [Test]
         public void CreateTestPNGFileToPathTests()
         {
-            FileUtility.CreatTestPngByPath(folderPath, fileName);
-            var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(assetPath);
+            FileUtility.CreatTestPngByPath(absoluteFolderPath, fileName);
+            var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(unityAssetsFolderPath);
             Assert.IsNotNull(texture2D);
-            FileUtility.DeleteFileWithMetaByPath(folderPath, fileName, ".png");
+            FileUtility.DeleteFileWithMetaByPath(absoluteFolderPath, fileName, ".png");
         }
-
 
         // A UnityTest behaves like a coroutine in Play Mode. In Edit Mode you can use
         // `yield return null;` to skip a frame.
