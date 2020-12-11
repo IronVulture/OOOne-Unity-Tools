@@ -24,7 +24,7 @@ namespace Plugins.OOOneUnityTools.Editor
             AssetDatabase.Refresh();
         }
 
-        public static void CreateAnimationClips(string childPath, string fileName)
+        public static void CreateAnimationClip(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false)
                 CreateUnityFolder(childPath);
