@@ -22,6 +22,7 @@ namespace OOOneTools.Editor.Tests
         {
             UnityFileUtility.CreateUnityFolder(_childPath);
             Assert.IsTrue(IsUnityFolderExist(_childPath));
+            UnityFileUtility.DeleteUnityFolder(_childPath);
         }
 
         [Test]
@@ -30,6 +31,7 @@ namespace OOOneTools.Editor.Tests
             var path = _childPath + "/" + _childPath;
             UnityFileUtility.CreateUnityFolder(path);
             Assert.IsTrue(IsUnityFolderExist(path));
+            UnityFileUtility.DeleteUnityFolder(_childPath);
         }
 
         [Test]
@@ -37,11 +39,13 @@ namespace OOOneTools.Editor.Tests
         {
             UnityFileUtility.CreateUnityFolder(_childPath);
             Assert.IsFalse(IsUnityFolderExist(_childPath + " 1"));
+            UnityFileUtility.DeleteUnityFolder(_childPath);
         }
 
         [Test]
         public void DeleteUnityFolder()
         {
+            UnityFileUtility.CreateUnityFolder(_childPath);
             UnityFileUtility.DeleteUnityFolder(_childPath);
             Assert.AreEqual(false, IsUnityFolderExist(_childPath));
         }
