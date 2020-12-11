@@ -9,8 +9,7 @@ namespace OOOneUnityTools.Editor
         public static void CreatTestPngByPath(string path, string fileName)
         {
             string fullPathBeforeParse = path + "/" + fileName + ".png";
-            Debug.Log($"{fullPathBeforeParse}");
-            string fullPathAfterParse = fullPathBeforeParse.Replace("/", @"\");
+            string fullPathAfterParse = ParsePathUnityToCsharp(fullPathBeforeParse);
             Texture2D testTexture = new Texture2D(10, 10);
             testTexture.Apply();
             var Bytes = testTexture.EncodeToPNG();
@@ -21,15 +20,15 @@ namespace OOOneUnityTools.Editor
         public static void DeleteFileWithMetaByPath(string folderPath, string fileName)
         {
             string pngPathBeforeParse = folderPath + "/" + fileName + ".png";
-            string pngPathAfterParse = pngPathBeforeParse.Replace("/", @"\");
+            string pngPathAfterParse = ParsePathUnityToCsharp(pngPathBeforeParse);
             string metaPathBeforeParse = folderPath + "/" + fileName + ".meta";
-            string metaPathAfterParse = metaPathBeforeParse.Replace("/", @"\");
+            string metaPathAfterParse = ParsePathUnityToCsharp(metaPathBeforeParse);
             File.Delete(pngPathAfterParse);
             File.Delete(metaPathAfterParse);
             AssetDatabase.Refresh();
         }
 
-        public static string ParePathUnityToCsharp(string pathBeforeParse)
+        public static string ParsePathUnityToCsharp(string pathBeforeParse)
         {
             var pathAfterParse = pathBeforeParse.Replace("/", @"\");
             return pathAfterParse;

@@ -37,7 +37,7 @@ namespace Tests
         {
             var pathBeforeParse = "Assets/Plugins/OOOneUnityTools/Editor/FileUtility.cs";
             var expectedResult = @"Assets\Plugins\OOOneUnityTools\Editor\FileUtility.cs";
-            var pathAfterParse = FileUtility.ParePathUnityToCsharp(pathBeforeParse);
+            var pathAfterParse = FileUtility.ParsePathUnityToCsharp(pathBeforeParse);
             Assert.AreEqual(expectedResult, pathAfterParse);
         }
 
