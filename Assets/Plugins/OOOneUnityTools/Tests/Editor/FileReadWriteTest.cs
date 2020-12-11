@@ -38,6 +38,10 @@ namespace OOOneTools.Editor.Tests
         {
             FileShouldExist(_fileShouldExist);
             FileShouldNotExist(_fileShouldNotExist);
+
+            FileShouldExist(_fileShouldExistName + ".anim", _fileShouldExistFolderPath);
+            FileShouldNotExist(_fileShouldNotExistName + ".anim", _fileShouldNotExistFolderPath);
+
             FileShouldExist(_fileShouldExistName, _fileShouldExistFolderPath, ".anim");
             FileShouldNotExist(_fileShouldNotExistName, _fileShouldNotExistFolderPath, ".anim");
         }
@@ -45,20 +49,24 @@ namespace OOOneTools.Editor.Tests
         [Test]
         public void CreateAnimationClipFile()
         {
-            /*//創建檔案前檔案不應存在
-            FileShouldNotExist(_testCreateAnimationFile);
+            //創建檔案前檔案不應存在
+            FileShouldNotExist(_testCreateFileName, _testCreateFileFolder, ".anim");
 
             //創建檔案
             _fileHandler.CreateAnimationClipFile(_testCreateFileName, _testCreateFileFolder);
 
             //創建檔案後檔案應存在
-            FileShouldExist(_testCreateAnimationFile);*/
+            FileShouldExist(_testCreateFileName, _testCreateFileFolder, ".anim");
         }
 
         //檔案預期應該存在
         private void FileShouldExist(string filePath)
         {
             Assert.AreEqual(true, _fileHandler.TryGetFile(filePath));
+        }
+        private void FileShouldExist(string fileNameWithExtension, string folderPath)
+        {
+            Assert.AreEqual(true, _fileHandler.TryGetFile(fileNameWithExtension, folderPath));
         }
         private void FileShouldExist(string fileName, string folderPath, string fileNameExtensionWithDot)
         {
@@ -69,6 +77,10 @@ namespace OOOneTools.Editor.Tests
         private void FileShouldNotExist(string filePath)
         {
             Assert.AreEqual(false, _fileHandler.TryGetFile(filePath));
+        }
+        private void FileShouldNotExist(string fileNameWithExtension, string folderPath)
+        {
+            Assert.AreEqual(false, _fileHandler.TryGetFile(fileNameWithExtension, folderPath));
         }
         private void FileShouldNotExist(string fileName, string folderPath, string fileNameExtensionWithDot)
         {
