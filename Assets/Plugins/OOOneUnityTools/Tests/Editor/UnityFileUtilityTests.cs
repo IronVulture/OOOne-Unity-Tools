@@ -1,29 +1,29 @@
-using System.Collections;
-using System.IO;
 using NUnit.Framework;
 using Plugins.OOOneUnityTools.Editor;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.TestTools;
 
 namespace OOOneTools.Editor.Tests
 {
     public class UnityFileUtilityTests
     {
         private string _childPath;
+        private string _fileName;
+        private string _folderPath;
 
         [SetUp]
         public void SetUp()
         {
             _childPath = "QWERT";
+            _fileName = "WEjhdfjgh";
+            _folderPath = $@"{Application.dataPath}\{_childPath}";
         }
 
         [Test]
         public void CreateUnityFolderIfNotExist()
         {
-            UnityFileUtility.CreateUnityFolder(_childPath);
+            CreateUnityFolderUseChild();
             Assert.IsTrue(UnityFileUtility.IsUnityFolderExist(_childPath));
-            UnityFileUtility.DeleteUnityFolder(_childPath);
+            DeleteUnityFolderUseChild();
         }
 
         [Test]
@@ -32,34 +32,58 @@ namespace OOOneTools.Editor.Tests
             var path = _childPath + "/" + _childPath;
             UnityFileUtility.CreateUnityFolder(path);
             Assert.IsTrue(UnityFileUtility.IsUnityFolderExist(path));
-            UnityFileUtility.DeleteUnityFolder(_childPath);
+            DeleteUnityFolderUseChild();
         }
 
         [Test]
         public void DontCreateFolderIfExist()
         {
-            UnityFileUtility.CreateUnityFolder(_childPath);
+            CreateUnityFolderUseChild();
             Assert.IsFalse(UnityFileUtility.IsUnityFolderExist(_childPath + " 1"));
-            UnityFileUtility.DeleteUnityFolder(_childPath);
+            DeleteUnityFolderUseChild();
         }
 
         [Test]
         public void DeleteUnityFolder()
         {
-            UnityFileUtility.CreateUnityFolder(_childPath);
-            UnityFileUtility.DeleteUnityFolder(_childPath);
+            CreateUnityFolderUseChild();
+            DeleteUnityFolderUseChild();
             Assert.AreEqual(false, UnityFileUtility.IsUnityFolderExist(_childPath));
         }
 
         [Test]
-        public void CreateAnimationOverrideIfNoExists()
+        public void CreateAnimationOverrideIfFolderNoExists()
         {
-            var fileName = "WEjhdfjgh";
-            UnityFileUtility.CreateAnimationOverride(_childPath, fileName);
-            var folderPath = $@"{Application.dataPath}\{_childPath}";
-            var isFileInPath = CSharpFileUtility.IsFileInPath(folderPath, fileName, "overrideController");
-            Assert.AreEqual(true, isFileInPath);
-            UnityFileUtility.DeleteUnityFolder(_childPath);
+            CreateAnimationOverride();
+            Assert.AreEqual(true, IsFileInPath("overrideController"));
+            DeleteUnityFolderUseChild();
         }
+
+        [Test]
+        public void CreateAnimationOverrideIfFolderExists()
+        {
+            CreateUnityFolderUseChild();
+            CreateAnimationOverride();
+            Assert.AreEqual(true, IsFileInPath("overrideController"));
+            DeleteUnityFolderUseChild();
+        }
+        //
+        // [Test]
+        // public void CreateAnimationClipIfNoExist()
+        //
+        // {
+        //     var isFileInPath = CSharpFileUtility.IsFileInPath(folderPath, fileName, "anim");
+        //
+        //     Assert.AreEqual(true, isFileInPath);
+        // }
+
+        private void CreateAnimationOverride() => UnityFileUtility.CreateAnimationOverride(_childPath, _fileName);
+
+        private void DeleteUnityFolderUseChild() => UnityFileUtility.DeleteUnityFolder(_childPath);
+
+        private void CreateUnityFolderUseChild() => UnityFileUtility.CreateUnityFolder(_childPath);
+
+        private bool IsFileInPath(string fileExtension) =>
+            CSharpFileUtility.IsFileInPath(_folderPath, _fileName, fileExtension);
     }
 }
