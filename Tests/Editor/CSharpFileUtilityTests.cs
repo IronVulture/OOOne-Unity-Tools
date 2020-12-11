@@ -7,21 +7,35 @@ namespace OOOneTools.Editor.Tests
 {
     public class CSharpFileUtilityTests
     {
-        [Test]
-        public void ParseSlashToCsharpTest()
+        private string _beforeParsePath;
+
+
+        [SetUp]
+        public void SetUp()
         {
-            var beforeParse = "Assets/New Folder";
-            var afterParse = @"Assets\New Folder";
-            var actual = CSharpFileUtility.ParseSlashToCsharp(beforeParse);
-            Assert.AreEqual(afterParse, actual);
+            _beforeParsePath = "Assets/New Folder";
         }
 
         [Test]
         public void IsFolderExist()
         {
-            var path = "Assets/New Folder";
-            var isFolderExist = CSharpFileUtility.IsFolderExist(path);
+            var isFolderExist = CSharpFileUtility.IsFolderExist(_beforeParsePath);
             Assert.IsTrue(isFolderExist);
+        }
+
+        [Test]
+        public void ParseSlashToCsharpTest()
+        {
+            var afterParse = @"Assets\New Folder";
+            var actual = CSharpFileUtility.ParseSlashToCsharp(_beforeParsePath);
+            Assert.AreEqual(afterParse, actual);
+        }
+
+        [Test]
+        public void IsFileInPath()
+        {
+            var isFileInPath = CSharpFileUtility.IsFileInPath(_beforeParsePath, "TestFile", "txt");
+            Assert.AreEqual(true, isFileInPath);
         }
     }
 }

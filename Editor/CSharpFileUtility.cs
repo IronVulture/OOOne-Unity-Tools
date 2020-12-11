@@ -15,5 +15,13 @@ namespace OOOneTools.Editor
         {
             return beforeParse.Replace("/", @"\");
         }
+
+        public static bool IsFileInPath(string folderPath,string fileName , string FileExtension)
+        {
+            var newFolderPath = ParseSlashToCsharp(folderPath);
+            var fullPath = newFolderPath +@"\"+ fileName +"."+ FileExtension;
+            var fileExists = File.Exists(fullPath);
+            return fileExists;
+        }
     }
 }
