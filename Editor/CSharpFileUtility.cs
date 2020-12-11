@@ -19,9 +19,15 @@ namespace OOOneTools.Editor
         public static bool IsFileInPath(string folderPath,string fileName , string FileExtension)
         {
             var newFolderPath = ParseSlashToCsharp(folderPath);
-            var fullPath = newFolderPath +@"\"+ fileName +"."+ FileExtension;
+            var fullPath = GetFullPath(fileName, FileExtension, newFolderPath);
             var fileExists = File.Exists(fullPath);
             return fileExists;
+        }
+
+        public static string GetFullPath(string fileName, string FileExtension, string newFolderPath)
+        {
+            var fullPath = newFolderPath + @"\" + fileName + "." + FileExtension;
+            return fullPath;
         }
     }
 }
