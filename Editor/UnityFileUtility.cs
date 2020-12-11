@@ -1,7 +1,9 @@
+using System;
 using System.IO;
 using OOOneTools.Editor;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace Plugins.OOOneUnityTools.Editor
 {
@@ -13,7 +15,7 @@ namespace Plugins.OOOneUnityTools.Editor
             if (CSharpFileUtility.IsFolderExist(fullPath) == false)
             {
                 Directory.CreateDirectory(fullPath);
-                AssetDatabase.Refresh();
+                RefreshAsset();
             }
         }
 
@@ -21,35 +23,39 @@ namespace Plugins.OOOneUnityTools.Editor
         public static void DeleteUnityFolder(string childPath)
         {
             AssetDatabase.DeleteAsset(GetAssetsPath(childPath));
-            AssetDatabase.Refresh();
+            RefreshAsset();
         }
 
         public static void CreateAnimationClip(string childPath, string fileName)
         {
-            if (IsUnityFolderExist(childPath) == false)
-                CreateUnityFolder(childPath);
-
-            var animationClip = new AnimationClip();
-            var path = $"Assets/{childPath}/{fileName}.anim";
-            AssetDatabase.CreateAsset(animationClip, path);
-            AssetDatabase.Refresh();
+            if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
+            CreateUnityAsset(childPath, fileName, typeof(AnimationClip), "anim");
+            RefreshAsset();
         }
 
         public static void CreateAnimationOverride(string childPath, string fileName)
         {
-            if (IsUnityFolderExist(childPath) == false)
-                CreateUnityFolder(childPath);
-
-            var overrideController = new AnimatorOverrideController();
-            var path = $"Assets/{childPath}/{fileName}.overrideController";
-            AssetDatabase.CreateAsset(overrideController, path);
-            AssetDatabase.Refresh();
+            if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
+            CreateUnityAsset(childPath, fileName, typeof(AnimatorOverrideController), "overrideController");
+            RefreshAsset();
         }
 
-        private static string GetAssetsPath(string childPath)
+        private static void CreateUnityAsset(string childPath, string fileName, Type type, string extension)
         {
-            return "Assets/" + childPath;
+            Object overrideController = (Object) Activator.CreateInstance(type);
+            var path = GetExtensionPath(childPath, fileName, extension);
+            AssetDatabase.CreateAsset(overrideController, path);
         }
+
+        private static string GetExtensionPath(string childPath, string fileName, string extension)
+        {
+            var path = $"Assets/{childPath}/{fileName}.{extension}";
+            return path;
+        }
+
+
+        private static string GetAssetsPath(string childPath) => "Assets/" + childPath;
+        private static void RefreshAsset() => AssetDatabase.Refresh();
 
         private static string GetFullPath(string path)
         {
@@ -61,6 +67,5 @@ namespace Plugins.OOOneUnityTools.Editor
         {
             return CSharpFileUtility.IsFolderExist("Assets/" + childPath);
         }
-
     }
 }
