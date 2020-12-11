@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using UnityEditor;
+using UnityEditor.Presets;
 using UnityEngine;
 
 namespace OOOne.Tools.Editor
@@ -32,6 +33,14 @@ namespace OOOne.Tools.Editor
         {
             var pathAfterParse = pathBeforeParse.Replace("/", @"\");
             return pathAfterParse;
+        }
+
+        public static void CreateTestTexturePreset(string presetPath, string presetFileName)
+        {
+            var presetFileExtension = ".preset";
+            var testTexture2D = new Texture2D(10, 10);
+            Preset preset = new Preset(testTexture2D);
+            AssetDatabase.CreateAsset(preset, presetPath + presetFileName + presetFileExtension);
         }
     }
 }

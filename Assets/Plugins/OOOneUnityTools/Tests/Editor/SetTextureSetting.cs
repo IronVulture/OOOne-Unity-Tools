@@ -4,6 +4,7 @@ using System.IO;
 using NUnit.Framework;
 using OOOne.Tools.Editor;
 using UnityEditor;
+using UnityEditor.Presets;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -14,6 +15,8 @@ namespace OOOne.Editor.Tests
         private string _fileName;
         private string _absoluteFolderPath;
         private string _pngFileExtension;
+        private string unityFullPath;
+        private string unityAssetsFolderPath;
 
         [SetUp]
         public void SetUp()
@@ -21,6 +24,8 @@ namespace OOOne.Editor.Tests
             _fileName = "apple";
             _pngFileExtension = ".png";
             _absoluteFolderPath = Application.dataPath;
+            unityAssetsFolderPath = "Assets/";
+            unityFullPath = unityAssetsFolderPath + _fileName + _pngFileExtension;
         }
 
         [Test]
@@ -49,16 +54,26 @@ namespace OOOne.Editor.Tests
         }
 
 
-        [Test]
-        public void CreateTestPNGFileToPathTests()
-        {
-            const string unityAssetsFolderPath = "Assets/";
-            var unityFullPath = unityAssetsFolderPath + _fileName + _pngFileExtension;
-            FileUtility.CreatTestPngByPath(_absoluteFolderPath, _fileName);
-            var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(unityFullPath);
-            Assert.IsNotNull(texture2D);
-            FileUtility.DeleteFileWithMetaByPath(_absoluteFolderPath, _fileName, ".png");
-        }
+        // [Test]
+        // public void CreateTestPNGFileToPathTests()
+        // {
+        //     FileUtility.CreatTestPngByPath(_absoluteFolderPath, _fileName);
+        //     var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(unityFullPath);
+        //     Assert.IsNotNull(texture2D);
+        //     FileUtility.DeleteFileWithMetaByPath(_absoluteFolderPath, _fileName, ".png");
+        // }
 
+        [Test]
+        public void CreateTexturePresetToPathTests()
+        {
+            var presetPath = unityAssetsFolderPath;
+            var presetFileName = "testPreset";
+            var presetFileExtension = ".preset";
+            FileUtility.CreateTestTexturePreset(presetPath, presetFileName);
+            var absoluteFullPath = _absoluteFolderPath + presetFileName + presetFileExtension;
+            var presetFileExist = File.Exists(absoluteFullPath);
+            Assert.IsFalse(presetFileExist);
+            FileUtility.DeleteFileWithMetaByPath(_absoluteFolderPath, presetFileName, presetFileExtension);
+        }
     }
 }
