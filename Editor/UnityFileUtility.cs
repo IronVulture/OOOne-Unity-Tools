@@ -34,5 +34,10 @@ namespace Plugins.OOOneUnityTools.Editor
             var fullPath = $"{Application.dataPath}/{path}";
             return fullPath;
         }
+
+        public static bool IsUnityFolderExist(string childPath)
+        {
+            return CSharpFileUtility.IsFolderExist("Assets/" + childPath);
+        }
     }
 }
