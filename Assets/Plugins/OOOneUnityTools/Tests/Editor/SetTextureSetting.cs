@@ -15,8 +15,7 @@ namespace OOOne.Editor.Tests
         private string _fileName;
         private string _absoluteFolderPath;
         private string _pngFileExtension;
-        private string unityFullPath;
-        private string unityAssetsFolderPath;
+        private string _unityAssetsFolderPath;
 
         [SetUp]
         public void SetUp()
@@ -24,8 +23,7 @@ namespace OOOne.Editor.Tests
             _fileName = "apple";
             _pngFileExtension = ".png";
             _absoluteFolderPath = Application.dataPath;
-            unityAssetsFolderPath = "Assets/";
-            unityFullPath = unityAssetsFolderPath + _fileName + _pngFileExtension;
+            _unityAssetsFolderPath = "Assets/";
         }
 
         [Test]
@@ -66,9 +64,9 @@ namespace OOOne.Editor.Tests
         [Test]
         public void CreateTexturePresetToPathTests()
         {
-            var presetPath = unityAssetsFolderPath;
-            var presetFileName = "testPreset";
-            var presetFileExtension = ".preset";
+            var presetPath = _unityAssetsFolderPath;
+            const string presetFileName = "testPreset";
+            const string presetFileExtension = ".preset";
             FileUtility.CreateTestTexturePreset(presetPath, presetFileName);
             var absoluteFullPath = _absoluteFolderPath + presetFileName + presetFileExtension;
             var presetFileExist = File.Exists(absoluteFullPath);
