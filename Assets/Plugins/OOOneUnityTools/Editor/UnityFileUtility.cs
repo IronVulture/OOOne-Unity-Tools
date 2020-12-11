@@ -67,5 +67,15 @@ namespace Plugins.OOOneUnityTools.Editor
         {
             return CSharpFileUtility.IsFolderExist("Assets/" + childPath);
         }
+
+        public static void CreatePng(string childPath, string fileName)
+        {
+            if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
+            var path = GetFullPath(childPath) + @"\" + fileName + ".png";
+            var texture2D = Texture2D.blackTexture;
+            byte[] bytes = texture2D.EncodeToPNG();
+            File.WriteAllBytes(path, bytes);
+            RefreshAsset();
+        }
     }
 }

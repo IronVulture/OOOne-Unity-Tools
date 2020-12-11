@@ -85,6 +85,14 @@ namespace OOOneTools.Editor.Tests
             DeleteUnityFolderUseChild();
         }
 
+        [Test]
+        public void CreatePngIfFolderNoExists()
+        {
+            UnityFileUtility.CreatePng(_childPath, _fileName);
+            Assert.AreEqual(true, IsFileInPath("png"));
+            DeleteUnityFolderUseChild();
+        }
+
         private void CreateAnimationClip() => UnityFileUtility.CreateAnimationClip(_childPath, _fileName);
 
         private void CreateAnimationOverride() => UnityFileUtility.CreateAnimationOverride(_childPath, _fileName);
