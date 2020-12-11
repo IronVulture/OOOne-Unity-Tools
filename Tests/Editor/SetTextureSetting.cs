@@ -33,6 +33,16 @@ namespace Tests
         }
 
         [Test]
+        public void ParsePathUnityToCsharpTests()
+        {
+            var pathBeforeParse = "Assets/Plugins/OOOneUnityTools/Editor/FileUtility.cs";
+            var expectedResult = @"Assets\Plugins\OOOneUnityTools\Editor\FileUtility.cs";
+            var pathAfterParse = FileUtility.ParePathUnityToCsharp(pathBeforeParse);
+            Assert.AreEqual(expectedResult, pathAfterParse);
+        }
+
+
+        [Test]
         public void DeleteTestsPngFromPathTests()
         {
             FileUtility.CreatTestPngByPath(folderPath, fileName);

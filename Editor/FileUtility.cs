@@ -28,5 +28,11 @@ namespace OOOneUnityTools.Editor
             File.Delete(metaPathAfterParse);
             AssetDatabase.Refresh();
         }
+
+        public static string ParePathUnityToCsharp(string pathBeforeParse)
+        {
+            var pathAfterParse = pathBeforeParse.Replace("/", @"\");
+            return pathAfterParse;
+        }
     }
 }
