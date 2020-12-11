@@ -7,8 +7,9 @@ using UnityEngine;
 
 namespace OOOne.Tools.Editor
 {
-    public static class FileUtility
+    public class FileUtility
     {
+        
         public static void CreatTestPngByPath(string path, string fileName)
         {
             var fullPathBeforeParse = path + "/" + fileName + ".png";
