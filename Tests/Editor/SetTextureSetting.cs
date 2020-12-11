@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
-using OOOneUnityTools.Editor;
+using OOOne.Tools.Editor;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.TestTools;
 
-namespace Tests
+namespace OOOne.Editor.Tests
 {
     public class SetTextureSetting
     {

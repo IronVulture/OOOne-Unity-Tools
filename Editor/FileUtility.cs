@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace OOOneUnityTools.Editor
+namespace OOOne.Tools.Editor
 {
     public class FileUtility
     {
