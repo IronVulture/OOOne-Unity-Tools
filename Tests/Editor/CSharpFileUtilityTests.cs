@@ -19,6 +19,7 @@ namespace OOOneTools.Editor.Tests
         [Test]
         public void IsFolderExist()
         {
+
             var isFolderExist = CSharpFileUtility.IsFolderExist(_beforeParsePath);
             Assert.IsTrue(isFolderExist);
         }
@@ -37,5 +38,7 @@ namespace OOOneTools.Editor.Tests
             var isFileInPath = CSharpFileUtility.IsFileInPath(_beforeParsePath, "TestFile", "txt");
             Assert.AreEqual(true, isFileInPath);
         }
+
+
     }
 }
