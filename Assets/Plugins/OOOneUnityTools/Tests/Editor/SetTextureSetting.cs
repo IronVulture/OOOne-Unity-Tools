@@ -65,7 +65,7 @@ namespace OOOne.Editor.Tests
         public void CreateTestPNGFileToPathTests()
         {
             FileUtility.CreatTestPngByPath(absoluteFolderPath, fileName);
-            var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(unityAssetsFolderPath);
+            var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(unityFullPath);
             Assert.IsNotNull(texture2D);
             FileUtility.DeleteFileWithMetaByPath(absoluteFolderPath, fileName, ".png");
         }
