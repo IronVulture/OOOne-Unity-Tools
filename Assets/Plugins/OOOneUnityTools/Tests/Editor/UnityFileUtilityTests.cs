@@ -21,7 +21,7 @@ namespace OOOneTools.Editor.Tests
         public void CreateUnityFolderIfNotExist()
         {
             UnityFileUtility.CreateUnityFolder(_childPath);
-            Assert.IsTrue(IsUnityFolderExist(_childPath));
+            Assert.IsTrue(UnityFileUtility.IsUnityFolderExist(_childPath));
             UnityFileUtility.DeleteUnityFolder(_childPath);
         }
 
@@ -30,7 +30,7 @@ namespace OOOneTools.Editor.Tests
         {
             var path = _childPath + "/" + _childPath;
             UnityFileUtility.CreateUnityFolder(path);
-            Assert.IsTrue(IsUnityFolderExist(path));
+            Assert.IsTrue(UnityFileUtility.IsUnityFolderExist(path));
             UnityFileUtility.DeleteUnityFolder(_childPath);
         }
 
@@ -38,7 +38,7 @@ namespace OOOneTools.Editor.Tests
         public void DontCreateFolderIfExist()
         {
             UnityFileUtility.CreateUnityFolder(_childPath);
-            Assert.IsFalse(IsUnityFolderExist(_childPath + " 1"));
+            Assert.IsFalse(UnityFileUtility.IsUnityFolderExist(_childPath + " 1"));
             UnityFileUtility.DeleteUnityFolder(_childPath);
         }
 
@@ -47,12 +47,7 @@ namespace OOOneTools.Editor.Tests
         {
             UnityFileUtility.CreateUnityFolder(_childPath);
             UnityFileUtility.DeleteUnityFolder(_childPath);
-            Assert.AreEqual(false, IsUnityFolderExist(_childPath));
-        }
-
-        private bool IsUnityFolderExist(string childPath)
-        {
-            return CSharpFileUtility.IsFolderExist("Assets/" + childPath);
+            Assert.AreEqual(false, UnityFileUtility.IsUnityFolderExist(_childPath));
         }
     }
 }
