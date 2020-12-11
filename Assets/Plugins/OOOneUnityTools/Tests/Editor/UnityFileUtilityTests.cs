@@ -23,6 +23,13 @@ namespace OOOneTools.Editor.Tests
             UnityFileUtility.CreateUnityFolder(_childPath);
             Assert.IsTrue(IsUnityFolderExist(_childPath));
         }
+        [Test]
+        public void CreateUnityFolderInFolderIfNotExist()
+        {
+            var path = _childPath+"/"+_childPath;
+            UnityFileUtility.CreateUnityFolder(path);
+            Assert.IsTrue(IsUnityFolderExist(path));
+        }
 
         [Test]
         public void DontCreateFolderIfExist()

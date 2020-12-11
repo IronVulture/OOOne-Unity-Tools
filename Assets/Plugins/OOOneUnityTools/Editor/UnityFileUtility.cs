@@ -1,3 +1,4 @@
+using System.IO;
 using OOOneTools.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -13,9 +14,10 @@ namespace Plugins.OOOneUnityTools.Editor
             string assetFolder = "Assets";
             fullPath = fullPath.Substring(assetFolder.Length);
             fullPath = Application.dataPath + fullPath;
-            if (!CSharpFileUtility.IsFolderExist(fullPath))
+            if (CSharpFileUtility.IsFolderExist(fullPath) == false)
             {
-                AssetDatabase.CreateFolder(parentFolderPath, path);
+                Directory.CreateDirectory(fullPath);
+                AssetDatabase.Refresh();
             }
         }
     }
