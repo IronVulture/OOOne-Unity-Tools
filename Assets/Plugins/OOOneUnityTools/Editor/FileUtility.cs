@@ -50,7 +50,6 @@ namespace OOOne.Tools.Editor
             var folderPathHandler = new FolderPathHandler();
             var isFolderExist     = folderPathHandler.IsFolderExist(folderPath);
             var objects           = TryGetAsset<AnimatorOverrideController>(folderPath);
-            Debug.Log($"{objects}");
             // var preset              = objects as AnimatorOverrideController[];
             animatorOverrideControllers = new AnimatorOverrideController[3];
             return isFolderExist;
