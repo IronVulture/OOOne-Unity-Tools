@@ -1,10 +1,14 @@
+using UnityEditor;
+using UnityEngine;
+
 namespace OOOneTools.Editor
 {
     public class FileHandler
     {
         public bool TryGetFile(string filePath)
         {
-            return false;
+            Object obj = AssetDatabase.LoadAssetAtPath(filePath, typeof(Object));
+            return (obj != null);
         }
     }
 }
