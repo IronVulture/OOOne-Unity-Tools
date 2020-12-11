@@ -1,7 +1,7 @@
 #region
 
 using NUnit.Framework;
-using OOOneUnityTools.Editor;
+using OOOne.Tools.Editor;
 
 #endregion
 
