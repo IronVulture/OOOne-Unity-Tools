@@ -3,9 +3,9 @@ pipeline {
   environment {
     GIT = '"C:\\Program Files\\Git\\bin\\git.exe"'
     UNITY = '"C:\\Program Files\\Unity\\Hub\\Editor\\2020.1.2f1\\Editor\\Unity.exe"'
-    PROJECT = 'OOOneUnityTools'
+    PROJECT = 'OOOne-Unity-Tools'
     PLATFORM = 'Win64'
-    OUTPUT = 'Build/OOOneUnityTools.exe'
+    OUTPUT = 'Build/OOOne-Unity-Tools.exe'
   }
   stages {
     stage('Clean Workspace') {
