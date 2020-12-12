@@ -1,8 +1,6 @@
 ﻿using UnityEditor;
 
-namespace OOOne.BuildScript
-{
-    public static class BuildScript
+    public class BuildScript
     {
         [MenuItem("MyTools/Switch Build")]
         public static void BuildGame()
@@ -10,8 +8,9 @@ namespace OOOne.BuildScript
             // Get filename.
             string[] scenes = new string[] {"Assets/Scenes/SampleScence.unity"};
 
+#if UNITY_EDITOR
             // Build player.
             BuildPipeline.BuildPlayer(scenes, "./builds/OOOneTools", BuildTarget.Switch, BuildOptions.Development);
+#endif
         }
     }
-}
