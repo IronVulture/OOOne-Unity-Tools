@@ -1,4 +1,4 @@
-﻿namespace OOOneBuildScript
+﻿namespace OOOne.AutoBuild
 {
     using UnityEditor;
 
