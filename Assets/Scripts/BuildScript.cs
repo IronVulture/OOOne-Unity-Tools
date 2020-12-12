@@ -1,16 +1,16 @@
 ﻿using UnityEditor;
 
-    public static class BuildScript
+class BuildScript
+{
+    [MenuItem("MyTools/Switch Build")]
+    static void BuildGame()
     {
-        [MenuItem("MyTools/Switch Build")]
-        public static void BuildGame()
-        {
-            // Get filename.
-            string[] scenes = new string[] {"Assets/Scenes/SampleScence.unity"};
+        // Get filename.
+        string[] scenes = new string[] {"Assets/Scenes/SampleScence.unity"};
 
 #if UNITY_EDITOR
-            // Build player.
-            BuildPipeline.BuildPlayer(scenes, "./builds/OOOneTools", BuildTarget.Switch, BuildOptions.Development);
+        // Build player.
+        BuildPipeline.BuildPlayer(scenes, "./builds/OOOneTools", BuildTarget.Switch, BuildOptions.Development);
 #endif
-        }
     }
+}
