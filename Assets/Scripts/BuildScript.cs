@@ -1,16 +1,17 @@
 ﻿using UnityEditor;
 
-public static class BuildScript 
+namespace OOOne.BuildScript
 {
-    [MenuItem("MyTools/Switch Build")]
-    public static void BuildGame ()
+    public static class BuildScript
     {
-        // Get filename.
-        string[] scenes = new string[] {"Assets/Scenes/SampleScence.unity"};
+        [MenuItem("MyTools/Switch Build")]
+        public static void BuildGame()
+        {
+            // Get filename.
+            string[] scenes = new string[] {"Assets/Scenes/SampleScence.unity"};
 
-        // Build player.
-        BuildPipeline.BuildPlayer(scenes, "./builds/OOOneTools", BuildTarget.Switch, BuildOptions.Development);
-        
-        
+            // Build player.
+            BuildPipeline.BuildPlayer(scenes, "./builds/OOOneTools", BuildTarget.Switch, BuildOptions.Development);
+        }
     }
 }
