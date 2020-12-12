@@ -32,7 +32,7 @@ pipeline {
     }
     stage('Build') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -buildTarget $PLATFORM -quit -buildWindows64Player $OUTPUT"
+        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -buildTarget $PLATFORM -quit -buildWindows64Player=$OUTPUT"
       }
     }
   }
