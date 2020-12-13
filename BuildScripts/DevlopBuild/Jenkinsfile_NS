@@ -2,7 +2,7 @@ pipeline {
   agent any
   environment {
     GIT = '"C:\\Program Files\\Git\\bin\\git.exe"'
-    UNITY = '"C:\\Program Files\\Unity\\Hub\\Editor\\2020.1.2f1\\Editor\\Unity.exe"'
+    UNITY = '"C:\\Program Files\\Unity\\Editor\\Unity.exe"'
     PROJECT = 'OOOneUnityTools'
     PLATFORM = 'Switch'
     OUTPUT = 'Build/OOneUnityTools.exe'
