@@ -3,7 +3,7 @@ pipeline {
   environment {
     GIT = '"C:\\Program Files\\Git\\bin\\git.exe"'
     UNITY = '"C:\\Program Files\\Unity\\Editor\\Unity.exe"'
-    PROJECT_PATH= '"C:\Users\builder\AppData\Local\Jenkins\.jenkins\workspace\OOOneUnityTools_Switch"'
+    PROJECT_PATH= '"C:\\Users\\builder\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\OOOneUnityTools_Switch"'
     PROJECT = 'OOOneUnityTools'
     PLATFORM = 'Switch'
     OUTPUT = 'Build/OOneUnityTools.exe'
