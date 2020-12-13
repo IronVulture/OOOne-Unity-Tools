@@ -11,7 +11,7 @@ pipeline {
     stage('Clean Workspace') {
       steps {
         bat "$GIT reset --hard"
-        bat "$GIT clean -x -f -d -e C:\jenkins_out\Library"
+        bat "$GIT clean -x -f -d -e $PROJECT/Library"
       }
     }
     stage('Update Workspace') {
@@ -22,17 +22,17 @@ pipeline {
     }
     stage('Import Assets') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=C:\jenkins_out -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit -accept-apiupdate"
+        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit -accept-apiupdate"
       }
     }
     stage('Run Unit Tests') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=C:\jenkins_out -executeMethod OOOneBuild.AutoBuildScript.BuildGame -runEditorTests"
+        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOneBuild.AutoBuildScript.BuildGame -runEditorTests"
       }
     }
     stage('Build') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=C:\jenkins_out -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit "
+        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit "
       }
     }
   }
