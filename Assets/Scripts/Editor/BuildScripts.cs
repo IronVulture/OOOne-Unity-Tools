@@ -2,7 +2,7 @@
 {
     using UnityEditor;
 
-    class BuildScript
+    public class BuildScript
     {
         [MenuItem("MyTools/Switch Build")]
         static void BuildGame()
