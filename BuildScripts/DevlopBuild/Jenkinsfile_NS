@@ -3,16 +3,16 @@ pipeline {
   environment {
     GIT = '"C:\\Program Files\\Git\\bin\\git.exe"'
     UNITY = '"C:\\Program Files\\Unity\\Editor\\Unity.exe"'
+    PROJECT_PATH= '"C:\Users\builder\AppData\Local\Jenkins\.jenkins\workspace\OOOneUnityTools_Switch"'
     PROJECT = 'OOOneUnityTools'
     PLATFORM = 'Switch'
-    PROJECT_PATH = '"/Users/builder/AppData/Local/Jenkins/.jenkins/workspace/OOOneUnityTools_Switch"'
     OUTPUT = 'Build/OOneUnityTools.exe'
   }
   stages {
     stage('Clean Workspace') {
       steps {
         bat "$GIT reset --hard"
-        bat "$GIT clean -x -f  -e $PROJECT_PATH"
+        bat "$GIT clean -x -f -d -e $PROJECT/Library"
       }
     }
     stage('Update Workspace') {
