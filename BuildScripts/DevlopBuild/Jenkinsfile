@@ -3,7 +3,7 @@ pipeline {
   environment {
     GIT = '"C:\\Program Files\\Git\\bin\\git.exe"'
     UNITY = '"C:\\Program Files\\Unity\\Editor\\Unity.exe"'
-    PROJECT = 'OOOneUnityTools'
+    PROJECT = 'OOOneUnityTools_Win64'
     PLATFORM = 'Win64'
     OUTPUT = 'Build/OOneUnityTools.exe'
   }
@@ -36,29 +36,6 @@ pipeline {
       }
     }
 
-    stage('NS_Clean Workspace') {
-      steps {
-        bat "$GIT reset --hard"
-        bat "$GIT clean -x -f -d -e $PROJECT/Library"
-      }
-    }
-    stage('NS_Update Workspace') {
-      steps {
-        bat "$GIT checkout"
-        bat "$GIT lfs checkout"
-      }
-    }
-
-    stage('NS_Import Assets') {
-      steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit -accept-apiupdate"
-      }
-    }
-    stage('NS_Run Unit Tests') {
-      steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOneBuild.AutoBuildScript.BuildGame -runEditorTests"
-      }
-    }
     stage('NS_Build') {
       steps {
         bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit "
