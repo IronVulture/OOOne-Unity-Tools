@@ -4,6 +4,7 @@ pipeline {
     GIT = '"C:\\Program Files\\Git\\bin\\git.exe"'
     UNITY = '"C:\\Program Files\\Unity\\Editor\\Unity.exe"'
     PROJECT = 'OOOneUnityTools_Switch'
+    PROJECTPATH = '"/Users/builder/AppData/Local/Jenkins/.jenkins/workspace/OOOneUnityTools_Switch"
     PLATFORM = 'Switch'
     OUTPUT = 'Build/OOneUnityTools.exe'
   }
@@ -11,7 +12,7 @@ pipeline {
     stage('Clean Workspace') {
       steps {
         bat "$GIT reset --hard"
-        bat "$GIT clean -x -f -d -e $PROJECT/Library"
+        bat "$GIT clean -x -f -d -e $PROJECTPATH/Library"
       }
     }
     stage('Update Workspace') {
@@ -22,17 +23,17 @@ pipeline {
     }
     stage('Import Assets') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit -accept-apiupdate"
+        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECTPATH -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit -accept-apiupdate"
       }
     }
     stage('Run Unit Tests') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOneBuild.AutoBuildScript.BuildGame -runEditorTests"
+        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECTPATH -executeMethod OOOneBuild.AutoBuildScript.BuildGame -runEditorTests"
       }
     }
     stage('Build') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit "
+        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECTPATH -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit "
       }
     }
   }
