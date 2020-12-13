@@ -22,17 +22,17 @@ pipeline {
     }
     stage('Import Assets') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOne.AutoBuild.BuildScript.BuildGame -quit -accept-apiupdate"
+        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOneBuild.BuildScript.BuildGame -quit -accept-apiupdate"
       }
     }
     stage('Run Unit Tests') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOne.AutoBuild.BuildScript.BuildGame -runEditorTests"
+        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOneBuild.BuildScript.BuildGame -runEditorTests"
       }
     }
     stage('Build') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOne.AutoBuild.BuildScript.BuildGame -quit "
+        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -executeMethod OOOneBuild.BuildScript.BuildGame -quit "
       }
     }
   }
