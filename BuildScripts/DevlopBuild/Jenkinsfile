@@ -6,7 +6,7 @@ pipeline {
     PROJECT = 'OOOneUnityTools_Win64'
     PLATFORM = 'Win64'
     OUTPUT = 'Build/OOneUnityTools.exe'
-    PROJECT_PATH = '""C:\Users\builder\AppData\Local\Jenkins\.jenkins\workspace\OOOneUnityTools_Win64""'
+    PROJECT_PATH = '"C:\Users\builder\AppData\Local\Jenkins\.jenkins\workspace\OOOneUnityTools_Win64"'
   }
   stages {
     stage('Clean Workspace') {
