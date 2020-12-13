@@ -6,6 +6,7 @@ pipeline {
     PROJECT = 'OOOneUnityTools_Win64'
     PLATFORM = 'Win64'
     OUTPUT = 'Build/OOneUnityTools.exe'
+    PROJECT_PATH = '""C:\Users\builder\AppData\Local\Jenkins\.jenkins\workspace\OOOneUnityTools_Win64""'
   }
   stages {
     stage('Clean Workspace') {
@@ -38,7 +39,7 @@ pipeline {
 
     stage('NS_Build') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath="C:\Users\builder\AppData\Local\Jenkins\.jenkins\workspace\OOOneUnityTools_Win64" -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit "
+        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT_PATH -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit "
       }
     }
   }
