@@ -22,12 +22,12 @@ pipeline {
     }
     stage('Import Assets') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT"C:\Users\builder\AppData\Local\Jenkins\.jenkins\workspace\OOOneUnityTools_Switch" -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit -accept-apiupdate"
+        bat "$UNITY -batchmode -logFile - -projectPath="C:\Users\builder\AppData\Local\Jenkins\.jenkins\workspace\OOOneUnityTools_Switch" -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit -accept-apiupdate"
       }
     }
     stage('Run Unit Tests') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT="C:\Users\builder\AppData\Local\Jenkins\.jenkins\workspace\OOOneUnityTools_Switch" -executeMethod OOOneBuild.AutoBuildScript.BuildGame -runEditorTests"
+        bat "$UNITY -batchmode -logFile - -projectPath="C:\Users\builder\AppData\Local\Jenkins\.jenkins\workspace\OOOneUnityTools_Switch" -executeMethod OOOneBuild.AutoBuildScript.BuildGame -runEditorTests"
       }
     }
     stage('Build') {
