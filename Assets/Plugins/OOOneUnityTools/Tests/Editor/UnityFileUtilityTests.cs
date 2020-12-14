@@ -139,7 +139,7 @@ namespace OOOneTools.Editor.Tests
 
         private bool CreateAnimationClip() => UnityFileUtility.TryCreateAnimationClip(_childPath, _fileName);
 
-        private bool CreateAnimationOverride() => UnityFileUtility.CreateAnimationOverride(_childPath, _fileName);
+        private bool CreateAnimationOverride() => UnityFileUtility.TryCreateAnimationOverride(_childPath, _fileName);
 
         private void DeleteUnityFolderUseChild() => UnityFileUtility.DeleteUnityFolder(_childPath);
 
