@@ -3,7 +3,7 @@ pipeline {
   environment {
     GIT = '"C:\\Program Files\\Git\\bin\\git.exe"'
     UNITY = '"C:\\Program Files\\Unity\\Editor\\Unity.exe"'
-    PROJECT = 'OOOneUnityTools_Win64'
+    PROJECT = 'OOOneUnityTools_Win_Switch'
     PLATFORM = 'Win64'
     OUTPUT = 'Build/OOneUnityTools.exe'
   }
