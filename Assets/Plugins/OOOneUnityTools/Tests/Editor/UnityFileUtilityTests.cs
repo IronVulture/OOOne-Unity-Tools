@@ -40,7 +40,6 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             Assert.IsTrue(UnityFileUtility.IsUnityFolderExist(_childPath));
-            DeleteUnityFolderUseChild();
         }
 
         [Test]
@@ -49,7 +48,6 @@ namespace OOOneTools.Editor.Tests
             var path = _childPath + "/" + _childPath;
             UnityFileUtility.CreateUnityFolder(path);
             Assert.IsTrue(UnityFileUtility.IsUnityFolderExist(path));
-            DeleteUnityFolderUseChild();
         }
 
         [Test]
@@ -57,7 +55,6 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             Assert.IsFalse(UnityFileUtility.IsUnityFolderExist(_childPath + " 1"));
-            DeleteUnityFolderUseChild();
         }
 
         [Test]
@@ -72,8 +69,7 @@ namespace OOOneTools.Editor.Tests
         public void CreateAnimationOverrideIfFolderNoExists()
         {
             CreateAnimationOverride();
-            Assert.AreEqual(true, IsFileInPath(_override_extension));
-            DeleteUnityFolderUseChild();
+            ShouldFileInPath(_override_extension);
         }
 
         [Test]
@@ -81,16 +77,14 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             CreateAnimationOverride();
-            Assert.AreEqual(true, IsFileInPath(_override_extension));
-            DeleteUnityFolderUseChild();
+            ShouldFileInPath(_override_extension);
         }
 
         [Test]
         public void CreateAnimationClipIfFolderNoExists()
         {
             CreateAnimationClip();
-            Assert.AreEqual(true, IsFileInPath(_anime_extension));
-            DeleteUnityFolderUseChild();
+            ShouldFileInPath(_anime_extension);
         }
 
         [Test]
@@ -99,7 +93,6 @@ namespace OOOneTools.Editor.Tests
             CreateUnityFolderUseChild();
             CreateAnimationClip();
             Assert.AreEqual(true, IsFileInPath(_anime_extension));
-            DeleteUnityFolderUseChild();
         }
 
         [Test]
@@ -107,7 +100,6 @@ namespace OOOneTools.Editor.Tests
         {
             CreatePng();
             ShouldPngInPath();
-            DeleteUnityFolderUseChild();
         }
 
         [Test]
@@ -116,7 +108,6 @@ namespace OOOneTools.Editor.Tests
             CreateUnityFolderUseChild();
             CreatePng();
             ShouldPngInPath();
-            DeleteUnityFolderUseChild();
         }
 
         [Test]
@@ -133,7 +124,6 @@ namespace OOOneTools.Editor.Tests
             Assert.AreEqual(2, fileCountInFolder);
             Assert.AreEqual(oldModifyTime, newModifyTime);
             Assert.AreEqual(false, isFileCreateSuccess);
-            DeleteUnityFolderUseChild();
         }
 
         [Test]
@@ -150,7 +140,6 @@ namespace OOOneTools.Editor.Tests
             Assert.AreEqual(2, fileCountInFolder);
             Assert.AreEqual(oldModifyTime, newModifyTime);
             Assert.AreEqual(false, isFileCreateSuccess);
-            DeleteUnityFolderUseChild();
         }
 
         [Test]
@@ -167,6 +156,15 @@ namespace OOOneTools.Editor.Tests
             Assert.AreEqual(2, fileCountInFolder);
             Assert.AreEqual(oldModifyTime, newModifyTime);
             Assert.AreEqual(false, isFileCreateSuccess);
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        [TearDown]
+        public void TearDown()
+        {
             DeleteUnityFolderUseChild();
         }
 
@@ -188,6 +186,11 @@ namespace OOOneTools.Editor.Tests
 
         private bool IsFileInPath(string fileExtension) =>
             CSharpFileUtility.IsFileInPath(_folderPath, _fileName, fileExtension);
+
+        private void ShouldFileInPath(string overrideExtension)
+        {
+            Assert.AreEqual(true, IsFileInPath(overrideExtension));
+        }
 
         private void ShouldPngInPath()
         {

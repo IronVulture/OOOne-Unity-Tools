@@ -72,16 +72,11 @@ namespace Plugins.OOOneUnityTools.Editor
 
         public static bool TryCreatePng(string childPath, string fileName)
         {
-            if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
             var csharpFolderPath = ParseChildPathToCsharpFolderPath(childPath);
-            if (CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "png"))
-                return false;
-            var path = GetFullPath(childPath) + @"\" + fileName + ".png";
-            var texture2D = Texture2D.blackTexture;
-            byte[] bytes = texture2D.EncodeToPNG();
-            File.WriteAllBytes(path, bytes);
-            RefreshAsset();
-            return true;
+            var isFileInPath = CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "png");
+            var createPng = !isFileInPath;
+            if (createPng) CreatePng(childPath, fileName);
+            return createPng;
         }
 
         private static string GetExtensionPath(string childPath, string fileName, string extension)
