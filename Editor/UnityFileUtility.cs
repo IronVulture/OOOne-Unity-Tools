@@ -28,8 +28,6 @@ namespace Plugins.OOOneUnityTools.Editor
 
         private static string UnityAbsolutePath = Application.dataPath;
 
-        private const string UnityPath = "Assets";
-
         #endregion
 
         #region Public Methods
@@ -78,6 +76,21 @@ namespace Plugins.OOOneUnityTools.Editor
         {
             AssetDatabase.DeleteAsset(GetAssetsPath(childPath));
             RefreshAsset();
+        }
+
+        public static string GetAbsolutePath()
+        {
+            return UnityAbsolutePath;
+        }
+
+        public static string GetUnityAbsoluteFolderPath(string childPath)
+        {
+            return GetAbsolutePath() + "/" + childPath;
+        }
+
+        public static string GetUnityFolderPath(string childPath)
+        {
+            return CombineUnityPath(GetUnityPath(), childPath);
         }
 
         public static string GetUnityPath()
@@ -131,6 +144,11 @@ namespace Plugins.OOOneUnityTools.Editor
 
         #region Private Methods
 
+        private static string CombineUnityPath(string basePath, string childPath)
+        {
+            return basePath + "/" + childPath;
+        }
+
         private static string GetAssetsPath(string childPath) => "Assets/" + childPath;
 
         private static string GetExtension(FileType fileType)
@@ -164,19 +182,6 @@ namespace Plugins.OOOneUnityTools.Editor
 
         #endregion
 
-        public static string GetAbsolutePath()
-        {
-            return UnityAbsolutePath;
-        }
-
-        public static string GetUnityFolderPath(string childPath)
-        {
-            return GetUnityPath() + "/" + childPath;
-        }
-
-        public static string GetUnityAbsoluteFolderPath(string childPath)
-        {
-            return GetAbsolutePath() + "/" + childPath;
-        }
+        private const string UnityPath = "Assets";
     }
 }
