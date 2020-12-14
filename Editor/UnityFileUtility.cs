@@ -44,11 +44,21 @@ namespace Plugins.OOOneUnityTools.Editor
 
         }
 
-        public static void CreateAnimationOverride(string childPath, string fileName)
+        public static bool CreateAnimationOverride(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
-            CreateUnityAsset(childPath, fileName, typeof(AnimatorOverrideController), "overrideController");
-            RefreshAsset();
+            var csharpFolderPath = CSharpFileUtility.ParseSlashToCsharp(Application.dataPath + "/" + childPath);
+            if (CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "overrideController"))
+            {
+                return false;
+            }
+            else
+            {
+                CreateUnityAsset(childPath, fileName, typeof(AnimatorOverrideController), "overrideController");
+                RefreshAsset();
+                return true;
+            }
+
         }
 
         private static void CreateUnityAsset(string childPath, string fileName, Type type, string extension)

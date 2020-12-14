@@ -120,11 +120,26 @@ namespace OOOneTools.Editor.Tests
             DeleteUnityFolderUseChild();
         }
 
-
+        [Test]
+        public void NotCreateAnimationOverrideIfFileAndFolderExist()
+        {
+            CreateUnityFolderUseChild();
+            CreateAnimationOverride();
+            string path = _folderPath + "/" + _fileName + "overrideController";
+            var oldModifyTime = File.GetCreationTime(path);
+            var IsFileCreateSuccess = CreateAnimationOverride();
+            var newModifyTime = File.GetCreationTime(path);
+            var fileCountInFolder = Directory.GetFiles(_folderPath).Length;
+            Assert.AreEqual(true, IsFileInPath("overrideController"));
+            Assert.AreEqual(2, fileCountInFolder);
+            Assert.AreEqual(oldModifyTime, newModifyTime);
+            Assert.AreEqual(false, IsFileCreateSuccess);
+            DeleteUnityFolderUseChild();
+        }
 
         private bool CreateAnimationClip() => UnityFileUtility.TryCreateAnimationClip(_childPath, _fileName);
 
-        private void CreateAnimationOverride() => UnityFileUtility.CreateAnimationOverride(_childPath, _fileName);
+        private bool CreateAnimationOverride() => UnityFileUtility.CreateAnimationOverride(_childPath, _fileName);
 
         private void DeleteUnityFolderUseChild() => UnityFileUtility.DeleteUnityFolder(_childPath);
 
