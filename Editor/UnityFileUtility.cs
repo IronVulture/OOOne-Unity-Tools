@@ -26,6 +26,8 @@ namespace Plugins.OOOneUnityTools.Editor
             {FileType.AnimatorOverride, "overrideController"},
         };
 
+        private const string UnityPath = "Assets";
+
         #endregion
 
         #region Public Methods
@@ -74,6 +76,11 @@ namespace Plugins.OOOneUnityTools.Editor
         {
             AssetDatabase.DeleteAsset(GetAssetsPath(childPath));
             RefreshAsset();
+        }
+
+        public static string GetUnityPath()
+        {
+            return UnityPath;
         }
 
         public static bool IsFileInPath(string unityFullFolderPath, string fileName, FileType fileType)
@@ -154,10 +161,5 @@ namespace Plugins.OOOneUnityTools.Editor
         private static void RefreshAsset() => AssetDatabase.Refresh();
 
         #endregion
-
-        public static string GetUnityPath()
-        {
-            return "Assets";
-        }
     }
 }
