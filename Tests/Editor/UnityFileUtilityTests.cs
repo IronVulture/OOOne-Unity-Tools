@@ -165,6 +165,13 @@ namespace OOOneTools.Editor.Tests
             Assert.AreEqual(false, isFileCreateSuccess);
         }
 
+        [Test]
+        public void GetUnityPath()
+        {
+            var result = UnityFileUtility.GetUnityPath();
+            Assert.AreEqual( "Assets" , result  );
+        }
+
         #endregion
 
         #region Public Methods

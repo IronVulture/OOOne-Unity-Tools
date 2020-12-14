@@ -154,5 +154,10 @@ namespace Plugins.OOOneUnityTools.Editor
         private static void RefreshAsset() => AssetDatabase.Refresh();
 
         #endregion
+
+        public static string GetUnityPath()
+        {
+            return "Assets";
+        }
     }
 }
