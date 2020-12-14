@@ -7,12 +7,18 @@ namespace OOOneTools.Editor.Tests
 {
     public class UnityFileUtilityTests
     {
+        #region Private Variables
+
+        private string _anime_extension;
         private string _childPath;
         private string _fileName;
         private string _folderPath;
-        private string _anime_extension;
         private string _override_extension;
         private string _png_extension;
+
+        #endregion
+
+        #region Setup/Teardown Methods
 
         [SetUp]
         public void SetUp()
@@ -24,6 +30,10 @@ namespace OOOneTools.Editor.Tests
             _override_extension = "overrideController";
             _png_extension = "png";
         }
+
+        #endregion
+
+        #region Test Methods
 
         [Test]
         public void CreateUnityFolderIfNotExist()
@@ -95,8 +105,8 @@ namespace OOOneTools.Editor.Tests
         [Test]
         public void CreatePngIfFolderNoExists()
         {
-            UnityFileUtility.CreatePng(_childPath, _fileName);
-            Assert.AreEqual(true, IsFileInPath(_png_extension));
+            CreatePng();
+            ShouldPngInPath();
             DeleteUnityFolderUseChild();
         }
 
@@ -104,8 +114,8 @@ namespace OOOneTools.Editor.Tests
         public void CreatePngIfFolderExists()
         {
             CreateUnityFolderUseChild();
-            UnityFileUtility.CreatePng(_childPath, _fileName);
-            Assert.AreEqual(true, IsFileInPath(_png_extension));
+            CreatePng();
+            ShouldPngInPath();
             DeleteUnityFolderUseChild();
         }
 
@@ -114,7 +124,7 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             CreateAnimationClip();
-            string path = GetUnityFullPath(_folderPath, _fileName, _anime_extension);
+            var path = GetUnityFullPath(_anime_extension);
             var oldModifyTime = File.GetCreationTime(path);
             var isFileCreateSuccess = CreateAnimationClip();
             var newModifyTime = File.GetCreationTime(path);
@@ -131,7 +141,7 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             CreateAnimationOverride();
-            string path = GetUnityFullPath(_folderPath, _fileName, _override_extension);
+            var path = GetUnityFullPath(_override_extension);
             var oldModifyTime = File.GetCreationTime(path);
             var isFileCreateSuccess = CreateAnimationOverride();
             var newModifyTime = File.GetCreationTime(path);
@@ -148,7 +158,7 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             UnityFileUtility.TryCreatePng(_childPath, _fileName);
-            string path = GetUnityFullPath(_folderPath, _fileName, _png_extension);
+            var path = GetUnityFullPath(_png_extension);
             var oldModifyTime = File.GetCreationTime(path);
             var isFileCreateSuccess = UnityFileUtility.TryCreatePng(_childPath, _fileName);
             var newModifyTime = File.GetCreationTime(path);
@@ -160,21 +170,30 @@ namespace OOOneTools.Editor.Tests
             DeleteUnityFolderUseChild();
         }
 
+        #endregion
 
-        private string GetUnityFullPath(string folderPath, string fileName, object extension)
-        {
-            return _folderPath + "/" + _fileName + "." +extension;
-        }
+        #region Private Methods
 
         private bool CreateAnimationClip() => UnityFileUtility.TryCreateAnimationClip(_childPath, _fileName);
 
         private bool CreateAnimationOverride() => UnityFileUtility.TryCreateAnimationOverride(_childPath, _fileName);
 
-        private void DeleteUnityFolderUseChild() => UnityFileUtility.DeleteUnityFolder(_childPath);
+        private void CreatePng() => UnityFileUtility.CreatePng(_childPath, _fileName);
 
         private void CreateUnityFolderUseChild() => UnityFileUtility.CreateUnityFolder(_childPath);
 
+        private void DeleteUnityFolderUseChild() => UnityFileUtility.DeleteUnityFolder(_childPath);
+
+        private string GetUnityFullPath(string extension) => _folderPath + "/" + _fileName + "." + extension;
+
         private bool IsFileInPath(string fileExtension) =>
             CSharpFileUtility.IsFileInPath(_folderPath, _fileName, fileExtension);
+
+        private void ShouldPngInPath()
+        {
+            Assert.AreEqual(true, IsFileInPath(_png_extension));
+        }
+
+        #endregion
     }
 }
