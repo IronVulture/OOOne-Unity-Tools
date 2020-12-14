@@ -168,5 +168,10 @@ namespace Plugins.OOOneUnityTools.Editor
         {
             return UnityAbsolutePath;
         }
+
+        public static string GetUnityFolderPath(string childPath)
+        {
+            return GetUnityPath() + "/" + childPath;
+        }
     }
 }
