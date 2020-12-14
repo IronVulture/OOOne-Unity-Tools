@@ -6,7 +6,7 @@ pipeline {
     PROJECT = 'OOOneUnityTools_Win_Switch'
     PLATFORM = 'Win64'
     OUTPUT = 'Build/OOneUnityTools.exe'
-    WORKSPACE = '"C:/Users/builder/AppData/Local/Jenkins/.jenkins/workspace"'
+    WORKSPACE = '"C:/Users/builder/AppData/Local/Jenkins/.jenkins/workspace/OOOneUnityTools_Win_Switch"'
   }
   stages {
     stage('Clean Workspace') {
@@ -23,23 +23,23 @@ pipeline {
     }
     stage('Import Assets') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE/$PROJECT -buildTarget $PLATFORM -quit -accept-apiupdate"
+        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE -buildTarget $PLATFORM -quit -accept-apiupdate"
       }
     }
     stage('Run Unit Tests') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE/$PROJECT -buildTarget $PLATFORM -runEditorTests"
+        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE -buildTarget $PLATFORM -runEditorTests"
       }
     }
     stage('Build') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE/$PROJECT -buildTarget $PLATFORM -quit -buildWindows64Player=$OUTPUT"
+        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE -buildTarget $PLATFORM -quit -buildWindows64Player=$OUTPUT"
       }
     }
 
     stage('NS_Build') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE/$PROJECT -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit "
+        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit "
       }
     }
   }
