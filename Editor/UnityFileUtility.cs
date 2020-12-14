@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using NUnit.Framework;
 using OOOneTools.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -61,7 +60,7 @@ namespace Plugins.OOOneUnityTools.Editor
             AssetDatabase.CreateAsset(instance, path);
         }
 
-        public static bool CreatePng(string childPath, string fileName)
+        public static bool TryCreatePng(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
             var csharpFolderPath = ParseChildPathToCsharpFolderPath(childPath);
