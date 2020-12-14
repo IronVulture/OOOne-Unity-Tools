@@ -6,6 +6,7 @@ pipeline {
     PROJECT = 'OOOneUnityTools_Win_Switch'
     PLATFORM = 'Win64'
     OUTPUT = 'Build/OOneUnityTools.exe'
+    WORKSPACE = '"C:/Users/builder/AppData/Local/Jenkins/.jenkins/workspace"'
   }
   stages {
     stage('Clean Workspace') {
@@ -22,7 +23,7 @@ pipeline {
     }
     stage('Import Assets') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -buildTarget $PLATFORM -quit -accept-apiupdate"
+        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE/$PROJECT -buildTarget $PLATFORM -quit -accept-apiupdate"
       }
     }
     stage('Run Unit Tests') {
