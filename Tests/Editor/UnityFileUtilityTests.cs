@@ -180,13 +180,22 @@ namespace OOOneTools.Editor.Tests
         [Test]
         public void GetUnityFolderPath()
         {
-            ShouldEqualResult("Assets/"+_childPath , UnityFileUtility.GetUnityFolderPath(_childPath));
+            ShouldEqualResult("Assets/" + _childPath, UnityFileUtility.GetUnityFolderPath(_childPath));
         }
 
         [Test]
         public void GetUnityAbsoluteFolderPath()
         {
-            ShouldEqualResult($"{Application.dataPath}/{_childPath}", UnityFileUtility.GetUnityAbsoluteFolderPath(_childPath));
+            ShouldEqualResult($"{Application.dataPath}/{_childPath}",
+                UnityFileUtility.GetUnityAbsoluteFolderPath(_childPath));
+        }
+
+        [Test]
+        public void GetUnityFullPath()
+        {
+            var extension = "overrideController";
+            var expected = $"Assets/{_childPath}/{_fileName}.{extension}";
+            ShouldEqualResult(expected,UnityFileUtility.GetUnityFullPath(_childPath, _fileName, extension));
         }
 
         #endregion
