@@ -30,35 +30,32 @@ namespace Plugins.OOOneUnityTools.Editor
         public static bool TryCreateAnimationClip(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
-            var csharpFolderPath = CSharpFileUtility.ParseSlashToCsharp(Application.dataPath + "/" + childPath);
+            var csharpFolderPath = ParseChildPathToCsharpFolderPath(childPath);
             if (CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "anim"))
-            {
                 return false;
-            }
-            else
-            {
-                CreateUnityAsset(childPath, fileName, typeof(AnimationClip), "anim");
-                RefreshAsset();
-                return true;
-            }
+
+            CreateUnityAsset(childPath, fileName, typeof(AnimationClip), "anim");
+            RefreshAsset();
+            return true;
 
         }
 
-        public static bool CreateAnimationOverride(string childPath, string fileName)
+        public static bool TryCreateAnimationOverride(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
-            var csharpFolderPath = CSharpFileUtility.ParseSlashToCsharp(Application.dataPath + "/" + childPath);
+            var csharpFolderPath = ParseChildPathToCsharpFolderPath(childPath);
             if (CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "overrideController"))
-            {
                 return false;
-            }
-            else
-            {
-                CreateUnityAsset(childPath, fileName, typeof(AnimatorOverrideController), "overrideController");
-                RefreshAsset();
-                return true;
-            }
 
+            CreateUnityAsset(childPath, fileName, typeof(AnimatorOverrideController), "overrideController");
+            RefreshAsset();
+            return true;
+
+        }
+
+        private static string ParseChildPathToCsharpFolderPath(string childPath)
+        {
+            return CSharpFileUtility.ParseSlashToCsharp(Application.dataPath + "/" + childPath);
         }
 
         private static void CreateUnityAsset(string childPath, string fileName, Type type, string extension)
