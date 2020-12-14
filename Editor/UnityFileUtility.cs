@@ -88,6 +88,11 @@ namespace Plugins.OOOneUnityTools.Editor
             return GetAbsolutePath() + "/" + childPath;
         }
 
+        public static string GetUnityAbsoluteFullPath(string childPath, string fileName, string extension)
+        {
+            return CombineAbsolutePath(GetUnityAbsoluteFolderPath(childPath), fileName, extension);
+        }
+
         public static string GetUnityFolderPath(string childPath)
         {
             return CombineUnityPath(GetUnityPath(), childPath);
@@ -153,8 +158,14 @@ namespace Plugins.OOOneUnityTools.Editor
 
         private static string CombineUnityFullPath(string childPath, string fileName, string extension)
         {
-            var path = CombineUnityPath(GetUnityFolderPath(childPath), fileName);
-            var unityFullPath = $"{path}.{extension}";
+            return CombineAbsolutePath(GetUnityFolderPath(childPath), fileName, extension);
+        }
+
+        private static string CombineAbsolutePath(string absolutePath, string fileName,
+            string extension)
+        {
+            // var path = CombineUnityPath(absolutePath, childPath);
+            var unityFullPath = $"{absolutePath}/{fileName}.{extension}";
             return unityFullPath;
         }
 

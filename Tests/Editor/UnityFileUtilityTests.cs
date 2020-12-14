@@ -195,7 +195,15 @@ namespace OOOneTools.Editor.Tests
         {
             var extension = "overrideController";
             var expected = $"Assets/{_childPath}/{_fileName}.{extension}";
-            ShouldEqualResult(expected,UnityFileUtility.GetUnityFullPath(_childPath, _fileName, extension));
+            ShouldEqualResult(expected, UnityFileUtility.GetUnityFullPath(_childPath, _fileName, extension));
+        }
+
+        [Test]
+        public void GetUnityAbsoluteFullPath()
+        {
+            var extension = "overrideController";
+            var expected = $"{Application.dataPath}/{_childPath}/{_fileName}.{extension}";
+            ShouldEqualResult(expected, UnityFileUtility.GetUnityAbsoluteFullPath(_childPath, _fileName, extension));
         }
 
         #endregion
