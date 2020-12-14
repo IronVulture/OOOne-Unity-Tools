@@ -42,15 +42,11 @@ pipeline {
         bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit "
       }
 	}
-
-	post {
-	  always{
-	    load "$JENKINS_HOME/.envvars/OOOneVariable.groovy"
-	    discordSend description: "Jenkins Pipeline Build", footer: "Footer Text", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "${env.Discord_WebHook}"
-	  }
-	}
-
-
-
+  }
+  post {
+    always{
+       load "$JENKINS_HOME/.envvars/OOOneVariable.groovy"
+       discordSend description: "Jenkins Pipeline Build", footer: "Footer Text", link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "${env.Discord_WebHook}"
+    }
   }
 }
