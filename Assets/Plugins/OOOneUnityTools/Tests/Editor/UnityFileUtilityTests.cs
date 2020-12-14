@@ -168,19 +168,24 @@ namespace OOOneTools.Editor.Tests
         [Test]
         public void GetUnityPath()
         {
-            ShouldEqualResult(UnityFileUtility.GetUnityPath());
+            ShouldEqualResult("Assets", UnityFileUtility.GetUnityPath());
         }
 
         [Test]
         public void GetUnityAbsolutePath()
         {
-            ShouldEqualResult(UnityFileUtility.GetAbsolutePath());
+            ShouldEqualResult(Application.dataPath, UnityFileUtility.GetAbsolutePath());
         }
 
         [Test]
         public void GetUnityFolderPath()
         {
-            ShouldEqualResult(UnityFileUtility.GetUnityFolderPath(_childPath));
+            ShouldEqualResult("Assets/"+_childPath , UnityFileUtility.GetUnityFolderPath(_childPath));
+        }
+
+        [Test]
+        public void GetUnityAbsoluteFolderPath()
+        {
         }
 
         #endregion
@@ -215,9 +220,9 @@ namespace OOOneTools.Editor.Tests
         private bool IsFileInPath(string fileExtension) =>
             CSharpFileUtility.IsFileInPath(_unityFullFolderPath, _fileName, fileExtension);
 
-        private static void ShouldEqualResult(string result)
+        private static void ShouldEqualResult(string expected, string result)
         {
-            Assert.AreEqual("Assets", result);
+            Assert.AreEqual(expected, result);
         }
 
         private void ShouldFileCountCorrect()
