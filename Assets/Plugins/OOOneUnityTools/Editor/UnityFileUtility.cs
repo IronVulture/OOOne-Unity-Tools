@@ -93,6 +93,15 @@ namespace Plugins.OOOneUnityTools.Editor
             return CombineUnityPath(GetUnityPath(), childPath);
         }
 
+        public static string GetUnityFullPath(string childPath) => $@"{Application.dataPath}\{childPath}";
+
+        public static string GetUnityFullPath(string childPath, string fileName, string extension)
+        {
+            var path1 = CombineUnityPath(GetUnityFolderPath(childPath), fileName);
+            var unityFullPath = $"{path1}.{extension}";
+            return unityFullPath;
+        }
+
         public static string GetUnityPath()
         {
             return UnityPath;
@@ -170,8 +179,6 @@ namespace Plugins.OOOneUnityTools.Editor
             var fullPath = $"{Application.dataPath}/{path}";
             return fullPath;
         }
-
-        private static string GetUnityFullPath(string childPath) => $@"{Application.dataPath}\{childPath}";
 
         private static string ParseChildPathToCsharpFolderPath(string childPath)
         {
