@@ -95,7 +95,7 @@ namespace OOOneTools.Editor.Tests
         [Test]
         public void CreatePngIfFolderNoExists()
         {
-            UnityFileUtility.CreatePng(_childPath, _fileName);
+            UnityFileUtility.TryCreatePng(_childPath, _fileName);
             Assert.AreEqual(true, IsFileInPath(_png_extension));
             DeleteUnityFolderUseChild();
         }
@@ -104,7 +104,7 @@ namespace OOOneTools.Editor.Tests
         public void CreatePngIfFolderExists()
         {
             CreateUnityFolderUseChild();
-            UnityFileUtility.CreatePng(_childPath, _fileName);
+            UnityFileUtility.TryCreatePng(_childPath, _fileName);
             Assert.AreEqual(true, IsFileInPath(_png_extension));
             DeleteUnityFolderUseChild();
         }
@@ -147,10 +147,10 @@ namespace OOOneTools.Editor.Tests
         public void NotCreatePngIfFileAndFolderExist()
         {
             CreateUnityFolderUseChild();
-            UnityFileUtility.CreatePng(_childPath, _fileName);
+            UnityFileUtility.TryCreatePng(_childPath, _fileName);
             string path = GetUnityFullPath(_folderPath, _fileName, _png_extension);
             var oldModifyTime = File.GetCreationTime(path);
-            var isFileCreateSuccess = UnityFileUtility.CreatePng(_childPath, _fileName);
+            var isFileCreateSuccess = UnityFileUtility.TryCreatePng(_childPath, _fileName);
             var newModifyTime = File.GetCreationTime(path);
             var fileCountInFolder = Directory.GetFiles(_folderPath).Length;
             Assert.AreEqual(true, IsFileInPath(_png_extension));
