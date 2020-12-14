@@ -45,6 +45,7 @@ pipeline {
     post {
       always {
         discordSend description: 'OOOneUnityTools_Win_Switch Build', footer: 'Jenkins 2.263.1', link: env.BUILD_URL, result: currentBuild.currentResult, unstable: false, title: OOOneUnityTools_Win_Switch, webhookURL: 'https://discordapp.com/api/webhooks/788020632562302977/MMKmpKHvYt87lAhubWz4eRSumUkQgsrKeh_H3XfF3wJB9PZpCmV9H8xd-pdlfW4p_Mdg'
+      }
     }
   }
 }
