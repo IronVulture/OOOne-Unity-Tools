@@ -23,12 +23,12 @@ pipeline {
     }
     stage('Import Assets') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE -buildTarget $PLATFORM -quit -accept-apiupdate"
+        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE -quit -accept-apiupdate"
       }
     }
     stage('Run Unit Tests') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE -buildTarget $PLATFORM -runEditorTests"
+        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE -runEditorTests -quit"
       }
     }
     stage('Build') {
