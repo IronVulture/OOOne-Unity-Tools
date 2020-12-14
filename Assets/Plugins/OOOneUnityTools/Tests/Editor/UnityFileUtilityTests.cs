@@ -110,15 +110,16 @@ namespace OOOneTools.Editor.Tests
             CreateAnimationClip();
             string path = _folderPath + "/" + _fileName + "anim";
             var oldModifyTime = File.GetCreationTime(path);
-            var IsFileAlreadyExsit = CreateAnimationClip();
+            var IsFileCreateSuccess = CreateAnimationClip();
             var newModifyTime = File.GetCreationTime(path);
             var fileCountInFolder = Directory.GetFiles(_folderPath).Length;
             Assert.AreEqual(true, IsFileInPath("anim"));
             Assert.AreEqual(2, fileCountInFolder);
             Assert.AreEqual(oldModifyTime, newModifyTime);
-            Assert.AreEqual(false, IsFileAlreadyExsit);
+            Assert.AreEqual(false, IsFileCreateSuccess);
             DeleteUnityFolderUseChild();
         }
+
 
 
         private bool CreateAnimationClip() => UnityFileUtility.TryCreateAnimationClip(_childPath, _fileName);
