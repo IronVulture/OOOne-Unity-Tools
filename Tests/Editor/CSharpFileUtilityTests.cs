@@ -1,7 +1,4 @@
-using System.Collections;
 using NUnit.Framework;
-using UnityEditor;
-using OOOne.Tools.Editor;
 
 namespace OOOneTools.Editor.Tests
 {
@@ -38,9 +35,6 @@ namespace OOOneTools.Editor.Tests
             var isFileInPath = CSharpFileUtility.IsFileInPath(_beforeParsePath, "TestFile", "txt");
             Assert.AreEqual(true, isFileInPath);
         }
-
-
-
 
     }
 }
