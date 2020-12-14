@@ -1,3 +1,4 @@
+using System.IO;
 using NUnit.Framework;
 using Plugins.OOOneUnityTools.Editor;
 using UnityEngine;
@@ -102,6 +103,17 @@ namespace OOOneTools.Editor.Tests
             DeleteUnityFolderUseChild();
         }
 
+        [Test]
+        public void NotCreateAnimationClipIfFileAndFolderExist()
+        {
+            CreateUnityFolderUseChild();
+            CreateAnimationClip();
+            CreateAnimationClip();
+            var fileCountInFolder = Directory.GetFiles(_folderPath).Length;
+            Assert.AreEqual(true, IsFileInPath("anim"));
+            Assert.AreEqual(2, fileCountInFolder);
+            DeleteUnityFolderUseChild();
+        }
 
 
         private void CreateAnimationClip() => UnityFileUtility.CreateAnimationClip(_childPath, _fileName);

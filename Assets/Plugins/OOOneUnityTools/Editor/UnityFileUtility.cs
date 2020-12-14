@@ -47,6 +47,16 @@ namespace Plugins.OOOneUnityTools.Editor
             AssetDatabase.CreateAsset(overrideController, path);
         }
 
+        public static void CreatePng(string childPath, string fileName)
+        {
+            if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
+            var path = GetFullPath(childPath) + @"\" + fileName + ".png";
+            var texture2D = Texture2D.blackTexture;
+            byte[] bytes = texture2D.EncodeToPNG();
+            File.WriteAllBytes(path, bytes);
+            RefreshAsset();
+        }
+
         private static string GetExtensionPath(string childPath, string fileName, string extension)
         {
             var path = $"Assets/{childPath}/{fileName}.{extension}";
@@ -55,6 +65,7 @@ namespace Plugins.OOOneUnityTools.Editor
 
 
         private static string GetAssetsPath(string childPath) => "Assets/" + childPath;
+
         private static void RefreshAsset() => AssetDatabase.Refresh();
 
         private static string GetFullPath(string path)
@@ -66,16 +77,6 @@ namespace Plugins.OOOneUnityTools.Editor
         public static bool IsUnityFolderExist(string childPath)
         {
             return CSharpFileUtility.IsFolderExist("Assets/" + childPath);
-        }
-
-        public static void CreatePng(string childPath, string fileName)
-        {
-            if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
-            var path = GetFullPath(childPath) + @"\" + fileName + ".png";
-            var texture2D = Texture2D.blackTexture;
-            byte[] bytes = texture2D.EncodeToPNG();
-            File.WriteAllBytes(path, bytes);
-            RefreshAsset();
         }
     }
 }
