@@ -39,21 +39,11 @@ public class StringInList : PropertyAttribute
     {
         get
         {
-            if (_list != null)
-                return _list;
-
+            if (_list != null) return _list;
             var method = _type.GetMethod(_methodName);
-
-            if (method != null)
-            {
-                // List = method.Invoke(null , null) as string[];
-            }
-            else
-            {
-                Debug.LogError("NO SUCH METHOD " + _methodName + " FOR " + _type);
-            }
-
-            return method.Invoke(null , null) as string[];
+            if (method != null) return method.Invoke(null , null) as string[];
+            Debug.LogError("NO SUCH METHOD " + _methodName + " FOR " + _type);
+            return null;
         }
         set => _list = value;
     }
