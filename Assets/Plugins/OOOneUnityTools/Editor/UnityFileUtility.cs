@@ -58,9 +58,9 @@ namespace Plugins.OOOneUnityTools.Editor
 
         private static void CreateUnityAsset(string childPath, string fileName, Type type, string extension)
         {
-            Object overrideController = (Object) Activator.CreateInstance(type);
+            Object instance = (Object) Activator.CreateInstance(type);
             var path = GetExtensionPath(childPath, fileName, extension);
-            AssetDatabase.CreateAsset(overrideController, path);
+            AssetDatabase.CreateAsset(instance, path);
         }
 
         public static void CreatePng(string childPath, string fileName)

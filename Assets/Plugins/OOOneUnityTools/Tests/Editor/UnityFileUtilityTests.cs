@@ -143,6 +143,7 @@ namespace OOOneTools.Editor.Tests
             DeleteUnityFolderUseChild();
         }
 
+
         private string GetUnityFullPath(string folderPath, string fileName, object extension)
         {
             return _folderPath + "/" + _fileName + "." +extension;
