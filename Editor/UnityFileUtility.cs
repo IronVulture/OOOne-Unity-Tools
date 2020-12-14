@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using NUnit.Framework;
 using OOOneTools.Editor;
 using UnityEditor;
 using UnityEngine;
@@ -26,11 +27,21 @@ namespace Plugins.OOOneUnityTools.Editor
             RefreshAsset();
         }
 
-        public static void CreateAnimationClip(string childPath, string fileName)
+        public static bool TryCreateAnimationClip(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
-            CreateUnityAsset(childPath, fileName, typeof(AnimationClip), "anim");
-            RefreshAsset();
+            var csharpFolderPath = CSharpFileUtility.ParseSlashToCsharp(Application.dataPath + "/" + childPath);
+            if (CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "anim"))
+            {
+                return false;
+            }
+            else
+            {
+                CreateUnityAsset(childPath, fileName, typeof(AnimationClip), "anim");
+                RefreshAsset();
+                return true;
+            }
+
         }
 
         public static void CreateAnimationOverride(string childPath, string fileName)
