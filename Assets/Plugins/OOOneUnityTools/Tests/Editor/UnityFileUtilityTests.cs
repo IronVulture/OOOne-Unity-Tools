@@ -108,10 +108,14 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             CreateAnimationClip();
+            string path = _folderPath + "/" + _fileName + "anim";
+            var oldModifyTime = File.GetCreationTime(path);
             CreateAnimationClip();
+            var newModifyTime = File.GetCreationTime(path);
             var fileCountInFolder = Directory.GetFiles(_folderPath).Length;
             Assert.AreEqual(true, IsFileInPath("anim"));
             Assert.AreEqual(2, fileCountInFolder);
+            Assert.AreEqual(oldModifyTime, newModifyTime);
             DeleteUnityFolderUseChild();
         }
 
