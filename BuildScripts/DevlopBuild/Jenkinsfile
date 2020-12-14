@@ -28,18 +28,18 @@ pipeline {
     }
     stage('Run Unit Tests') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -buildTarget $PLATFORM -runEditorTests"
+        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE/$PROJECT -buildTarget $PLATFORM -runEditorTests"
       }
     }
     stage('Build') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath=$PROJECT -buildTarget $PLATFORM -quit -buildWindows64Player=$OUTPUT"
+        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE/$PROJECT -buildTarget $PLATFORM -quit -buildWindows64Player=$OUTPUT"
       }
     }
 
     stage('NS_Build') {
       steps {
-        bat "$UNITY -batchmode -logFile - -projectPath -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit "
+        bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE/$PROJECT -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit "
       }
     }
   }
