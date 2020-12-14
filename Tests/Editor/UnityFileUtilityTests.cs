@@ -172,6 +172,13 @@ namespace OOOneTools.Editor.Tests
             Assert.AreEqual( "Assets" , result  );
         }
 
+        [Test]
+        public void GetUnityAbsolutePath()
+        {
+            var result = UnityFileUtility.GetAbsolutePath();
+            Assert.AreEqual( Application.dataPath , result  );
+        }
+
         #endregion
 
         #region Public Methods
