@@ -1,19 +1,15 @@
-using System;
 using System.IO;
 
 namespace OOOneTools.Editor
 {
     public class CSharpFileUtility
     {
-        public static bool IsFolderExist(string folderPath)
-        {
-            string newFolderPath = ParseSlashToCsharp(folderPath);
-            return Directory.Exists(newFolderPath);
-        }
+        #region Public Methods
 
-        public static string ParseSlashToCsharp(string beforeParse)
+        public static string GetFullPath(string fileName, string FileExtension, string newFolderPath)
         {
-            return beforeParse.Replace("/", @"\");
+            var fullPath = newFolderPath + @"\" + fileName + "." + FileExtension;
+            return fullPath;
         }
 
         public static bool IsFileInPath(string folderPath, string fileName, string FileExtension)
@@ -24,10 +20,17 @@ namespace OOOneTools.Editor
             return fileExists;
         }
 
-        public static string GetFullPath(string fileName, string FileExtension, string newFolderPath)
+        public static bool IsFolderExist(string folderPath)
         {
-            var fullPath = newFolderPath + @"\" + fileName + "." + FileExtension;
-            return fullPath;
+            var newFolderPath = ParseSlashToCsharp(folderPath);
+            return Directory.Exists(newFolderPath);
         }
+
+        public static string ParseSlashToCsharp(string beforeParse)
+        {
+            return beforeParse.Replace("/", @"\");
+        }
+
+        #endregion
     }
 }
