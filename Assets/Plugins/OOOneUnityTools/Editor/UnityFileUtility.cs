@@ -37,7 +37,6 @@ namespace Plugins.OOOneUnityTools.Editor
             CreateUnityAsset(childPath, fileName, typeof(AnimationClip), "anim");
             RefreshAsset();
             return true;
-
         }
 
         public static bool TryCreateAnimationOverride(string childPath, string fileName)
@@ -50,7 +49,6 @@ namespace Plugins.OOOneUnityTools.Editor
             CreateUnityAsset(childPath, fileName, typeof(AnimatorOverrideController), "overrideController");
             RefreshAsset();
             return true;
-
         }
 
         private static string ParseChildPathToCsharpFolderPath(string childPath)
