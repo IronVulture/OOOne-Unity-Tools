@@ -10,6 +10,9 @@ namespace OOOneTools.Editor.Tests
         private string _childPath;
         private string _fileName;
         private string _folderPath;
+        private string _anime_extension;
+        private string _override_extension;
+        private string _png_extension;
 
         [SetUp]
         public void SetUp()
@@ -17,6 +20,9 @@ namespace OOOneTools.Editor.Tests
             _childPath = "QWERT";
             _fileName = "WEjhdfjgh";
             _folderPath = $@"{Application.dataPath}\{_childPath}";
+            _anime_extension = "anim";
+            _override_extension = "overrideController";
+            _png_extension = "png";
         }
 
         [Test]
@@ -56,7 +62,7 @@ namespace OOOneTools.Editor.Tests
         public void CreateAnimationOverrideIfFolderNoExists()
         {
             CreateAnimationOverride();
-            Assert.AreEqual(true, IsFileInPath("overrideController"));
+            Assert.AreEqual(true, IsFileInPath(_override_extension));
             DeleteUnityFolderUseChild();
         }
 
@@ -65,7 +71,7 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             CreateAnimationOverride();
-            Assert.AreEqual(true, IsFileInPath("overrideController"));
+            Assert.AreEqual(true, IsFileInPath(_override_extension));
             DeleteUnityFolderUseChild();
         }
 
@@ -73,7 +79,7 @@ namespace OOOneTools.Editor.Tests
         public void CreateAnimationClipIfFolderNoExists()
         {
             CreateAnimationClip();
-            Assert.AreEqual(true, IsFileInPath("anim"));
+            Assert.AreEqual(true, IsFileInPath(_anime_extension));
             DeleteUnityFolderUseChild();
         }
 
@@ -82,7 +88,7 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             CreateAnimationClip();
-            Assert.AreEqual(true, IsFileInPath("anim"));
+            Assert.AreEqual(true, IsFileInPath(_anime_extension));
             DeleteUnityFolderUseChild();
         }
 
@@ -90,7 +96,7 @@ namespace OOOneTools.Editor.Tests
         public void CreatePngIfFolderNoExists()
         {
             UnityFileUtility.CreatePng(_childPath, _fileName);
-            Assert.AreEqual(true, IsFileInPath("png"));
+            Assert.AreEqual(true, IsFileInPath(_png_extension));
             DeleteUnityFolderUseChild();
         }
 
@@ -99,7 +105,7 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             UnityFileUtility.CreatePng(_childPath, _fileName);
-            Assert.AreEqual(true, IsFileInPath("png"));
+            Assert.AreEqual(true, IsFileInPath(_png_extension));
             DeleteUnityFolderUseChild();
         }
 
@@ -108,12 +114,12 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             CreateAnimationClip();
-            string path = _folderPath + "/" + _fileName + "anim";
+            string path = GetUnityFullPath(_folderPath, _fileName, _anime_extension);
             var oldModifyTime = File.GetCreationTime(path);
             var IsFileCreateSuccess = CreateAnimationClip();
             var newModifyTime = File.GetCreationTime(path);
             var fileCountInFolder = Directory.GetFiles(_folderPath).Length;
-            Assert.AreEqual(true, IsFileInPath("anim"));
+            Assert.AreEqual(true, IsFileInPath(_anime_extension));
             Assert.AreEqual(2, fileCountInFolder);
             Assert.AreEqual(oldModifyTime, newModifyTime);
             Assert.AreEqual(false, IsFileCreateSuccess);
@@ -125,16 +131,21 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             CreateAnimationOverride();
-            string path = _folderPath + "/" + _fileName + "overrideController";
+            string path = GetUnityFullPath(_folderPath, _fileName, _override_extension);
             var oldModifyTime = File.GetCreationTime(path);
             var IsFileCreateSuccess = CreateAnimationOverride();
             var newModifyTime = File.GetCreationTime(path);
             var fileCountInFolder = Directory.GetFiles(_folderPath).Length;
-            Assert.AreEqual(true, IsFileInPath("overrideController"));
+            Assert.AreEqual(true, IsFileInPath(_override_extension));
             Assert.AreEqual(2, fileCountInFolder);
             Assert.AreEqual(oldModifyTime, newModifyTime);
             Assert.AreEqual(false, IsFileCreateSuccess);
             DeleteUnityFolderUseChild();
+        }
+
+        private string GetUnityFullPath(string folderPath, string fileName, object extension)
+        {
+            return _folderPath + "/" + _fileName + "." +extension;
         }
 
         private bool CreateAnimationClip() => UnityFileUtility.TryCreateAnimationClip(_childPath, _fileName);
