@@ -31,7 +31,7 @@ pipeline {
         bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE -runEditorTests -quit"
       }
     }
-    stage('Build') {
+    stage('Win64_Build') {
       steps {
         bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE -buildTarget $PLATFORM -quit -buildWindows64Player=$OUTPUT"
       }
