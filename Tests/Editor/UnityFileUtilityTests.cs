@@ -116,13 +116,13 @@ namespace OOOneTools.Editor.Tests
             CreateAnimationClip();
             string path = GetUnityFullPath(_folderPath, _fileName, _anime_extension);
             var oldModifyTime = File.GetCreationTime(path);
-            var IsFileCreateSuccess = CreateAnimationClip();
+            var isFileCreateSuccess = CreateAnimationClip();
             var newModifyTime = File.GetCreationTime(path);
             var fileCountInFolder = Directory.GetFiles(_folderPath).Length;
             Assert.AreEqual(true, IsFileInPath(_anime_extension));
             Assert.AreEqual(2, fileCountInFolder);
             Assert.AreEqual(oldModifyTime, newModifyTime);
-            Assert.AreEqual(false, IsFileCreateSuccess);
+            Assert.AreEqual(false, isFileCreateSuccess);
             DeleteUnityFolderUseChild();
         }
 
@@ -133,13 +133,13 @@ namespace OOOneTools.Editor.Tests
             CreateAnimationOverride();
             string path = GetUnityFullPath(_folderPath, _fileName, _override_extension);
             var oldModifyTime = File.GetCreationTime(path);
-            var IsFileCreateSuccess = CreateAnimationOverride();
+            var isFileCreateSuccess = CreateAnimationOverride();
             var newModifyTime = File.GetCreationTime(path);
             var fileCountInFolder = Directory.GetFiles(_folderPath).Length;
             Assert.AreEqual(true, IsFileInPath(_override_extension));
             Assert.AreEqual(2, fileCountInFolder);
             Assert.AreEqual(oldModifyTime, newModifyTime);
-            Assert.AreEqual(false, IsFileCreateSuccess);
+            Assert.AreEqual(false, isFileCreateSuccess);
             DeleteUnityFolderUseChild();
         }
 
