@@ -39,7 +39,7 @@ namespace OOOneTools.Editor.Tests
         public void CreateUnityFolderIfNotExist()
         {
             CreateUnityFolderUseChild();
-            Assert.IsTrue(UnityFileUtility.IsUnityFolderExist(_childPath));
+            ShouldFolderExist(true, _childPath);
         }
 
         [Test]
@@ -47,14 +47,14 @@ namespace OOOneTools.Editor.Tests
         {
             var path = _childPath + "/" + _childPath;
             UnityFileUtility.CreateUnityFolder(path);
-            Assert.IsTrue(UnityFileUtility.IsUnityFolderExist(path));
+            ShouldFolderExist(true, path);
         }
 
         [Test]
         public void DontCreateFolderIfExist()
         {
             CreateUnityFolderUseChild();
-            Assert.IsFalse(UnityFileUtility.IsUnityFolderExist(_childPath + " 1"));
+            ShouldFolderExist(false, _childPath + " 1");
         }
 
         [Test]
@@ -62,7 +62,7 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             DeleteUnityFolderUseChild();
-            Assert.AreEqual(false, UnityFileUtility.IsUnityFolderExist(_childPath));
+            ShouldFolderExist(false, _childPath);
         }
 
         [Test]
@@ -190,6 +190,11 @@ namespace OOOneTools.Editor.Tests
         private void ShouldFileInPath(string overrideExtension)
         {
             Assert.AreEqual(true, IsFileInPath(overrideExtension));
+        }
+
+        private void ShouldFolderExist(bool expected, string path)
+        {
+            Assert.AreEqual(expected, UnityFileUtility.IsUnityFolderExist(path));
         }
 
         private void ShouldPngInPath()
