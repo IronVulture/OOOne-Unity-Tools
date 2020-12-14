@@ -97,9 +97,7 @@ namespace Plugins.OOOneUnityTools.Editor
 
         public static string GetUnityFullPath(string childPath, string fileName, string extension)
         {
-            var path1 = CombineUnityPath(GetUnityFolderPath(childPath), fileName);
-            var unityFullPath = $"{path1}.{extension}";
-            return unityFullPath;
+            return CombineUnityFullPath(childPath, fileName, extension);
         }
 
         public static string GetUnityPath()
@@ -152,6 +150,13 @@ namespace Plugins.OOOneUnityTools.Editor
         #endregion
 
         #region Private Methods
+
+        private static string CombineUnityFullPath(string childPath, string fileName, string extension)
+        {
+            var path = CombineUnityPath(GetUnityFolderPath(childPath), fileName);
+            var unityFullPath = $"{path}.{extension}";
+            return unityFullPath;
+        }
 
         private static string CombineUnityPath(string basePath, string childPath)
         {
