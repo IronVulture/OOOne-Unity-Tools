@@ -186,6 +186,7 @@ namespace OOOneTools.Editor.Tests
         [Test]
         public void GetUnityAbsoluteFolderPath()
         {
+            ShouldEqualResult($"{Application.dataPath}/{_childPath}", UnityFileUtility.GetUnityAbsoluteFolderPath(_childPath));
         }
 
         #endregion
