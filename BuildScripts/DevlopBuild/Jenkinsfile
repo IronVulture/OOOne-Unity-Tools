@@ -31,7 +31,7 @@ pipeline {
         bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE -runEditorTests -quit"
       }
     }
-    stage('Build') {
+    stage('Win64_Build') {
       steps {
         bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE -buildTarget $PLATFORM -quit -buildWindows64Player=$OUTPUT"
       }
@@ -41,6 +41,10 @@ pipeline {
       steps {
         bat "$UNITY -batchmode -logFile - -projectPath=$WORKSPACE -executeMethod OOOneBuild.AutoBuildScript.BuildGame -quit "
       }
+    }
+    post {
+      always {
+        discordSend description: 'OOOneUnityTools_Win_Switch Build', footer: 'Jenkins 2.263.1', link: env.BUILD_URL, result: currentBuild.currentResult, unstable: false, title: OOOneUnityTools_Win_Switch, webhookURL: 'https://discordapp.com/api/webhooks/788020632562302977/MMKmpKHvYt87lAhubWz4eRSumUkQgsrKeh_H3XfF3wJB9PZpCmV9H8xd-pdlfW4p_Mdg'
     }
   }
 }
