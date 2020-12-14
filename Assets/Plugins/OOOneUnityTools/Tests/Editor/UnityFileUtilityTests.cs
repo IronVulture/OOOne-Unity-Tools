@@ -143,6 +143,23 @@ namespace OOOneTools.Editor.Tests
             DeleteUnityFolderUseChild();
         }
 
+        [Test]
+        public void NotCreatePngIfFileAndFolderExist()
+        {
+            CreateUnityFolderUseChild();
+            UnityFileUtility.CreatePng(_childPath, _fileName);
+            string path = GetUnityFullPath(_folderPath, _fileName, _png_extension);
+            var oldModifyTime = File.GetCreationTime(path);
+            var isFileCreateSuccess = UnityFileUtility.CreatePng(_childPath, _fileName);
+            var newModifyTime = File.GetCreationTime(path);
+            var fileCountInFolder = Directory.GetFiles(_folderPath).Length;
+            Assert.AreEqual(true, IsFileInPath(_png_extension));
+            Assert.AreEqual(2, fileCountInFolder);
+            Assert.AreEqual(oldModifyTime, newModifyTime);
+            Assert.AreEqual(false, isFileCreateSuccess);
+            DeleteUnityFolderUseChild();
+        }
+
 
         private string GetUnityFullPath(string folderPath, string fileName, object extension)
         {

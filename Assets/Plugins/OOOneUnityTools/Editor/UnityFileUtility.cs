@@ -33,7 +33,6 @@ namespace Plugins.OOOneUnityTools.Editor
             var csharpFolderPath = ParseChildPathToCsharpFolderPath(childPath);
             if (CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "anim"))
                 return false;
-
             CreateUnityAsset(childPath, fileName, typeof(AnimationClip), "anim");
             RefreshAsset();
             return true;
@@ -45,7 +44,6 @@ namespace Plugins.OOOneUnityTools.Editor
             var csharpFolderPath = ParseChildPathToCsharpFolderPath(childPath);
             if (CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "overrideController"))
                 return false;
-
             CreateUnityAsset(childPath, fileName, typeof(AnimatorOverrideController), "overrideController");
             RefreshAsset();
             return true;
@@ -63,14 +61,18 @@ namespace Plugins.OOOneUnityTools.Editor
             AssetDatabase.CreateAsset(instance, path);
         }
 
-        public static void CreatePng(string childPath, string fileName)
+        public static bool CreatePng(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
+            var csharpFolderPath = ParseChildPathToCsharpFolderPath(childPath);
+            if (CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "png"))
+                return false;
             var path = GetFullPath(childPath) + @"\" + fileName + ".png";
             var texture2D = Texture2D.blackTexture;
             byte[] bytes = texture2D.EncodeToPNG();
             File.WriteAllBytes(path, bytes);
             RefreshAsset();
+            return true;
         }
 
         private static string GetExtensionPath(string childPath, string fileName, string extension)
