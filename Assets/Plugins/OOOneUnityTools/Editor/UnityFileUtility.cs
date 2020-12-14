@@ -26,6 +26,8 @@ namespace Plugins.OOOneUnityTools.Editor
             {FileType.AnimatorOverride, "overrideController"},
         };
 
+        private static string UnityAbsolutePath = Application.dataPath;
+
         private const string UnityPath = "Assets";
 
         #endregion
@@ -161,5 +163,10 @@ namespace Plugins.OOOneUnityTools.Editor
         private static void RefreshAsset() => AssetDatabase.Refresh();
 
         #endregion
+
+        public static string GetAbsolutePath()
+        {
+            return UnityAbsolutePath;
+        }
     }
 }
