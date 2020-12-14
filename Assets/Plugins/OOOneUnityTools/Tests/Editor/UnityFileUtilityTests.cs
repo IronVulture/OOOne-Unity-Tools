@@ -95,7 +95,7 @@ namespace OOOneTools.Editor.Tests
         [Test]
         public void CreatePngIfFolderNoExists()
         {
-            UnityFileUtility.TryCreatePng(_childPath, _fileName);
+            UnityFileUtility.CreatePng(_childPath, _fileName);
             Assert.AreEqual(true, IsFileInPath(_png_extension));
             DeleteUnityFolderUseChild();
         }
@@ -104,7 +104,7 @@ namespace OOOneTools.Editor.Tests
         public void CreatePngIfFolderExists()
         {
             CreateUnityFolderUseChild();
-            UnityFileUtility.TryCreatePng(_childPath, _fileName);
+            UnityFileUtility.CreatePng(_childPath, _fileName);
             Assert.AreEqual(true, IsFileInPath(_png_extension));
             DeleteUnityFolderUseChild();
         }

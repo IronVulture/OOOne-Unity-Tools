@@ -60,6 +60,16 @@ namespace Plugins.OOOneUnityTools.Editor
             AssetDatabase.CreateAsset(instance, path);
         }
 
+        public static void CreatePng(string childPath, string fileName)
+        {
+            if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
+            var path = GetFullPath(childPath) + @"\" + fileName + ".png";
+            var texture2D = Texture2D.blackTexture;
+            byte[] bytes = texture2D.EncodeToPNG();
+            File.WriteAllBytes(path, bytes);
+            RefreshAsset();
+        }
+
         public static bool TryCreatePng(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
