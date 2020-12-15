@@ -165,47 +165,6 @@ namespace OOOneTools.Editor.Tests
             Assert.AreEqual(false, isFileCreateSuccess);
         }
 
-        [Test]
-        public void GetUnityPath()
-        {
-            ShouldEqualResult("Assets", UnityFileUtility.GetUnityPath());
-        }
-
-        [Test]
-        public void GetUnityAbsolutePath()
-        {
-            ShouldEqualResult(Application.dataPath, UnityFileUtility.GetAbsolutePath());
-        }
-
-        [Test]
-        public void GetUnityFolderPath()
-        {
-            ShouldEqualResult("Assets/" + _childPath, UnityFileUtility.GetUnityFolderPath(_childPath));
-        }
-
-        [Test]
-        public void GetUnityAbsoluteFolderPath()
-        {
-            ShouldEqualResult($"{Application.dataPath}/{_childPath}",
-                UnityFileUtility.GetUnityAbsoluteFolderPath(_childPath));
-        }
-
-        [Test]
-        public void GetUnityFullPath()
-        {
-            var extension = "overrideController";
-            var expected = $"Assets/{_childPath}/{_fileName}.{extension}";
-            ShouldEqualResult(expected, UnityFileUtility.GetUnityFullPath(_childPath, _fileName, extension));
-        }
-
-        [Test]
-        public void GetUnityAbsoluteFullPath()
-        {
-            var extension = "overrideController";
-            var expected = $"{Application.dataPath}/{_childPath}/{_fileName}.{extension}";
-            ShouldEqualResult(expected, UnityFileUtility.GetUnityAbsoluteFullPath(_childPath, _fileName, extension));
-        }
-
         #endregion
 
         #region Public Methods
@@ -238,7 +197,7 @@ namespace OOOneTools.Editor.Tests
         private bool IsFileInPath(string fileExtension) =>
             CSharpFileUtility.IsFileInPath(_unityFullFolderPath, _fileName, fileExtension);
 
-        private static void ShouldEqualResult(string expected, string result)
+        public static void ShouldEqualResult(string expected, string result)
         {
             Assert.AreEqual(expected, result);
         }
