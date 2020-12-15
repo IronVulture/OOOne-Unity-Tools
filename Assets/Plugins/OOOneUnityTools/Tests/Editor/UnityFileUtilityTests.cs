@@ -96,7 +96,7 @@ namespace OOOneTools.Editor.Tests
         {
             var extension = UnityFileUtility.GetExtension(fileType);
             var cSharpFullPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, extension);
-            Assert.AreEqual(true , ModifyTimeIsEqual(fileType, cSharpFullPath));
+            Assert.AreEqual(true, NotCreateWhenFileExist(fileType, cSharpFullPath));
             ShouldFileInPath(fileType, true);
         }
 
@@ -119,12 +119,9 @@ namespace OOOneTools.Editor.Tests
 
         #region Private Methods
 
-
-
-
-        private void CreateAssetFileWithType(UnityFileUtility.FileType fileType)
+        private bool CreateAssetFileWithType(UnityFileUtility.FileType fileType)
         {
-            UnityFileUtility.CreateAssetFile(fileType, _childPath, _fileName);
+            return UnityFileUtility.CreateAssetFile(fileType, _childPath, _fileName);
         }
 
         private void CreateUnityFolderUseChild()
@@ -147,14 +144,14 @@ namespace OOOneTools.Editor.Tests
             return CSharpFileUtility.IsFileInPath(_unityFullFolderPath, _fileName, fileExtension);
         }
 
-        private bool ModifyTimeIsEqual(UnityFileUtility.FileType fileType, string cSharpFullPath)
+        private bool NotCreateWhenFileExist(UnityFileUtility.FileType fileType, string cSharpFullPath)
         {
             CreateAssetFileWithType(fileType);
             var modifyTimeBefore = File.GetLastWriteTime(cSharpFullPath);
-            CreateAssetFileWithType(fileType);
+            var isCreated = CreateAssetFileWithType(fileType);
             var modifyTimeAfter = File.GetLastWriteTime(cSharpFullPath);
             var modifyTimeIsEqual = modifyTimeAfter == modifyTimeBefore;
-            return modifyTimeIsEqual;
+            return modifyTimeIsEqual && isCreated == false;
         }
 
         private void ShouldFileCountCorrect()
