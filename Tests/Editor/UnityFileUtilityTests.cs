@@ -117,7 +117,7 @@ namespace OOOneTools.Editor.Tests
         public void Create_CustomFile_If_Folder_Exist(UnityFileUtility.FileType fileType)
         {
             CreateUnityFolderUseChild();
-            UnityFileUtility.CreateAssetFile(fileType , _childPath , _fileName);
+            CreateAssetFileWithType(fileType);
             ShouldFileInPath(fileType , true);
         }
 
@@ -128,13 +128,18 @@ namespace OOOneTools.Editor.Tests
         public void Create_CustomFile_If_Folder_Not_Exist(UnityFileUtility.FileType fileType)
         {
             ShouldFileInPath(fileType , false);
-            UnityFileUtility.CreateAssetFile(fileType , _childPath , _fileName);
+            CreateAssetFileWithType(fileType);
             ShouldFileInPath(fileType , true);
         }
 
     #endregion
 
     #region Public Methods
+
+        public static void ShouldEqualResult(string expected , string result)
+        {
+            Assert.AreEqual(expected , result);
+        }
 
         [TearDown]
         public void TearDown()
@@ -146,27 +151,44 @@ namespace OOOneTools.Editor.Tests
 
     #region Private Methods
 
-        private bool CreateAnimationClip() => UnityFileUtility.TryCreateAnimationClip(_childPath , _fileName);
+        private bool CreateAnimationClip()
+        {
+            return UnityFileUtility.TryCreateAnimationClip(_childPath , _fileName);
+        }
 
         private bool CreateAnimatorOverride()
         {
             return UnityFileUtility.TryCreateAnimatorOverride(_childPath , _fileName);
         }
 
-        private void CreatePng() => UnityFileUtility.CreatePng(_childPath , _fileName);
-
-        private void CreateUnityFolderUseChild() => UnityFileUtility.CreateUnityFolder(_childPath);
-
-        private void DeleteUnityFolderUseChild() => UnityFileUtility.DeleteUnityFolder(_childPath);
-
-        private string GetUnityFullPath(string extension) => _unityFullFolderPath + "/" + _fileName + "." + extension;
-
-        private bool IsFileInPath(string fileExtension) =>
-            CSharpFileUtility.IsFileInPath(_unityFullFolderPath , _fileName , fileExtension);
-
-        public static void ShouldEqualResult(string expected , string result)
+        private void CreateAssetFileWithType(UnityFileUtility.FileType fileType)
         {
-            Assert.AreEqual(expected , result);
+            UnityFileUtility.CreateAssetFile(fileType , _childPath , _fileName);
+        }
+
+        private void CreatePng()
+        {
+            UnityFileUtility.CreatePng(_childPath , _fileName);
+        }
+
+        private void CreateUnityFolderUseChild()
+        {
+            UnityFileUtility.CreateUnityFolder(_childPath);
+        }
+
+        private void DeleteUnityFolderUseChild()
+        {
+            UnityFileUtility.DeleteUnityFolder(_childPath);
+        }
+
+        private string GetUnityFullPath(string extension)
+        {
+            return _unityFullFolderPath + "/" + _fileName + "." + extension;
+        }
+
+        private bool IsFileInPath(string fileExtension)
+        {
+            return CSharpFileUtility.IsFileInPath(_unityFullFolderPath , _fileName , fileExtension);
         }
 
         private void ShouldFileCountCorrect()
