@@ -119,15 +119,13 @@ namespace OOOneTools.Editor.Tests
 
         [Test]
         [TestCase(UnityFileUtility.FileType.AnimatorOverride)]
+        [TestCase(UnityFileUtility.FileType.AnimationClip)]
+        [TestCase(UnityFileUtility.FileType.Png)]
         public void Dont_Create_CustomFile_If_File_Exist(UnityFileUtility.FileType fileType)
         {
-            CreateAssetFileWithType(fileType);
             var extension = UnityFileUtility.GetExtension(fileType);
             var cSharpFullPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, extension);
-            var modifyTimeBefore = File.GetLastWriteTime(cSharpFullPath);
-            CreateAssetFileWithType(fileType);
-            var modifyTimeAfter = File.GetLastWriteTime(cSharpFullPath);
-            Assert.AreEqual(modifyTimeBefore, modifyTimeAfter);
+            Assert.AreEqual(true , ModifyTimeIsEqual(fileType, cSharpFullPath));
             ShouldFileInPath(fileType, true);
         }
 
@@ -188,6 +186,16 @@ namespace OOOneTools.Editor.Tests
         private bool IsFileInPath(string fileExtension)
         {
             return CSharpFileUtility.IsFileInPath(_unityFullFolderPath, _fileName, fileExtension);
+        }
+
+        private bool ModifyTimeIsEqual(UnityFileUtility.FileType fileType, string cSharpFullPath)
+        {
+            CreateAssetFileWithType(fileType);
+            var modifyTimeBefore = File.GetLastWriteTime(cSharpFullPath);
+            CreateAssetFileWithType(fileType);
+            var modifyTimeAfter = File.GetLastWriteTime(cSharpFullPath);
+            var modifyTimeIsEqual = modifyTimeAfter == modifyTimeBefore;
+            return modifyTimeIsEqual;
         }
 
         private void ShouldFileCountCorrect()
