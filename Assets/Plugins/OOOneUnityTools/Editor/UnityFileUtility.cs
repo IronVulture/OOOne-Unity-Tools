@@ -26,7 +26,7 @@ namespace Plugins.OOOneUnityTools.Editor
             {FileType.AnimatorOverride, "overrideController"},
         };
 
-        private static string UnityAbsolutePath = Application.dataPath;
+
 
         #endregion
 
@@ -34,7 +34,7 @@ namespace Plugins.OOOneUnityTools.Editor
 
         public static void CreateAssetFile(FileType fileType, string childPath, string fileName)
         {
-            var fileNotExist = IsFileInPath(GetUnityFullPath(childPath), fileName, fileType) == false;
+            var fileNotExist = IsFileInPath(UnityPathUtility.GetUnityFullPath(childPath), fileName, fileType) == false;
             if (fileNotExist)
             {
                 if (fileType == FileType.AnimatorOverride)
@@ -76,38 +76,6 @@ namespace Plugins.OOOneUnityTools.Editor
         {
             AssetDatabase.DeleteAsset(GetAssetsPath(childPath));
             RefreshAsset();
-        }
-
-        public static string GetAbsolutePath()
-        {
-            return UnityAbsolutePath;
-        }
-
-        public static string GetUnityAbsoluteFolderPath(string childPath)
-        {
-            return GetAbsolutePath() + "/" + childPath;
-        }
-
-        public static string GetUnityAbsoluteFullPath(string childPath, string fileName, string extension)
-        {
-            return CombineAbsolutePath(GetUnityAbsoluteFolderPath(childPath), fileName, extension);
-        }
-
-        public static string GetUnityFolderPath(string childPath)
-        {
-            return CombineUnityPath(GetUnityPath(), childPath);
-        }
-
-        public static string GetUnityFullPath(string childPath) => $@"{Application.dataPath}\{childPath}";
-
-        public static string GetUnityFullPath(string childPath, string fileName, string extension)
-        {
-            return CombineUnityFullPath(childPath, fileName, extension);
-        }
-
-        public static string GetUnityPath()
-        {
-            return UnityPath;
         }
 
         public static bool IsFileInPath(string unityFullFolderPath, string fileName, FileType fileType)
@@ -156,24 +124,6 @@ namespace Plugins.OOOneUnityTools.Editor
 
         #region Private Methods
 
-        private static string CombineUnityFullPath(string childPath, string fileName, string extension)
-        {
-            return CombineAbsolutePath(GetUnityFolderPath(childPath), fileName, extension);
-        }
-
-        private static string CombineAbsolutePath(string absolutePath, string fileName,
-            string extension)
-        {
-            // var path = CombineUnityPath(absolutePath, childPath);
-            var unityFullPath = $"{absolutePath}/{fileName}.{extension}";
-            return unityFullPath;
-        }
-
-        private static string CombineUnityPath(string basePath, string childPath)
-        {
-            return basePath + "/" + childPath;
-        }
-
         private static string GetAssetsPath(string childPath) => "Assets/" + childPath;
 
         private static string GetExtension(FileType fileType)
@@ -205,6 +155,5 @@ namespace Plugins.OOOneUnityTools.Editor
 
         #endregion
 
-        private const string UnityPath = "Assets";
     }
 }
