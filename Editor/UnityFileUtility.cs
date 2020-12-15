@@ -118,7 +118,7 @@ namespace Plugins.OOOneUnityTools.Editor
             return "";
         }
 
-        private static void RefreshAsset() => AssetDatabase.Refresh();
+        public static void RefreshAsset() => AssetDatabase.Refresh();
 
         #endregion
     }

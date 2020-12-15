@@ -1,6 +1,7 @@
 using System.IO;
 using NUnit.Framework;
 using Plugins.OOOneUnityTools.Editor;
+using UnityEngine;
 
 namespace OOOneTools.Editor.Tests
 {
@@ -47,13 +48,18 @@ namespace OOOneTools.Editor.Tests
             Assert.AreEqual(true, isFileInPath);
         }
 
-        // [Test]
-        // public void CopyFile_If_Folder_Exist_And_File_NotExist()
-        // {
-        //     string pathA = "";
-        //     string pathB = "";
-        //     Assert.AreEqual( true , CSharpFileUtility.IsFileAreEqual(pathA, pathB) );
-        // }
+        [Test]
+        public void CopyFile_If_Folder_Exist_And_File_NotExist()
+        {
+            UnityFileUtility.CreateUnityFolder(_childPath);
+            var sourcePath = @"C:\" + _childPath + @"\" + _fileName + ".png";
+            Debug.Log($"{sourcePath}");
+            var targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, "png");
+            Debug.Log($"{targetPath}");
+            CSharpFileUtility.CopyFile(sourcePath, targetPath);
+            Assert.AreEqual( true , CSharpFileUtility.IsFileAreEqual(sourcePath, targetPath) );
+            UnityFileUtility.DeleteUnityFolder(_childPath);
+        }
 
     }
 }

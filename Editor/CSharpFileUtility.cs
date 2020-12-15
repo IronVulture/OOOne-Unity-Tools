@@ -1,4 +1,7 @@
+using System;
 using System.IO;
+using System.Security.Cryptography;
+using Plugins.OOOneUnityTools.Editor;
 
 namespace OOOneTools.Editor
 {
@@ -35,7 +38,27 @@ namespace OOOneTools.Editor
 
         public static bool IsFileAreEqual(string pathA, string pathB)
         {
-            return false;
+            string hash;
+            string hash2;
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(pathA))
+                {
+                    hash = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
+                }
+                using (var stream = File.OpenRead(pathB))
+                {
+                    hash2 = BitConverter.ToString(md5.ComputeHash(stream)).Replace("-", "").ToLower();
+                }
+            }
+
+            return hash == hash2;
+        }
+
+        public static void CopyFile(string sourcePath, string targetPath)
+        {
+            File.Copy(sourcePath, targetPath);
+            UnityFileUtility.RefreshAsset();
         }
     }
 }
