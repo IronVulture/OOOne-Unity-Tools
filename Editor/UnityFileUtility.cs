@@ -61,7 +61,7 @@ namespace Plugins.OOOneUnityTools.Editor
         public static void CreatePng(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
-            var path = UnityPathUtility.GetUnityAbsoluteFolderPath(childPath) + @"\" + fileName + ".png";
+            var path = UnityPathUtility.GetUnityAbsoluteFullPath(childPath, fileName, GetExtension(FileType.Png));
             var texture2D = Texture2D.blackTexture;
             byte[] bytes = texture2D.EncodeToPNG();
             File.WriteAllBytes(path, bytes);
