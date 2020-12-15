@@ -46,19 +46,21 @@ namespace OOOneTools.Editor
 
         public static void CopyFile(string sourcePath, string targetPath)
         {
-            if (File.Exists(sourcePath) == false)
-            {
-                return;
-            }
+            if (File.Exists(sourcePath) == false) return;
             var directoryName = Path.GetDirectoryName(targetPath);
-            if (IsFolderExist(directoryName) == false)
-            {
-                Directory.CreateDirectory(directoryName);
-            }
+            CreateFolderIfNotExist(directoryName);
             if (IsFileAreEqual(sourcePath, targetPath) == false)
             {
                 File.Copy(sourcePath, targetPath, false);
                 UnityFileUtility.RefreshAsset();
+            }
+        }
+
+        public static void CreateFolderIfNotExist(string directoryName)
+        {
+            if (IsFolderExist(directoryName) == false)
+            {
+                Directory.CreateDirectory(directoryName);
             }
         }
     }
