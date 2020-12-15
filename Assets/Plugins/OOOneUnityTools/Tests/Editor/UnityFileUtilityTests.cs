@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using NUnit.Framework;
 using Plugins.OOOneUnityTools.Editor;
@@ -8,7 +7,7 @@ namespace OOOneTools.Editor.Tests
 {
     public class UnityFileUtilityTests
     {
-    #region Private Variables
+        #region Private Variables
 
         private string _anime_extension;
         private string _childPath;
@@ -17,30 +16,30 @@ namespace OOOneTools.Editor.Tests
         private string _png_extension;
         private string _unityFullFolderPath;
 
-    #endregion
+        #endregion
 
-    #region Setup/Teardown Methods
+        #region Setup/Teardown Methods
 
         [SetUp]
         public void SetUp()
         {
-            _childPath           = "QWERT";
-            _fileName            = "WEjhdfjgh";
+            _childPath = "QWERT";
+            _fileName = "WEjhdfjgh";
             _unityFullFolderPath = $@"{Application.dataPath}\{_childPath}";
-            _anime_extension     = "anim";
-            _override_extension  = "overrideController";
-            _png_extension       = "png";
+            _anime_extension = "anim";
+            _override_extension = "overrideController";
+            _png_extension = "png";
         }
 
-    #endregion
+        #endregion
 
-    #region Test Methods
+        #region Test Methods
 
         [Test]
         public void CreateUnityFolderIfNotExist()
         {
             CreateUnityFolderUseChild();
-            ShouldFolderExist(true , _childPath);
+            ShouldFolderExist(true, _childPath);
         }
 
         [Test]
@@ -48,14 +47,14 @@ namespace OOOneTools.Editor.Tests
         {
             var path = _childPath + "/" + _childPath;
             UnityFileUtility.CreateUnityFolder(path);
-            ShouldFolderExist(true , path);
+            ShouldFolderExist(true, path);
         }
 
         [Test]
         public void DontCreateFolderIfExist()
         {
             CreateUnityFolderUseChild();
-            ShouldFolderExist(false , _childPath + " 1");
+            ShouldFolderExist(false, _childPath + " 1");
         }
 
         [Test]
@@ -63,7 +62,7 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             DeleteUnityFolderUseChild();
-            ShouldFolderExist(false , _childPath);
+            ShouldFolderExist(false, _childPath);
         }
 
         [Test]
@@ -93,7 +92,7 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             CreateAnimationClip();
-            Assert.AreEqual(true , IsFileInPath(_anime_extension));
+            Assert.AreEqual(true, IsFileInPath(_anime_extension));
         }
 
         [Test]
@@ -104,8 +103,7 @@ namespace OOOneTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             CreateAssetFileWithType(fileType);
-            ShouldFileInPath(fileType , true);
-
+            ShouldFileInPath(fileType, true);
         }
 
         [Test]
@@ -114,9 +112,9 @@ namespace OOOneTools.Editor.Tests
         [TestCase(UnityFileUtility.FileType.Png)]
         public void Create_CustomFile_If_Folder_Not_Exist(UnityFileUtility.FileType fileType)
         {
-            ShouldFileInPath(fileType , false);
+            ShouldFileInPath(fileType, false);
             CreateAssetFileWithType(fileType);
-            ShouldFileInPath(fileType , true);
+            ShouldFileInPath(fileType, true);
         }
 
         [Test]
@@ -124,23 +122,22 @@ namespace OOOneTools.Editor.Tests
         public void Dont_Create_CustomFile_If_File_Exist(UnityFileUtility.FileType fileType)
         {
             CreateAssetFileWithType(fileType);
-            ShouldFileInPath(fileType , true);
-            string cSharpFullPath = CsharpPathUtility.GetCsharpUnityAbsoluteFolderPath(_childPath);
-            cSharpFullPath += $"{_fileName}.{UnityFileUtility.GetExtension(fileType)}";
-            DateTime modifyTimeBefore = File.GetLastWriteTime(cSharpFullPath);
+            var extension = UnityFileUtility.GetExtension(fileType);
+            var cSharpFullPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, extension);
+            var modifyTimeBefore = File.GetLastWriteTime(cSharpFullPath);
             CreateAssetFileWithType(fileType);
-            DateTime modifyTimeAfter = File.GetLastWriteTime(cSharpFullPath);
+            var modifyTimeAfter = File.GetLastWriteTime(cSharpFullPath);
             Assert.AreEqual(modifyTimeBefore, modifyTimeAfter);
-            ShouldFileInPath(fileType , true);
+            ShouldFileInPath(fileType, true);
         }
 
-    #endregion
+        #endregion
 
-    #region Public Methods
+        #region Public Methods
 
-        public static void ShouldEqualResult(string expected , string result)
+        public static void ShouldEqualResult(string expected, string result)
         {
-            Assert.AreEqual(expected , result);
+            Assert.AreEqual(expected, result);
         }
 
         [TearDown]
@@ -149,28 +146,28 @@ namespace OOOneTools.Editor.Tests
             DeleteUnityFolderUseChild();
         }
 
-    #endregion
+        #endregion
 
-    #region Private Methods
+        #region Private Methods
 
         private bool CreateAnimationClip()
         {
-            return UnityFileUtility.TryCreateAnimationClip(_childPath , _fileName);
+            return UnityFileUtility.TryCreateAnimationClip(_childPath, _fileName);
         }
 
         private bool CreateAnimatorOverride()
         {
-            return UnityFileUtility.TryCreateAnimatorOverride(_childPath , _fileName);
+            return UnityFileUtility.TryCreateAnimatorOverride(_childPath, _fileName);
         }
 
         private void CreateAssetFileWithType(UnityFileUtility.FileType fileType)
         {
-            UnityFileUtility.CreateAssetFile(fileType , _childPath , _fileName);
+            UnityFileUtility.CreateAssetFile(fileType, _childPath, _fileName);
         }
 
         private void CreatePng()
         {
-            UnityFileUtility.CreatePng(_childPath , _fileName);
+            UnityFileUtility.CreatePng(_childPath, _fileName);
         }
 
         private void CreateUnityFolderUseChild()
@@ -190,35 +187,35 @@ namespace OOOneTools.Editor.Tests
 
         private bool IsFileInPath(string fileExtension)
         {
-            return CSharpFileUtility.IsFileInPath(_unityFullFolderPath , _fileName , fileExtension);
+            return CSharpFileUtility.IsFileInPath(_unityFullFolderPath, _fileName, fileExtension);
         }
 
         private void ShouldFileCountCorrect()
         {
-            Assert.AreEqual(2 , Directory.GetFiles(_unityFullFolderPath).Length);
+            Assert.AreEqual(2, Directory.GetFiles(_unityFullFolderPath).Length);
         }
 
-        private void ShouldFileInPath(UnityFileUtility.FileType fileType , bool exist)
+        private void ShouldFileInPath(UnityFileUtility.FileType fileType, bool exist)
         {
-            var isFileInPath = UnityFileUtility.IsFileInPath(_unityFullFolderPath , _fileName , fileType);
-            Assert.AreEqual(exist , isFileInPath);
+            var isFileInPath = UnityFileUtility.IsFileInPath(_unityFullFolderPath, _fileName, fileType);
+            Assert.AreEqual(exist, isFileInPath);
         }
 
         private void ShouldFileInPath(string overrideExtension)
         {
-            Assert.AreEqual(true , IsFileInPath(overrideExtension));
+            Assert.AreEqual(true, IsFileInPath(overrideExtension));
         }
 
-        private void ShouldFolderExist(bool expected , string path)
+        private void ShouldFolderExist(bool expected, string path)
         {
-            Assert.AreEqual(expected , UnityFileUtility.IsUnityFolderExist(path));
+            Assert.AreEqual(expected, UnityFileUtility.IsUnityFolderExist(path));
         }
 
         private void ShouldPngInPath()
         {
-            Assert.AreEqual(true , IsFileInPath(_png_extension));
+            Assert.AreEqual(true, IsFileInPath(_png_extension));
         }
 
-    #endregion
+        #endregion
     }
 }
