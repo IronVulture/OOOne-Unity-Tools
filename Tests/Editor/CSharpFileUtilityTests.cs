@@ -99,6 +99,14 @@ namespace OOOneTools.Editor.Tests
             ShouldFileEqual(true);
         }
 
+        [Test]
+        public void Not_CopyFile_If_Source_Is_NotExist()
+        {
+            _sourcePath = "asdjfk";
+            CopyFile(_sourcePath, _targetPath);
+            Assert.AreEqual( false , File.Exists(_targetPath) );
+        }
+
         #endregion
 
         #region Public Methods
