@@ -47,7 +47,7 @@ namespace Plugins.OOOneUnityTools.Editor
         public static void CreatePng(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
-            var path = GetFullPath(childPath) + @"\" + fileName + ".png";
+            var path = UnityPathUtility.GetUnityAbsoluteFolderPath(childPath) + @"\" + fileName + ".png";
             var texture2D = Texture2D.blackTexture;
             byte[] bytes = texture2D.EncodeToPNG();
             File.WriteAllBytes(path, bytes);
@@ -57,13 +57,13 @@ namespace Plugins.OOOneUnityTools.Editor
         public static void CreateUnityAsset(string childPath, string fileName, Type type, string extension)
         {
             Object instance = (Object) Activator.CreateInstance(type);
-            var path = GetExtensionPath(childPath, fileName, extension);
+            var path = UnityPathUtility.GetUnityFullPath(childPath, fileName, extension);
             AssetDatabase.CreateAsset(instance, path);
         }
 
-        public static void CreateUnityFolder(string path)
+        public static void CreateUnityFolder(string childPath)
         {
-            var fullPath = GetFullPath(path);
+            var fullPath = UnityPathUtility.GetUnityAbsoluteFolderPath(childPath);
             if (CSharpFileUtility.IsFolderExist(fullPath) == false)
             {
                 Directory.CreateDirectory(fullPath);
@@ -74,7 +74,7 @@ namespace Plugins.OOOneUnityTools.Editor
 
         public static void DeleteUnityFolder(string childPath)
         {
-            AssetDatabase.DeleteAsset(GetAssetsPath(childPath));
+            AssetDatabase.DeleteAsset(UnityPathUtility.GetUnityFolderPath(childPath));
             RefreshAsset();
         }
 
@@ -92,7 +92,7 @@ namespace Plugins.OOOneUnityTools.Editor
         public static bool TryCreateAnimationClip(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
-            var csharpFolderPath = ParseChildPathToCsharpFolderPath(childPath);
+            var csharpFolderPath = CsharpPathUtility.GetCsharpUnityAbsoluteFolderPath(childPath);
             if (CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "anim"))
                 return false;
             CreateUnityAsset(childPath, fileName, typeof(AnimationClip), "anim");
@@ -103,7 +103,7 @@ namespace Plugins.OOOneUnityTools.Editor
         public static bool TryCreateAnimatorOverride(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
-            var csharpFolderPath = ParseChildPathToCsharpFolderPath(childPath);
+            var csharpFolderPath = CsharpPathUtility.GetCsharpUnityAbsoluteFolderPath(childPath);
             if (CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "overrideController"))
                 return false;
             CreateUnityAsset(childPath, fileName, typeof(AnimatorOverrideController), "overrideController");
@@ -113,7 +113,7 @@ namespace Plugins.OOOneUnityTools.Editor
 
         public static bool TryCreatePng(string childPath, string fileName)
         {
-            var csharpFolderPath = ParseChildPathToCsharpFolderPath(childPath);
+            var csharpFolderPath = CsharpPathUtility.GetCsharpUnityAbsoluteFolderPath(childPath);
             var isFileInPath = CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "png");
             var createPng = !isFileInPath;
             if (createPng) CreatePng(childPath, fileName);
@@ -124,31 +124,12 @@ namespace Plugins.OOOneUnityTools.Editor
 
         #region Private Methods
 
-        private static string GetAssetsPath(string childPath) => "Assets/" + childPath;
-
         private static string GetExtension(FileType fileType)
         {
             if (FileExtension.ContainsKey(fileType))
                 return FileExtension[fileType];
 
             return "";
-        }
-
-        private static string GetExtensionPath(string childPath, string fileName, string extension)
-        {
-            var path = $"Assets/{childPath}/{fileName}.{extension}";
-            return path;
-        }
-
-        private static string GetFullPath(string path)
-        {
-            var fullPath = $"{Application.dataPath}/{path}";
-            return fullPath;
-        }
-
-        private static string ParseChildPathToCsharpFolderPath(string childPath)
-        {
-            return CSharpFileUtility.ParseSlashToCsharp(Application.dataPath + "/" + childPath);
         }
 
         private static void RefreshAsset() => AssetDatabase.Refresh();
