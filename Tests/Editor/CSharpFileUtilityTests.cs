@@ -9,15 +9,18 @@ namespace OOOneTools.Editor.Tests
         #region Private Variables
 
         private string _beforeParsePath;
-        private string _childPath;
+        private string _sourceChildPath;
         private string _fileName;
         private string _pngExtension;
         private string _sourcePath;
         private string _sourcePathPng;
         private string _targetPath;
-        private string _whiteCatPath;
+        private string _sourceChildPath2;
         private string _targetPathJpg;
         private string _sourcePathJpg;
+        private string _jpgExtension;
+        private string _targetChildPath;
+        private string _targetChildPath2;
 
         #endregion
 
@@ -27,15 +30,17 @@ namespace OOOneTools.Editor.Tests
         public void SetUp()
         {
             _beforeParsePath = "Assets/asdfasdlfja";
-            _childPath = "asdfasdlfja";
-            _whiteCatPath = "lksdfkj";
+            _sourceChildPath = "asdfasdlfja";
+            _targetChildPath = "eedkcvjiosder";
+            _sourceChildPath2 = "lksdfkj";
             _fileName = "235432asdfasdf";
             _pngExtension = "png";
-            _sourcePath = $@"C:\{_childPath}\{_fileName}.{_pngExtension}";
-            _sourcePathPng = $@"C:\{_whiteCatPath}\{_fileName}.{_pngExtension}";
-            _sourcePathJpg = $@"C:\{_whiteCatPath}\{_fileName}.jpg";
-            _targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, _pngExtension);
-            _targetPathJpg = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, "jpg");
+            _jpgExtension = "jpg";
+            _sourcePath = $@"C:\{_sourceChildPath}\{_fileName}.{_pngExtension}";
+            _sourcePathPng = $@"C:\{_sourceChildPath2}\{_fileName}.{_pngExtension}";
+            _sourcePathJpg = $@"C:\{_sourceChildPath2}\{_fileName}.{_jpgExtension}";
+            _targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_targetChildPath, _fileName, _pngExtension);
+            _targetPathJpg = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_targetChildPath, _fileName, _jpgExtension);
         }
 
         #endregion
@@ -62,7 +67,7 @@ namespace OOOneTools.Editor.Tests
         public void IsFileInPath()
         {
             CreateFolderUseChildPath();
-            UnityFileUtility.CreateAssetFile(UnityFileUtility.FileType.Png, _childPath, _fileName);
+            UnityFileUtility.CreateAssetFile(UnityFileUtility.FileType.Png, _sourceChildPath, _fileName);
             var isFileInPath = CSharpFileUtility.IsFileInPath(_beforeParsePath, _fileName, _pngExtension);
             Assert.AreEqual(true, isFileInPath);
         }
@@ -128,12 +133,12 @@ namespace OOOneTools.Editor.Tests
 
         private void CreateFolderUseChildPath()
         {
-            Directory.CreateDirectory(UnityPathUtility.GetCsharpUnityAbsoluteFolderPath(_childPath));
+            Directory.CreateDirectory(UnityPathUtility.GetCsharpUnityAbsoluteFolderPath(_sourceChildPath));
         }
 
         private void DeleteFolderUseChildPath()
         {
-            UnityFileUtility.DeleteUnityFolder(_childPath);
+            UnityFileUtility.DeleteUnityFolder(_targetChildPath);
         }
 
         private void ShouldFileEqual(bool expected)
