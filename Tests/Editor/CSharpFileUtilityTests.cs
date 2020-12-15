@@ -92,6 +92,12 @@ namespace OOOneTools.Editor.Tests
             CopyFile(_sourcePathJpg, _targetPathJpg);
             ShouldFileEqual(true);
         }
+        [Test]
+        public void CopyFile_If_Folder_Is_NotExist()
+        {
+            CopyFile(_sourcePath, _targetPath);
+            ShouldFileEqual(true);
+        }
 
         #endregion
 

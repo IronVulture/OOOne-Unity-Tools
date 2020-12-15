@@ -23,8 +23,8 @@ namespace OOOneTools.Editor
 
         public static bool IsFolderExist(string folderPath)
         {
-            var newFolderPath = ParseSlashToCsharp(folderPath);
-            return Directory.Exists(newFolderPath);
+            var parsedFolderPath = ParseSlashToCsharp(folderPath);
+            return Directory.Exists(parsedFolderPath);
         }
 
         public static string ParseSlashToCsharp(string beforeParse)
@@ -46,6 +46,11 @@ namespace OOOneTools.Editor
 
         public static void CopyFile(string sourcePath, string targetPath)
         {
+            var directoryName = Path.GetDirectoryName(targetPath);
+            if (IsFolderExist(directoryName) == false)
+            {
+                Directory.CreateDirectory(directoryName);
+            }
             if (IsFileAreEqual(sourcePath, targetPath) == false)
             {
                 File.Copy(sourcePath, targetPath, false);
