@@ -1,3 +1,4 @@
+using OOOneTools.Editor;
 using UnityEngine;
 
 namespace Plugins.OOOneUnityTools.Editor
@@ -55,6 +56,17 @@ namespace Plugins.OOOneUnityTools.Editor
         private static string CombineUnityPath(string basePath, string childPath)
         {
             return basePath + "/" + childPath;
+        }
+
+        public static string GetCsharpUnityAbsoluteFolderPath(string childPath)
+        {
+
+            return CSharpFileUtility.ParseSlashToCsharp(GetUnityAbsoluteFolderPath(childPath));
+        }
+
+        public static string GetCsharpUnityAbsoluteFullPath(string childPath, string fileName, string extension)
+        {
+            return CSharpFileUtility.ParseSlashToCsharp(GetUnityAbsoluteFullPath(childPath, fileName, extension));
         }
     }
 }

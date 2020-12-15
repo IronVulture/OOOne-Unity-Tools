@@ -107,7 +107,7 @@ namespace Plugins.OOOneUnityTools.Editor
         public static bool TryCreateAnimationClip(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
-            var csharpFolderPath = CsharpPathUtility.GetCsharpUnityAbsoluteFolderPath(childPath);
+            var csharpFolderPath = UnityPathUtility.GetCsharpUnityAbsoluteFolderPath(childPath);
             if (CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "anim"))
                 return false;
             CreateUnityAsset(childPath, fileName, typeof(AnimationClip), "anim");
@@ -118,7 +118,7 @@ namespace Plugins.OOOneUnityTools.Editor
         public static bool TryCreateAnimatorOverride(string childPath, string fileName)
         {
             if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
-            var csharpFolderPath = CsharpPathUtility.GetCsharpUnityAbsoluteFolderPath(childPath);
+            var csharpFolderPath = UnityPathUtility.GetCsharpUnityAbsoluteFolderPath(childPath);
             if (CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "overrideController"))
                 return false;
             CreateUnityAsset(childPath, fileName, typeof(AnimatorOverrideController), "overrideController");
@@ -128,7 +128,7 @@ namespace Plugins.OOOneUnityTools.Editor
 
         public static bool TryCreatePng(string childPath, string fileName)
         {
-            var csharpFolderPath = CsharpPathUtility.GetCsharpUnityAbsoluteFolderPath(childPath);
+            var csharpFolderPath = UnityPathUtility.GetCsharpUnityAbsoluteFolderPath(childPath);
             var isFileInPath = CSharpFileUtility.IsFileInPath(csharpFolderPath, fileName, "png");
             var createPng = !isFileInPath;
             if (createPng) CreatePng(childPath, fileName);
