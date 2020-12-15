@@ -26,8 +26,6 @@ namespace Plugins.OOOneUnityTools.Editor
             {FileType.AnimatorOverride, "overrideController"},
         };
 
-
-
         #endregion
 
         #region Public Methods
@@ -135,6 +133,5 @@ namespace Plugins.OOOneUnityTools.Editor
         private static void RefreshAsset() => AssetDatabase.Refresh();
 
         #endregion
-
     }
 }
