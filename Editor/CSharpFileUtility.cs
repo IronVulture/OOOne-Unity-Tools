@@ -12,10 +12,10 @@ namespace OOOneTools.Editor
             return fullPath;
         }
 
-        public static bool IsFileInPath(string folderPath, string fileName, string FileExtension)
+        public static bool IsFileInPath(string folderPath, string fileName, string fileExtension)
         {
             var newFolderPath = ParseSlashToCsharp(folderPath);
-            var fullPath = GetFullPath(fileName, FileExtension, newFolderPath);
+            var fullPath = GetFullPath(fileName, fileExtension, newFolderPath);
             var fileExists = File.Exists(fullPath);
             return fileExists;
         }

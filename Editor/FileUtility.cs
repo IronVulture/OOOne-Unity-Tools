@@ -9,24 +9,33 @@ namespace OOOne.Tools.Editor
 {
     public class FileUtility
     {
-        
-        public static void CreatTestPngByPath(string path, string fileName)
+    #region Public Methods
+
+        public static void CreateTestTexturePreset(string presetPath , string presetFileName)
+        {
+            const string presetFileExtension = ".preset";
+            var          testTexture2D       = new Texture2D(10 , 10);
+            var          preset              = new Preset(testTexture2D);
+            AssetDatabase.CreateAsset(preset , presetPath + presetFileName + presetFileExtension);
+        }
+
+        public static void CreatTestPngByPath(string path , string fileName)
         {
             var fullPathBeforeParse = path + "/" + fileName + ".png";
-            var fullPathAfterParse = ParsePathUnityToCsharp(fullPathBeforeParse);
-            var testTexture = new Texture2D(10, 10);
+            var fullPathAfterParse  = ParsePathUnityToCsharp(fullPathBeforeParse);
+            var testTexture         = new Texture2D(10 , 10);
             testTexture.Apply();
             var Bytes = testTexture.EncodeToPNG();
-            File.WriteAllBytes(fullPathAfterParse, Bytes);
+            File.WriteAllBytes(fullPathAfterParse , Bytes);
             AssetDatabase.Refresh();
         }
 
-        public static void DeleteFileWithMetaByPath(string folderPath, string fileName, string fileExtension)
+        public static void DeleteFileWithMetaByPath(string folderPath , string fileName , string fileExtension)
         {
-            var pngPathBeforeParse = folderPath + "/" + fileName + fileExtension;
-            var pngPathAfterParse = ParsePathUnityToCsharp(pngPathBeforeParse);
+            var pngPathBeforeParse  = folderPath + "/" + fileName + fileExtension;
+            var pngPathAfterParse   = ParsePathUnityToCsharp(pngPathBeforeParse);
             var metaPathBeforeParse = folderPath + "/" + fileName + ".meta";
-            var metaPathAfterParse = ParsePathUnityToCsharp(metaPathBeforeParse);
+            var metaPathAfterParse  = ParsePathUnityToCsharp(metaPathBeforeParse);
             File.Delete(pngPathAfterParse);
             File.Delete(metaPathAfterParse);
             AssetDatabase.Refresh();
@@ -34,18 +43,11 @@ namespace OOOne.Tools.Editor
 
         public static string ParsePathUnityToCsharp(string pathBeforeParse)
         {
-            var pathAfterParse = pathBeforeParse.Replace("/", @"\");
+            var pathAfterParse = pathBeforeParse.Replace("/" , @"\");
             return pathAfterParse;
         }
 
-        public static void CreateTestTexturePreset(string presetPath, string presetFileName)
-        {
-            const string presetFileExtension = ".preset";
-            var testTexture2D = new Texture2D(10, 10);
-            var preset = new Preset(testTexture2D);
-            AssetDatabase.CreateAsset(preset, presetPath + presetFileName + presetFileExtension);
-        }
-         public bool TryGetAllOverrideControllerByFolder(string                           folderPath ,
+        public bool TryGetAllOverrideControllerByFolder(string                           folderPath ,
                                                         out AnimatorOverrideController[] animatorOverrideControllers)
         {
             var folderPathHandler = new FolderPathHandler();
@@ -55,6 +57,7 @@ namespace OOOne.Tools.Editor
             animatorOverrideControllers = new AnimatorOverrideController[3];
             return isFolderExist;
         }
+
         // https://forum.unity.com/threads/loadallassetsatpath-not-working-or-im-using-it-wrong.110326/
         /// <summary>
         /// Tries the get an asset.
@@ -65,14 +68,14 @@ namespace OOOne.Tools.Editor
         public static T TryGetAsset<T>(string optionalName = "") where T : UnityEngine.Object
         {
             // Gets all files with the Directory System.IO class
-            string[] files = Directory.GetFiles(Application.dataPath, "*.*", SearchOption.AllDirectories);
+            string[] files = Directory.GetFiles(Application.dataPath , "*.*" , SearchOption.AllDirectories);
             T        asset = null;
 
             // move through all files
             foreach (var file in files)
             {
                 // use the GetRightPartOfPath utility method to cut the path so it looks like this: Assets/folderblah
-                string path = GetRightPartOfPath(file, "Assets");
+                string path = GetRightPartOfPath(file , "Assets");
 
                 // Then I try and load the asset at the current path.
                 asset = AssetDatabase.LoadAssetAtPath<T>(path);
@@ -85,7 +88,6 @@ namespace OOOne.Tools.Editor
                     {
                         if (asset.name == optionalName)
                         {
-
                             Debug.Log("Found the database at path: " + path + "with name: " + asset.name);
                             break;
                         }
@@ -96,23 +98,29 @@ namespace OOOne.Tools.Editor
                         break;
                     }
                 }
-
             }
 
             return asset;
         }
-        private static string GetRightPartOfPath(string path, string after)
+
+    #endregion
+
+    #region Private Methods
+
+        private static string GetRightPartOfPath(string path , string after)
         {
             var parts      = path.Split(Path.DirectorySeparatorChar);
-            int afterIndex = Array.IndexOf(parts, after);
+            int afterIndex = Array.IndexOf(parts , after);
 
             if (afterIndex == -1)
             {
                 return null;
             }
 
-            return string.Join(Path.DirectorySeparatorChar.ToString(),
-                               parts, afterIndex, parts.Length - afterIndex);
+            return string.Join(Path.DirectorySeparatorChar.ToString() ,
+                               parts , afterIndex , parts.Length - afterIndex);
         }
+
+    #endregion
     }
 }
