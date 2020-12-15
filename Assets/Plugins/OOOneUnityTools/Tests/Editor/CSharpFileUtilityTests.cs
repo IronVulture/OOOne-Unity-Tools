@@ -1,16 +1,21 @@
 using System.IO;
 using NUnit.Framework;
 using Plugins.OOOneUnityTools.Editor;
-using UnityEngine;
 
 namespace OOOneTools.Editor.Tests
 {
     public class CSharpFileUtilityTests
     {
+        #region Private Variables
+
         private string _beforeParsePath;
         private string _childPath;
         private string _fileName;
+        private string _pngExtension;
 
+        #endregion
+
+        #region Setup/Teardown Methods
 
         [SetUp]
         public void SetUp()
@@ -18,16 +23,19 @@ namespace OOOneTools.Editor.Tests
             _beforeParsePath = "Assets/asdfasdlfja";
             _childPath = "asdfasdlfja";
             _fileName = "235432asdfasdf";
+            _pngExtension = "png";
         }
+
+        #endregion
+
+        #region Test Methods
 
         [Test]
         public void IsFolderExist()
         {
-
-            Directory.CreateDirectory(UnityPathUtility.GetCsharpUnityAbsoluteFolderPath(_childPath));
+            CreateFolderUseChildPath();
             var isFolderExist = CSharpFileUtility.IsFolderExist(_beforeParsePath);
             Assert.IsTrue(isFolderExist);
-            UnityFileUtility.DeleteUnityFolder(_childPath);
         }
 
         [Test]
@@ -41,25 +49,46 @@ namespace OOOneTools.Editor.Tests
         [Test]
         public void IsFileInPath()
         {
-            Directory.CreateDirectory(UnityPathUtility.GetCsharpUnityAbsoluteFolderPath(_childPath));
+            CreateFolderUseChildPath();
             UnityFileUtility.CreateAssetFile(UnityFileUtility.FileType.Png, _childPath, _fileName);
-            const string extension = "png";
-            var isFileInPath = CSharpFileUtility.IsFileInPath(_beforeParsePath, _fileName, extension);
+            var isFileInPath = CSharpFileUtility.IsFileInPath(_beforeParsePath, _fileName, _pngExtension);
             Assert.AreEqual(true, isFileInPath);
         }
 
         [Test]
         public void CopyFile_If_Folder_Exist_And_File_NotExist()
         {
-            UnityFileUtility.CreateUnityFolder(_childPath);
-            var sourcePath = @"C:\" + _childPath + @"\" + _fileName + ".png";
-            Debug.Log($"{sourcePath}");
-            var targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, "png");
-            Debug.Log($"{targetPath}");
+            CreateFolderUseChildPath();
+            var sourcePath = @"C:\" + _childPath + @"\" + _fileName + "." + _pngExtension;
+            var targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, _pngExtension);
             CSharpFileUtility.CopyFile(sourcePath, targetPath);
-            Assert.AreEqual( true , CSharpFileUtility.IsFileAreEqual(sourcePath, targetPath) );
+            Assert.AreEqual(true, CSharpFileUtility.IsFileAreEqual(sourcePath, targetPath));
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        [TearDown]
+        public void TearDown()
+        {
+            DeleteFolderUseChildPath();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void CreateFolderUseChildPath()
+        {
+            Directory.CreateDirectory(UnityPathUtility.GetCsharpUnityAbsoluteFolderPath(_childPath));
+        }
+
+        private void DeleteFolderUseChildPath()
+        {
             UnityFileUtility.DeleteUnityFolder(_childPath);
         }
 
+        #endregion
     }
 }
