@@ -79,6 +79,19 @@ namespace OOOneTools.Editor.Tests
             Assert.AreEqual(true, CSharpFileUtility.IsFileAreEqual(sourcePath, targetPath));
         }
 
+        [Test]
+        public void CopyFile_If_FileExtension_Is_Not_Same()
+        {
+            CreateFolderUseChildPath();
+            var sourcePath = @"C:\" + _childPath + @"\" + _fileName + "." + _pngExtension;
+            var targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, _pngExtension);
+            CSharpFileUtility.CopyFile(sourcePath, targetPath);
+            var targetPath2 = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, "jpg");
+            var sourcePathSecond = @"C:\" + _whiteCatPath + @"\" + _fileName + "." + "jpg";
+            CSharpFileUtility.CopyFile(sourcePathSecond, targetPath2);
+            Assert.AreEqual(true, CSharpFileUtility.IsFileAreEqual(sourcePath, targetPath));
+        }
+
         #endregion
 
         #region Public Methods
