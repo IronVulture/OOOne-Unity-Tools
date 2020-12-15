@@ -12,6 +12,7 @@ namespace OOOneTools.Editor.Tests
         private string _childPath;
         private string _fileName;
         private string _pngExtension;
+        private string _whiteCatPath;
 
         #endregion
 
@@ -22,6 +23,7 @@ namespace OOOneTools.Editor.Tests
         {
             _beforeParsePath = "Assets/asdfasdlfja";
             _childPath = "asdfasdlfja";
+            _whiteCatPath = "lksdfkj";
             _fileName = "235432asdfasdf";
             _pngExtension = "png";
         }
@@ -62,6 +64,18 @@ namespace OOOneTools.Editor.Tests
             var sourcePath = @"C:\" + _childPath + @"\" + _fileName + "." + _pngExtension;
             var targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, _pngExtension);
             CSharpFileUtility.CopyFile(sourcePath, targetPath);
+            Assert.AreEqual(true, CSharpFileUtility.IsFileAreEqual(sourcePath, targetPath));
+        }
+
+        [Test]
+        public void Dont_CopyFile_If_FileNameAndExtension_Is_Same()
+        {
+            CreateFolderUseChildPath();
+            var sourcePath = @"C:\" + _childPath + @"\" + _fileName + "." + _pngExtension;
+            var targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, _pngExtension);
+            CSharpFileUtility.CopyFile(sourcePath, targetPath);
+            var sourcePathSecond = @"C:\" + _whiteCatPath + @"\" + _fileName + "." + _pngExtension;
+            CSharpFileUtility.CopyFile(sourcePathSecond, targetPath);
             Assert.AreEqual(true, CSharpFileUtility.IsFileAreEqual(sourcePath, targetPath));
         }
 
