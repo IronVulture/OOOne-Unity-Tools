@@ -32,5 +32,10 @@ namespace OOOneTools.Editor
         }
 
         #endregion
+
+        public static bool IsFileAreEqual(string pathA, string pathB)
+        {
+            return false;
+        }
     }
 }
