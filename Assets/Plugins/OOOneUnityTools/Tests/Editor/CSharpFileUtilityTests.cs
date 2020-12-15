@@ -12,6 +12,8 @@ namespace OOOneTools.Editor.Tests
         private string _childPath;
         private string _fileName;
         private string _pngExtension;
+        private string _sourcePath;
+        private string _targetPath;
         private string _whiteCatPath;
 
         #endregion
@@ -61,10 +63,8 @@ namespace OOOneTools.Editor.Tests
         public void CopyFile_If_Folder_Exist_And_File_NotExist()
         {
             CreateFolderUseChildPath();
-            var sourcePath = @"C:\" + _childPath + @"\" + _fileName + "." + _pngExtension;
-            var targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, _pngExtension);
-            CSharpFileUtility.CopyFile(sourcePath, targetPath);
-            Assert.AreEqual(true, CSharpFileUtility.IsFileAreEqual(sourcePath, targetPath));
+            CopyFile();
+            ShouldFileEqual(true);
         }
 
         [Test]
@@ -83,9 +83,11 @@ namespace OOOneTools.Editor.Tests
         public void CopyFile_If_FileExtension_Is_Not_Same()
         {
             CreateFolderUseChildPath();
+
             var sourcePath = @"C:\" + _childPath + @"\" + _fileName + "." + _pngExtension;
             var targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, _pngExtension);
             CSharpFileUtility.CopyFile(sourcePath, targetPath);
+
             var targetPath2 = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, "jpg");
             var sourcePathSecond = @"C:\" + _whiteCatPath + @"\" + _fileName + "." + "jpg";
             CSharpFileUtility.CopyFile(sourcePathSecond, targetPath2);
@@ -106,6 +108,13 @@ namespace OOOneTools.Editor.Tests
 
         #region Private Methods
 
+        private void CopyFile()
+        {
+            _sourcePath = @"C:\" + _childPath + @"\" + _fileName + "." + _pngExtension;
+            _targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, _pngExtension);
+            CSharpFileUtility.CopyFile(_sourcePath, _targetPath);
+        }
+
         private void CreateFolderUseChildPath()
         {
             Directory.CreateDirectory(UnityPathUtility.GetCsharpUnityAbsoluteFolderPath(_childPath));
@@ -114,6 +123,11 @@ namespace OOOneTools.Editor.Tests
         private void DeleteFolderUseChildPath()
         {
             UnityFileUtility.DeleteUnityFolder(_childPath);
+        }
+
+        private void ShouldFileEqual(bool expected)
+        {
+            Assert.AreEqual(expected, CSharpFileUtility.IsFileAreEqual(_sourcePath, _targetPath));
         }
 
         #endregion
