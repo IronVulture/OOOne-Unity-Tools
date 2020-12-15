@@ -39,6 +39,7 @@ namespace Plugins.OOOneUnityTools.Editor
             var fileNotExist = IsFileInPath(UnityPathUtility.GetUnityFullPath(childPath), fileName, fileType) == false;
             if (fileNotExist)
             {
+                if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
                 switch (fileType)
                 {
                     case FileType.AnimatorOverride:
@@ -60,7 +61,6 @@ namespace Plugins.OOOneUnityTools.Editor
 
         public static void CreatePng(string childPath, string fileName)
         {
-            if (IsUnityFolderExist(childPath) == false) CreateUnityFolder(childPath);
             var path = UnityPathUtility.GetUnityAbsoluteFullPath(childPath, fileName, GetExtension(FileType.Png));
             var texture2D = Texture2D.blackTexture;
             byte[] bytes = texture2D.EncodeToPNG();
@@ -73,6 +73,7 @@ namespace Plugins.OOOneUnityTools.Editor
             Object instance = (Object) Activator.CreateInstance(type);
             var path = UnityPathUtility.GetUnityFullPath(childPath, fileName, extension);
             AssetDatabase.CreateAsset(instance, path);
+            RefreshAsset();
         }
 
         public static void CreateUnityFolder(string childPath)
