@@ -65,35 +65,6 @@ namespace OOOneTools.Editor.Tests
             ShouldFolderExist(false, _childPath);
         }
 
-        [Test]
-        public void CreateAnimationOverrideIfFolderNoExists()
-        {
-            CreateAnimatorOverride();
-            ShouldFileInPath(_override_extension);
-        }
-
-        [Test]
-        public void CreateAnimationOverrideIfFolderExists()
-        {
-            CreateUnityFolderUseChild();
-            CreateAnimatorOverride();
-            ShouldFileInPath(_override_extension);
-        }
-
-        [Test]
-        public void CreateAnimationClipIfFolderNoExists()
-        {
-            CreateAnimationClip();
-            ShouldFileInPath(_anime_extension);
-        }
-
-        [Test]
-        public void CreateAnimationClipIfFolderExists()
-        {
-            CreateUnityFolderUseChild();
-            CreateAnimationClip();
-            Assert.AreEqual(true, IsFileInPath(_anime_extension));
-        }
 
         [Test]
         [TestCase(UnityFileUtility.FileType.AnimatorOverride)]
@@ -148,24 +119,12 @@ namespace OOOneTools.Editor.Tests
 
         #region Private Methods
 
-        private bool CreateAnimationClip()
-        {
-            return UnityFileUtility.TryCreateAnimationClip(_childPath, _fileName);
-        }
 
-        private bool CreateAnimatorOverride()
-        {
-            return UnityFileUtility.TryCreateAnimatorOverride(_childPath, _fileName);
-        }
+
 
         private void CreateAssetFileWithType(UnityFileUtility.FileType fileType)
         {
             UnityFileUtility.CreateAssetFile(fileType, _childPath, _fileName);
-        }
-
-        private void CreatePng()
-        {
-            UnityFileUtility.CreatePng(_childPath, _fileName);
         }
 
         private void CreateUnityFolderUseChild()
