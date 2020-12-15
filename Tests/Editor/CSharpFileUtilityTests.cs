@@ -13,9 +13,11 @@ namespace OOOneTools.Editor.Tests
         private string _fileName;
         private string _pngExtension;
         private string _sourcePath;
-        private string _sourcePathSecond;
+        private string _sourcePathPng;
         private string _targetPath;
         private string _whiteCatPath;
+        private string _targetPathJpg;
+        private string _sourcePathJpg;
 
         #endregion
 
@@ -29,9 +31,11 @@ namespace OOOneTools.Editor.Tests
             _whiteCatPath = "lksdfkj";
             _fileName = "235432asdfasdf";
             _pngExtension = "png";
-            _sourcePath = @"C:\" + _childPath + @"\" + _fileName + "." + _pngExtension;
+            _sourcePath = $@"C:\{_childPath}\{_fileName}.{_pngExtension}";
+            _sourcePathPng = $@"C:\{_whiteCatPath}\{_fileName}.{_pngExtension}";
+            _sourcePathJpg = $@"C:\{_whiteCatPath}\{_fileName}.jpg";
             _targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, _pngExtension);
-            _sourcePathSecond = @"C:\" + _whiteCatPath + @"\" + _fileName + "." + _pngExtension;
+            _targetPathJpg = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, "jpg");
         }
 
         #endregion
@@ -76,7 +80,7 @@ namespace OOOneTools.Editor.Tests
         {
             CreateFolderUseChildPath();
             CopyFile(_sourcePath, _targetPath);
-            CopyFile(_sourcePathSecond, _targetPath);
+            CopyFile(_sourcePathPng, _targetPath);
             ShouldFileEqual(true);
         }
 
@@ -84,15 +88,9 @@ namespace OOOneTools.Editor.Tests
         public void CopyFile_If_FileExtension_Is_Not_Same()
         {
             CreateFolderUseChildPath();
-
-            var sourcePath = @"C:\" + _childPath + @"\" + _fileName + "." + _pngExtension;
-            var targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, _pngExtension);
-            CSharpFileUtility.CopyFile(sourcePath, targetPath);
-
-            var targetPath2 = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, "jpg");
-            var sourcePathSecond = @"C:\" + _whiteCatPath + @"\" + _fileName + "." + "jpg";
-            CSharpFileUtility.CopyFile(sourcePathSecond, targetPath2);
-            Assert.AreEqual(true, CSharpFileUtility.IsFileAreEqual(sourcePath, targetPath));
+            CopyFile(_sourcePath, _targetPath);
+            CopyFile(_sourcePathJpg, _targetPathJpg);
+            ShouldFileEqual(true);
         }
 
         #endregion
