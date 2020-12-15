@@ -139,7 +139,7 @@ namespace Plugins.OOOneUnityTools.Editor
 
         #region Private Methods
 
-        private static string GetExtension(FileType fileType)
+        public static string GetExtension(FileType fileType)
         {
             if (FileExtension.ContainsKey(fileType))
                 return FileExtension[fileType];

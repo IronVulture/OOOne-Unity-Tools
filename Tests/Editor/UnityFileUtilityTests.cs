@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using NUnit.Framework;
 using Plugins.OOOneUnityTools.Editor;
@@ -96,21 +97,6 @@ namespace OOOneTools.Editor.Tests
         }
 
         [Test]
-        public void CreatePngIfFolderNoExists()
-        {
-            CreatePng();
-            ShouldPngInPath();
-        }
-
-        [Test]
-        public void CreatePngIfFolderExists()
-        {
-            CreateUnityFolderUseChild();
-            CreatePng();
-            ShouldPngInPath();
-        }
-
-        [Test]
         [TestCase(UnityFileUtility.FileType.AnimatorOverride)]
         [TestCase(UnityFileUtility.FileType.AnimationClip)]
         [TestCase(UnityFileUtility.FileType.Png)]
@@ -119,6 +105,7 @@ namespace OOOneTools.Editor.Tests
             CreateUnityFolderUseChild();
             CreateAssetFileWithType(fileType);
             ShouldFileInPath(fileType , true);
+
         }
 
         [Test]
@@ -129,6 +116,21 @@ namespace OOOneTools.Editor.Tests
         {
             ShouldFileInPath(fileType , false);
             CreateAssetFileWithType(fileType);
+            ShouldFileInPath(fileType , true);
+        }
+
+        [Test]
+        [TestCase(UnityFileUtility.FileType.AnimatorOverride)]
+        public void Dont_Create_CustomFile_If_File_Exist(UnityFileUtility.FileType fileType)
+        {
+            CreateAssetFileWithType(fileType);
+            ShouldFileInPath(fileType , true);
+            string cSharpFullPath = CsharpPathUtility.GetCsharpUnityAbsoluteFolderPath(_childPath);
+            cSharpFullPath += $"{_fileName}.{UnityFileUtility.GetExtension(fileType)}";
+            DateTime modifyTimeBefore = File.GetLastWriteTime(cSharpFullPath);
+            CreateAssetFileWithType(fileType);
+            DateTime modifyTimeAfter = File.GetLastWriteTime(cSharpFullPath);
+            Assert.AreEqual(modifyTimeBefore, modifyTimeAfter);
             ShouldFileInPath(fileType , true);
         }
 
