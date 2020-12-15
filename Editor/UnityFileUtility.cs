@@ -37,12 +37,15 @@ namespace Plugins.OOOneUnityTools.Editor
             var fileNotExist = IsFileInPath(UnityPathUtility.GetUnityFullPath(childPath), fileName, fileType) == false;
             if (fileNotExist)
             {
-                if (fileType == FileType.AnimatorOverride)
-                    CreateUnityAsset(childPath, fileName, typeof(AnimatorOverrideController), GetExtension(fileType));
-
-                if (fileType == FileType.AnimationClip)
+                switch (fileType)
                 {
-                    CreateUnityAsset(childPath, fileName, typeof(AnimationClip), GetExtension(fileType));
+                    case FileType.AnimatorOverride:
+                        CreateUnityAsset(childPath, fileName, typeof(AnimatorOverrideController), GetExtension(fileType));
+                        break;
+                    case FileType.AnimationClip:
+                        CreateUnityAsset(childPath, fileName, typeof(AnimationClip), GetExtension(fileType));
+                        break;
+                    
                 }
 
                 RefreshAsset();
