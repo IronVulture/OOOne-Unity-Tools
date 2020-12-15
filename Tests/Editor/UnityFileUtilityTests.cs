@@ -134,16 +134,6 @@ namespace OOOneTools.Editor.Tests
             UnityFileUtility.DeleteUnityFolder(_childPath);
         }
 
-        private string GetUnityFullPath(string extension)
-        {
-            return _unityFullFolderPath + "/" + _fileName + "." + extension;
-        }
-
-        private bool IsFileInPath(string fileExtension)
-        {
-            return CSharpFileUtility.IsFileInPath(_unityFullFolderPath, _fileName, fileExtension);
-        }
-
         private bool NotCreateWhenFileExist(UnityFileUtility.FileType fileType, string cSharpFullPath)
         {
             CreateAssetFileWithType(fileType);
@@ -154,30 +144,15 @@ namespace OOOneTools.Editor.Tests
             return modifyTimeIsEqual && isCreated == false;
         }
 
-        private void ShouldFileCountCorrect()
-        {
-            Assert.AreEqual(2, Directory.GetFiles(_unityFullFolderPath).Length);
-        }
-
         private void ShouldFileInPath(UnityFileUtility.FileType fileType, bool exist)
         {
             var isFileInPath = UnityFileUtility.IsFileInPath(_unityFullFolderPath, _fileName, fileType);
             Assert.AreEqual(exist, isFileInPath);
         }
 
-        private void ShouldFileInPath(string overrideExtension)
-        {
-            Assert.AreEqual(true, IsFileInPath(overrideExtension));
-        }
-
         private void ShouldFolderExist(bool expected, string path)
         {
             Assert.AreEqual(expected, UnityFileUtility.IsUnityFolderExist(path));
-        }
-
-        private void ShouldPngInPath()
-        {
-            Assert.AreEqual(true, IsFileInPath(_png_extension));
         }
 
         #endregion
