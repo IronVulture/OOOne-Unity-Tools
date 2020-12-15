@@ -121,51 +121,6 @@ namespace OOOneTools.Editor.Tests
             ShouldFileInPath(fileType, true);
         }
 
-        [Test]
-        public void NotCreateAnimationClipIfFileAndFolderExist()
-        {
-            CreateUnityFolderUseChild();
-            CreateAnimationClip();
-            var path = GetUnityFullPath(_anime_extension);
-            var oldModifyTime = File.GetCreationTime(path);
-            var isFileCreateSuccess = CreateAnimationClip();
-            var newModifyTime = File.GetCreationTime(path);
-
-            Assert.AreEqual(true, IsFileInPath(_anime_extension));
-            ShouldFileCountCorrect();
-            Assert.AreEqual(oldModifyTime, newModifyTime);
-            Assert.AreEqual(false, isFileCreateSuccess);
-        }
-
-        [Test]
-        public void NotCreateAnimationOverrideIfFileAndFolderExist()
-        {
-            CreateUnityFolderUseChild();
-            CreateAnimatorOverride();
-            var path = GetUnityFullPath(_override_extension);
-            var oldModifyTime = File.GetCreationTime(path);
-            var isFileCreateSuccess = CreateAnimatorOverride();
-            var newModifyTime = File.GetCreationTime(path);
-            Assert.AreEqual(true, IsFileInPath(_override_extension));
-            ShouldFileCountCorrect();
-            Assert.AreEqual(oldModifyTime, newModifyTime);
-            Assert.AreEqual(false, isFileCreateSuccess);
-        }
-
-        [Test]
-        public void NotCreatePngIfFileAndFolderExist()
-        {
-            CreateUnityFolderUseChild();
-            UnityFileUtility.TryCreatePng(_childPath, _fileName);
-            var path = GetUnityFullPath(_png_extension);
-            var oldModifyTime = File.GetCreationTime(path);
-            var isFileCreateSuccess = UnityFileUtility.TryCreatePng(_childPath, _fileName);
-            var newModifyTime = File.GetCreationTime(path);
-            Assert.AreEqual(true, IsFileInPath(_png_extension));
-            ShouldFileCountCorrect();
-            Assert.AreEqual(oldModifyTime, newModifyTime);
-            Assert.AreEqual(false, isFileCreateSuccess);
-        }
 
         #endregion
 
