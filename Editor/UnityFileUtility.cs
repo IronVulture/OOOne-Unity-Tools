@@ -34,7 +34,7 @@ namespace Plugins.OOOneUnityTools.Editor
 
         #region Public Methods
 
-        public static void CreateAssetFile(FileType fileType, string childPath, string fileName)
+        public static bool CreateAssetFile(FileType fileType, string childPath, string fileName)
         {
             var fileNotExist = IsFileInPath(UnityPathUtility.GetUnityFullPath(childPath), fileName, fileType) == false;
             if (fileNotExist)
@@ -57,6 +57,8 @@ namespace Plugins.OOOneUnityTools.Editor
 
                 RefreshAsset();
             }
+
+            return fileNotExist;
         }
 
         public static void CreatePng(string childPath, string fileName)
