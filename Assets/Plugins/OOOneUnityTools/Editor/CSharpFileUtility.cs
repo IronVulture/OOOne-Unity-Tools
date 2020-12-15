@@ -46,6 +46,10 @@ namespace OOOneTools.Editor
 
         public static void CopyFile(string sourcePath, string targetPath)
         {
+            if (File.Exists(sourcePath) == false)
+            {
+                return;
+            }
             var directoryName = Path.GetDirectoryName(targetPath);
             if (IsFolderExist(directoryName) == false)
             {
