@@ -15,6 +15,7 @@ namespace Plugins.OOOneUnityTools.Editor
         public enum FileType
         {
             AnimatorOverride,
+            AnimationClip
         }
 
         #endregion
@@ -24,6 +25,7 @@ namespace Plugins.OOOneUnityTools.Editor
         private static readonly Dictionary<FileType, string> FileExtension = new Dictionary<FileType, string>()
         {
             {FileType.AnimatorOverride, "overrideController"},
+            {FileType.AnimationClip, "anim"},
         };
 
         #endregion
@@ -37,6 +39,11 @@ namespace Plugins.OOOneUnityTools.Editor
             {
                 if (fileType == FileType.AnimatorOverride)
                     CreateUnityAsset(childPath, fileName, typeof(AnimatorOverrideController), GetExtension(fileType));
+
+                if (fileType == FileType.AnimationClip)
+                {
+                    CreateUnityAsset(childPath, fileName, typeof(AnimationClip), GetExtension(fileType));
+                }
 
                 RefreshAsset();
             }

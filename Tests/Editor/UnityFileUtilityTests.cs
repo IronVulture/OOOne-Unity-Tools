@@ -112,6 +112,7 @@ namespace OOOneTools.Editor.Tests
 
         [Test]
         [TestCase(UnityFileUtility.FileType.AnimatorOverride)]
+        [TestCase(UnityFileUtility.FileType.AnimationClip)]
         public void CreateCustomFileIfFolderExist(UnityFileUtility.FileType fileType)
         {
             CreateUnityFolderUseChild();
