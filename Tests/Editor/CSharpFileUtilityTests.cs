@@ -13,6 +13,7 @@ namespace OOOneTools.Editor.Tests
         private string _fileName;
         private string _pngExtension;
         private string _sourcePath;
+        private string _sourcePathSecond;
         private string _targetPath;
         private string _whiteCatPath;
 
@@ -28,6 +29,9 @@ namespace OOOneTools.Editor.Tests
             _whiteCatPath = "lksdfkj";
             _fileName = "235432asdfasdf";
             _pngExtension = "png";
+            _sourcePath = @"C:\" + _childPath + @"\" + _fileName + "." + _pngExtension;
+            _targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, _pngExtension);
+            _sourcePathSecond = @"C:\" + _whiteCatPath + @"\" + _fileName + "." + _pngExtension;
         }
 
         #endregion
@@ -63,7 +67,7 @@ namespace OOOneTools.Editor.Tests
         public void CopyFile_If_Folder_Exist_And_File_NotExist()
         {
             CreateFolderUseChildPath();
-            CopyFile();
+            CopyFile(_sourcePath, _targetPath);
             ShouldFileEqual(true);
         }
 
@@ -71,12 +75,9 @@ namespace OOOneTools.Editor.Tests
         public void Dont_CopyFile_If_FileNameAndExtension_Is_Same()
         {
             CreateFolderUseChildPath();
-            var sourcePath = @"C:\" + _childPath + @"\" + _fileName + "." + _pngExtension;
-            var targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, _pngExtension);
-            CSharpFileUtility.CopyFile(sourcePath, targetPath);
-            var sourcePathSecond = @"C:\" + _whiteCatPath + @"\" + _fileName + "." + _pngExtension;
-            CSharpFileUtility.CopyFile(sourcePathSecond, targetPath);
-            Assert.AreEqual(true, CSharpFileUtility.IsFileAreEqual(sourcePath, targetPath));
+            CopyFile(_sourcePath, _targetPath);
+            CopyFile(_sourcePathSecond, _targetPath);
+            ShouldFileEqual(true);
         }
 
         [Test]
@@ -108,11 +109,9 @@ namespace OOOneTools.Editor.Tests
 
         #region Private Methods
 
-        private void CopyFile()
+        private void CopyFile(string sourcePath, string targetPath)
         {
-            _sourcePath = @"C:\" + _childPath + @"\" + _fileName + "." + _pngExtension;
-            _targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, _pngExtension);
-            CSharpFileUtility.CopyFile(_sourcePath, _targetPath);
+            CSharpFileUtility.CopyFile(sourcePath, targetPath);
         }
 
         private void CreateFolderUseChildPath()
