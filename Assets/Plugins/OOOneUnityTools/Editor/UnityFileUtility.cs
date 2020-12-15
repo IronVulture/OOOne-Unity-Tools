@@ -15,7 +15,8 @@ namespace Plugins.OOOneUnityTools.Editor
         public enum FileType
         {
             AnimatorOverride,
-            AnimationClip
+            AnimationClip,
+            Png
         }
 
         #endregion
@@ -26,6 +27,7 @@ namespace Plugins.OOOneUnityTools.Editor
         {
             {FileType.AnimatorOverride, "overrideController"},
             {FileType.AnimationClip, "anim"},
+            {FileType.Png, "png"},
         };
 
         #endregion
@@ -45,7 +47,11 @@ namespace Plugins.OOOneUnityTools.Editor
                     case FileType.AnimationClip:
                         CreateUnityAsset(childPath, fileName, typeof(AnimationClip), GetExtension(fileType));
                         break;
-                    
+                    case FileType.Png:
+                        CreatePng(childPath, fileName);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(fileType), fileType, null);
                 }
 
                 RefreshAsset();
