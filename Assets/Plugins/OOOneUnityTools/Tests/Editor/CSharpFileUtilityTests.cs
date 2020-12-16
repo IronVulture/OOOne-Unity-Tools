@@ -30,7 +30,6 @@ namespace OOOneTools.Editor.Tests
         [SetUp]
         public void SetUp()
         {
-
             _source1_ChildPath = "asdfasdlfja";
             _targetChildPath = "eedkcvjiosder";
             _source2_ChildPath = "lksdfkj";
@@ -117,7 +116,6 @@ namespace OOOneTools.Editor.Tests
             CopyFile(_source1_AnimFullPath, _target_AnimFullPath);
             ShouldFileSource1EqualtoTarget(_source1_PngFullPath, _target_PngFullPath);
             ShouldFileSource1EqualtoTarget(_source1_AnimFullPath, _target_AnimFullPath);
-
         }
 
         [Test]

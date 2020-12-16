@@ -100,6 +100,16 @@ namespace OOOneTools.Editor.Tests
             ShouldFileInPath(fileType, true);
         }
 
+        [Test]
+        public void CheckFileExtension()
+        {
+            var extension = "png";
+            string fullPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "png");
+            CreateAssetFileWithType(UnityFileUtility.FileType.Png);
+            bool extensionAreEqual = UnityFileUtility.CheckFileExtension(fullPath, extension);
+            Assert.AreEqual(true , extensionAreEqual );
+        }
+
         #endregion
 
         #region Public Methods
