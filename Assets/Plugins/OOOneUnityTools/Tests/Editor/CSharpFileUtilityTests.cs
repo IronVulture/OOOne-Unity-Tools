@@ -8,19 +8,20 @@ namespace OOOneTools.Editor.Tests
     {
         #region Private Variables
 
-        private string _beforeParsePath;
         private string _fileName;
-        private string _jpgExtension;
+        private string _animExtension;
         private string _pngExtension;
         private string _source1_ChildPath;
         private string _source1_PngFullPath;
         private string _source2_ChildPath;
         private string _source2_PngFullPath;
-        private string _sourcePathJpg;
-        private string _target_JpgFullPath;
+        private string _source1_AnimFullPath;
+        private string _target_AnimFullPath;
         private string _target_PngFullPath;
         private string _targetChildPath;
         private string _targetChildPath2;
+        private string _targetFolderPath;
+        private string _source1_PngFolderPath;
 
         #endregion
 
@@ -29,22 +30,27 @@ namespace OOOneTools.Editor.Tests
         [SetUp]
         public void SetUp()
         {
-            _beforeParsePath = "Assets/asdfasdlfja";
+
             _source1_ChildPath = "asdfasdlfja";
             _targetChildPath = "eedkcvjiosder";
             _source2_ChildPath = "lksdfkj";
             _fileName = "235432asdfasdf";
             _pngExtension = "png";
-            _jpgExtension = "jpg";
+            _animExtension = "anim";
+            _targetFolderPath =
+                UnityPathUtility.GetCsharpUnityAbsoluteFolderPath(_targetChildPath);
+            _source1_PngFolderPath =
+                UnityPathUtility.GetCsharpUnityAbsoluteFolderPath(_source1_ChildPath);
             _source1_PngFullPath =
                 UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_source1_ChildPath, _fileName, _pngExtension);
             _source2_PngFullPath =
                 UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_source2_ChildPath, _fileName, _pngExtension);
-            _sourcePathJpg = $@"C:\{_source2_ChildPath}\{_fileName}.{_jpgExtension}";
+            _source1_AnimFullPath =
+                UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_source1_ChildPath, _fileName, _animExtension);
             _target_PngFullPath =
                 UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_targetChildPath, _fileName, _pngExtension);
-            _target_JpgFullPath =
-                UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_targetChildPath, _fileName, _jpgExtension);
+            _target_AnimFullPath =
+                UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_targetChildPath, _fileName, _animExtension);
         }
 
         #endregion
@@ -55,24 +61,25 @@ namespace OOOneTools.Editor.Tests
         public void IsFolderExist()
         {
             CreateFolderUseTargetPath();
-            var isFolderExist = CSharpFileUtility.IsFolderExist(_beforeParsePath);
+            var isFolderExist = CSharpFileUtility.IsFolderExist(_targetFolderPath);
             Assert.IsTrue(isFolderExist);
         }
 
         [Test]
         public void ParseSlashToCsharpTest()
         {
+            var beforeParsePath = "Assets/asdfasdlfja";
             var afterParse = @"Assets\asdfasdlfja";
-            var actual = CSharpFileUtility.ParseSlashToCsharp(_beforeParsePath);
+            var actual = CSharpFileUtility.ParseSlashToCsharp(beforeParsePath);
             Assert.AreEqual(afterParse, actual);
         }
 
         [Test]
         public void IsFileInPath()
         {
-            CreateFolderUseTargetPath();
-            UnityFileUtility.CreateAssetFile(UnityFileUtility.FileType.Png, _source1_ChildPath, _fileName);
-            var isFileInPath = CSharpFileUtility.IsFileInPath(_beforeParsePath, _fileName, _pngExtension);
+            CreateFolerUsePathSource1();
+            CreateWhitePngInFolderSource1();
+            var isFileInPath = CSharpFileUtility.IsFileInPath(_source1_PngFolderPath, _fileName, _pngExtension);
             Assert.AreEqual(true, isFileInPath);
         }
 
@@ -83,7 +90,7 @@ namespace OOOneTools.Editor.Tests
             CreateWhitePngInFolderSource1();
             CreateFolderUseTargetPath();
             CopyFile(_source1_PngFullPath, _target_PngFullPath);
-            ShouldFileSource1EqualtoTarget(true);
+            ShouldFileSource1EqualtoTarget(_source1_PngFullPath, _target_PngFullPath);
         }
 
         [Test]
@@ -96,7 +103,7 @@ namespace OOOneTools.Editor.Tests
             CreateFolderUseTargetPath();
             CopyFile(_source1_PngFullPath, _target_PngFullPath);
             CopyFile(_source2_PngFullPath, _target_PngFullPath);
-            ShouldFileSource1EqualtoTarget(true);
+            ShouldFileSource1EqualtoTarget(_source1_PngFullPath, _target_PngFullPath);
         }
 
         [Test]
@@ -107,15 +114,19 @@ namespace OOOneTools.Editor.Tests
             UnityFileUtility.CreateAssetFile(UnityFileUtility.FileType.AnimationClip, _source1_ChildPath, _fileName);
             CreateFolderUseTargetPath();
             CopyFile(_source1_PngFullPath, _target_PngFullPath);
-            CopyFile(_sourcePathJpg, _target_JpgFullPath);
-            ShouldFileSource1EqualtoTarget(true);
+            CopyFile(_source1_AnimFullPath, _target_AnimFullPath);
+            ShouldFileSource1EqualtoTarget(_source1_PngFullPath, _target_PngFullPath);
+            ShouldFileSource1EqualtoTarget(_source1_AnimFullPath, _target_AnimFullPath);
+
         }
 
         [Test]
-        public void CopyFile_If_Folder_Is_NotExist()
+        public void CopyFile_If_TargetFolder_Is_NotExist()
         {
+            CreateFolerUsePathSource1();
+            CreateWhitePngInFolderSource1();
             CopyFile(_source1_PngFullPath, _target_PngFullPath);
-            ShouldFileSource1EqualtoTarget(true);
+            ShouldFileSource1EqualtoTarget(_source1_PngFullPath, _target_PngFullPath);
         }
 
         [Test]
@@ -177,9 +188,9 @@ namespace OOOneTools.Editor.Tests
             UnityFileUtility.DeleteUnityFolder(_targetChildPath);
         }
 
-        private void ShouldFileSource1EqualtoTarget(bool expected)
+        private void ShouldFileSource1EqualtoTarget(string source1PngFullPath, string targetPngFullPath)
         {
-            Assert.AreEqual(expected, CSharpFileUtility.IsFileAreEqual(_source1_PngFullPath, _target_PngFullPath));
+            Assert.AreEqual(true, CSharpFileUtility.IsFileAreEqual(source1PngFullPath, targetPngFullPath));
         }
 
         #endregion
