@@ -102,6 +102,9 @@ namespace OOOneTools.Editor.Tests
         [Test]
         public void CopyFile_If_FileExtension_Is_Not_Same()
         {
+            CreateFolerUsePathSource1();
+            CreateWhitePngInFolderSource1();
+            UnityFileUtility.CreateAssetFile(UnityFileUtility.FileType.AnimationClip, _source1_ChildPath, _fileName);
             CreateFolderUseTargetPath();
             CopyFile(_source1_PngFullPath, _target_PngFullPath);
             CopyFile(_sourcePathJpg, _target_JpgFullPath);
@@ -142,6 +145,11 @@ namespace OOOneTools.Editor.Tests
             CSharpFileUtility.CopyFile(sourcePath, targetPath);
         }
 
+        private void CreateBlackPngInFolderSource2()
+        {
+            UnityFileUtility.CreateTestPng(_source2_ChildPath, _fileName, TextureColor.black);
+        }
+
         private void CreateFolderUsePathSource2()
         {
             UnityFileUtility.CreateUnityFolder(_source2_ChildPath);
@@ -160,11 +168,6 @@ namespace OOOneTools.Editor.Tests
         private void CreateWhitePngInFolderSource1()
         {
             UnityFileUtility.CreateTestPng(_source1_ChildPath, _fileName, TextureColor.white);
-        }
-
-        private void CreateBlackPngInFolderSource2()
-        {
-            UnityFileUtility.CreateTestPng(_source2_ChildPath, _fileName, TextureColor.black);
         }
 
         private void DeleteFolderSourceAndTarget()
