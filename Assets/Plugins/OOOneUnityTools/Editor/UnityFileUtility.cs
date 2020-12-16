@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using OOOneTools.Editor;
 using UnityEditor;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace Plugins.OOOneUnityTools.Editor
+namespace OOOneUnityTools.Editor
 {
     public class UnityFileUtility
     {
@@ -143,13 +142,6 @@ namespace Plugins.OOOneUnityTools.Editor
             var bytes = texture2D.EncodeToPNG();
             File.WriteAllBytes(path, bytes);
             RefreshAsset();
-        }
-
-        public static bool CheckFileExtension(string fullPath, string extension)
-        {
-            var fileExtension = Path.GetExtension(fullPath);
-            fileExtension = fileExtension.Replace(".", "");
-            return fileExtension == extension;
         }
     }
 

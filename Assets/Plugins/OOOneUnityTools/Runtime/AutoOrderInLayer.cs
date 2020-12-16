@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace OOOneTools
+namespace OOOneUnityTools
 {
     public class AutoOrderInLayer : MonoBehaviour
     {

@@ -1,8 +1,7 @@
 using NUnit.Framework;
-using Plugins.OOOneUnityTools.Editor;
 using UnityEngine;
 
-namespace OOOneTools.Editor.Tests
+namespace OOOneUnityTools.Editor.Tests
 {
     public class UnityPathUtilityTests
     {

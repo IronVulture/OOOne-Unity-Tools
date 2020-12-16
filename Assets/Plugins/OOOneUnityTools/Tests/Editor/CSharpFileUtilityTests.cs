@@ -1,8 +1,7 @@
 using System.IO;
 using NUnit.Framework;
-using Plugins.OOOneUnityTools.Editor;
 
-namespace OOOneTools.Editor.Tests
+namespace OOOneUnityTools.Editor.Tests
 {
     public class CSharpFileUtilityTests
     {

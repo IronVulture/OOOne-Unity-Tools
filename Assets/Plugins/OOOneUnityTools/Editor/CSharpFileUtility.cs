@@ -1,11 +1,16 @@
 using System.IO;
-using Plugins.OOOneUnityTools.Editor;
 
-namespace OOOneTools.Editor
+namespace OOOneUnityTools.Editor
 {
     public class CSharpFileUtility
     {
         #region Public Methods
+
+        public static bool CheckFileExtension(string fullPath, string extension)
+        {
+            var fileExtension = GetExtensionFromFullPath(fullPath);
+            return fileExtension == extension;
+        }
 
         public static void CopyFile(string sourcePath, string targetPath)
         {
@@ -25,6 +30,13 @@ namespace OOOneTools.Editor
             {
                 Directory.CreateDirectory(directoryName);
             }
+        }
+
+        public static string GetExtensionFromFullPath(string fullPath)
+        {
+            var fileExtension = Path.GetExtension(fullPath);
+            fileExtension = fileExtension.Replace(".", "");
+            return fileExtension;
         }
 
         public static string GetFullPath(string fileName, string FileExtension, string newFolderPath)

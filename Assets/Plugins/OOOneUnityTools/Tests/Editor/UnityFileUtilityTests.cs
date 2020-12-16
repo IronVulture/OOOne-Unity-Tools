@@ -1,9 +1,8 @@
 using System.IO;
 using NUnit.Framework;
-using Plugins.OOOneUnityTools.Editor;
 using UnityEngine;
 
-namespace OOOneTools.Editor.Tests
+namespace OOOneUnityTools.Editor.Tests
 {
     public class UnityFileUtilityTests
     {
@@ -106,7 +105,7 @@ namespace OOOneTools.Editor.Tests
             var extension = "png";
             string fullPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "png");
             CreateAssetFileWithType(UnityFileUtility.FileType.Png);
-            bool extensionAreEqual = UnityFileUtility.CheckFileExtension(fullPath, extension);
+            bool extensionAreEqual = CSharpFileUtility.CheckFileExtension(fullPath, extension);
             Assert.AreEqual(true , extensionAreEqual );
         }
 

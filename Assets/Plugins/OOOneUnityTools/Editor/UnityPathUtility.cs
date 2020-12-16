@@ -1,7 +1,6 @@
-using OOOneTools.Editor;
 using UnityEngine;
 
-namespace Plugins.OOOneUnityTools.Editor
+namespace OOOneUnityTools.Editor
 {
     public class UnityPathUtility
     {
