@@ -7,10 +7,40 @@ namespace OOOneTools.Editor
     {
         #region Public Methods
 
+        public static void CopyFile(string sourcePath, string targetPath)
+        {
+            if (File.Exists(sourcePath) == false) return;
+            var directoryName = Path.GetDirectoryName(targetPath);
+            CreateFolderIfNotExist(directoryName);
+            if (IsFileAreEqual(sourcePath, targetPath) == false)
+            {
+                File.Copy(sourcePath, targetPath, false);
+                UnityFileUtility.RefreshAsset();
+            }
+        }
+
+        public static void CreateFolderIfNotExist(string directoryName)
+        {
+            if (IsFolderExist(directoryName) == false)
+            {
+                Directory.CreateDirectory(directoryName);
+            }
+        }
+
         public static string GetFullPath(string fileName, string FileExtension, string newFolderPath)
         {
             var fullPath = newFolderPath + @"\" + fileName + "." + FileExtension;
             return fullPath;
+        }
+
+        public static bool IsFileAreEqual(string pathA, string pathB)
+        {
+            if (File.Exists(pathA) == false || File.Exists(pathB) == false)
+                return false;
+            var sourceName = Path.GetFileName(pathA);
+            var targetName = Path.GetFileName(pathB);
+            var nameEqual = sourceName == targetName;
+            return nameEqual;
         }
 
         public static bool IsFileInPath(string folderPath, string fileName, string fileExtension)
@@ -33,35 +63,5 @@ namespace OOOneTools.Editor
         }
 
         #endregion
-
-        public static bool IsFileAreEqual(string pathA, string pathB)
-        {
-            if (File.Exists(pathA) == false || File.Exists(pathB) == false)
-                return false;
-            var sourceName = Path.GetFileName(pathA);
-            var targetName = Path.GetFileName(pathB);
-            var nameEqual = sourceName == targetName;
-            return nameEqual;
-        }
-
-        public static void CopyFile(string sourcePath, string targetPath)
-        {
-            if (File.Exists(sourcePath) == false) return;
-            var directoryName = Path.GetDirectoryName(targetPath);
-            CreateFolderIfNotExist(directoryName);
-            if (IsFileAreEqual(sourcePath, targetPath) == false)
-            {
-                File.Copy(sourcePath, targetPath, false);
-                UnityFileUtility.RefreshAsset();
-            }
-        }
-
-        public static void CreateFolderIfNotExist(string directoryName)
-        {
-            if (IsFolderExist(directoryName) == false)
-            {
-                Directory.CreateDirectory(directoryName);
-            }
-        }
     }
 }
