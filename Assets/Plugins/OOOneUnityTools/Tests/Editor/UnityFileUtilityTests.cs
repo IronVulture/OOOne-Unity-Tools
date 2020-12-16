@@ -15,6 +15,8 @@ namespace OOOneUnityTools.Editor.Tests
         private string _fileName;
         private string _override_extension;
         private string _png_extension;
+        private string _presetChildPath = "Test111";
+        private string _presetFileName = "asdfeedd";
         private string _unityFullFolderPath;
 
         #endregion
@@ -114,23 +116,20 @@ namespace OOOneUnityTools.Editor.Tests
         [Test]
         public void ApplyPresetWhenFileAreValid()
         {
-            CreateUnityFolderUseChild();
-            UnityFileUtility.CreateUnityFolder("Test111");
-            UnityFileUtility.CreateTestPng(_childPath, _fileName, TextureColor.white);
-            var presetPath = UnityPathUtility.GetUnityFullPath("Test111", "TestTexture2DPreset", "preset");
             var pngPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "png");
-            var textureImporter = AssetImporter.GetAtPath(pngPath) as TextureImporter;
+            CreateUnityFolderUseChild();
+            CreatePngInChildPath();
+            CreatePreset(_presetChildPath, _presetFileName, pngPath);
 
-            var textureImporterForePreset = AssetImporter.GetAtPath(pngPath) as TextureImporter;
-            var preset = new Preset(textureImporterForePreset);
-            textureImporterForePreset.filterMode = FilterMode.Trilinear;
+            var preset =
+                AssetDatabase.LoadAssetAtPath<Preset>(
+                    UnityPathUtility.GetUnityFullPath(_presetChildPath, _presetFileName, "preset"));
+            var textureImporterForPng = AssetImporter.GetAtPath(pngPath) as TextureImporter;
+            preset.ApplyTo(textureImporterForPng);
+            textureImporterForPng.SaveAndReimport();
 
-            AssetDatabase.CreateAsset(preset, presetPath);
-            preset.ApplyTo(textureImporter);
-            textureImporter.SaveAndReimport();
 
-            TextureImporter pngImporter = AssetImporter.GetAtPath(pngPath) as TextureImporter;
-
+            var pngImporter = AssetImporter.GetAtPath(pngPath) as TextureImporter;
             var dataEquals = preset.DataEquals(pngImporter);
             Assert.AreEqual(true, dataEquals);
         }
@@ -147,7 +146,7 @@ namespace OOOneUnityTools.Editor.Tests
         [TearDown]
         public void TearDown()
         {
-            // DeleteUnityFolderUseChild();
+            DeleteUnityFolderUseChild();
         }
 
         #endregion
@@ -157,6 +156,28 @@ namespace OOOneUnityTools.Editor.Tests
         private bool CreateAssetFileWithType(UnityFileUtility.FileType fileType)
         {
             return UnityFileUtility.CreateAssetFile(fileType, _childPath, _fileName);
+        }
+
+        private void CreatePngInChildPath()
+        {
+            UnityFileUtility.CreateTestPng(_childPath, _fileName, TextureColor.white);
+        }
+
+        private static void CreatePreset(string presetChildPath, string presetFileName,
+            string pngPath)
+        {
+            var textureImporterForPreset = AssetImporter.GetAtPath(pngPath) as TextureImporter;
+            var presetExtension = "preset";
+            var presetFullPath = UnityPathUtility.GetUnityFullPath(presetChildPath, presetFileName, presetExtension);
+            var preset = new Preset(textureImporterForPreset);
+            textureImporterForPreset.filterMode = FilterMode.Trilinear;
+            CreatePresetFolder(presetChildPath);
+            AssetDatabase.CreateAsset(preset, presetFullPath);
+        }
+
+        private static void CreatePresetFolder(string presetChildPath)
+        {
+            UnityFileUtility.CreateUnityFolder(presetChildPath);
         }
 
         private void CreateUnityFolderUseChild()
