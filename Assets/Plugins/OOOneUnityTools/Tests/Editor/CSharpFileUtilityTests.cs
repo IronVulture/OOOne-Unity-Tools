@@ -12,15 +12,15 @@ namespace OOOneTools.Editor.Tests
         private string _fileName;
         private string _jpgExtension;
         private string _pngExtension;
-        private string _sourceChildPath;
-        private string _sourceChildPath2;
-        private string _sourcePath;
+        private string _source1_ChildPath;
+        private string _source1_PngFullPath;
+        private string _source2_ChildPath;
+        private string _source2_PngFullPath;
         private string _sourcePathJpg;
-        private string _sourcePathPng;
+        private string _target_JpgFullPath;
+        private string _target_PngFullPath;
         private string _targetChildPath;
         private string _targetChildPath2;
-        private string _targetPath;
-        private string _targetPathJpg;
 
         #endregion
 
@@ -30,17 +30,20 @@ namespace OOOneTools.Editor.Tests
         public void SetUp()
         {
             _beforeParsePath = "Assets/asdfasdlfja";
-            _sourceChildPath = "asdfasdlfja";
+            _source1_ChildPath = "asdfasdlfja";
             _targetChildPath = "eedkcvjiosder";
-            _sourceChildPath2 = "lksdfkj";
+            _source2_ChildPath = "lksdfkj";
             _fileName = "235432asdfasdf";
             _pngExtension = "png";
             _jpgExtension = "jpg";
-            _sourcePath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_sourceChildPath, _fileName, _pngExtension);
-            _sourcePathPng = $@"C:\{_sourceChildPath2}\{_fileName}.{_pngExtension}";
-            _sourcePathJpg = $@"C:\{_sourceChildPath2}\{_fileName}.{_jpgExtension}";
-            _targetPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_targetChildPath, _fileName, _pngExtension);
-            _targetPathJpg =
+            _source1_PngFullPath =
+                UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_source1_ChildPath, _fileName, _pngExtension);
+            _source2_PngFullPath =
+                UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_source2_ChildPath, _fileName, _pngExtension);
+            _sourcePathJpg = $@"C:\{_source2_ChildPath}\{_fileName}.{_jpgExtension}";
+            _target_PngFullPath =
+                UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_targetChildPath, _fileName, _pngExtension);
+            _target_JpgFullPath =
                 UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_targetChildPath, _fileName, _jpgExtension);
         }
 
@@ -68,7 +71,7 @@ namespace OOOneTools.Editor.Tests
         public void IsFileInPath()
         {
             CreateFolderUseTargetPath();
-            UnityFileUtility.CreateAssetFile(UnityFileUtility.FileType.Png, _sourceChildPath, _fileName);
+            UnityFileUtility.CreateAssetFile(UnityFileUtility.FileType.Png, _source1_ChildPath, _fileName);
             var isFileInPath = CSharpFileUtility.IsFileInPath(_beforeParsePath, _fileName, _pngExtension);
             Assert.AreEqual(true, isFileInPath);
         }
@@ -76,19 +79,23 @@ namespace OOOneTools.Editor.Tests
         [Test]
         public void CopyFile_If_Folder_Exist_And_File_NotExist()
         {
-            CreateFolerUseSourcePath();
-            CreatePngInSourceFolder();
+            CreateFolerUsePathSource1();
+            CreatePngInFolderSource1();
             CreateFolderUseTargetPath();
-            CopyFile(_sourcePath, _targetPath);
+            CopyFile(_source1_PngFullPath, _target_PngFullPath);
             ShouldFileEqual(true);
         }
 
         [Test]
         public void Dont_CopyFile_If_FileNameAndExtension_Is_Same()
         {
+            CreateFolerUsePathSource1();
+            CreatePngInFolderSource1();
+            CreateFolderUsePathSource2();
+            CreatePngInFolderSource2();
             CreateFolderUseTargetPath();
-            CopyFile(_sourcePath, _targetPath);
-            CopyFile(_sourcePathPng, _targetPath);
+            CopyFile(_source1_PngFullPath, _target_PngFullPath);
+            CopyFile(_source2_PngFullPath, _target_PngFullPath);
             ShouldFileEqual(true);
         }
 
@@ -96,24 +103,24 @@ namespace OOOneTools.Editor.Tests
         public void CopyFile_If_FileExtension_Is_Not_Same()
         {
             CreateFolderUseTargetPath();
-            CopyFile(_sourcePath, _targetPath);
-            CopyFile(_sourcePathJpg, _targetPathJpg);
+            CopyFile(_source1_PngFullPath, _target_PngFullPath);
+            CopyFile(_sourcePathJpg, _target_JpgFullPath);
             ShouldFileEqual(true);
         }
 
         [Test]
         public void CopyFile_If_Folder_Is_NotExist()
         {
-            CopyFile(_sourcePath, _targetPath);
+            CopyFile(_source1_PngFullPath, _target_PngFullPath);
             ShouldFileEqual(true);
         }
 
         [Test]
         public void Not_CopyFile_If_Source_Is_NotExist()
         {
-            _sourcePath = "asdjfk";
-            CopyFile(_sourcePath, _targetPath);
-            Assert.AreEqual(false, File.Exists(_targetPath));
+            _source1_PngFullPath = "asdjfk";
+            CopyFile(_source1_PngFullPath, _target_PngFullPath);
+            Assert.AreEqual(false, File.Exists(_target_PngFullPath));
         }
 
         #endregion
@@ -123,7 +130,7 @@ namespace OOOneTools.Editor.Tests
         [TearDown]
         public void TearDown()
         {
-            DeleteFolderUseChildPath();
+            DeleteFolderSourceAndTarget();
         }
 
         #endregion
@@ -135,30 +142,41 @@ namespace OOOneTools.Editor.Tests
             CSharpFileUtility.CopyFile(sourcePath, targetPath);
         }
 
+        private void CreateFolderUsePathSource2()
+        {
+            UnityFileUtility.CreateUnityFolder(_source2_ChildPath);
+        }
+
         private void CreateFolderUseTargetPath()
         {
             UnityFileUtility.CreateUnityFolder(_targetChildPath);
         }
 
-        private void CreateFolerUseSourcePath()
+        private void CreateFolerUsePathSource1()
         {
-            UnityFileUtility.CreateUnityFolder(_sourceChildPath);
+            UnityFileUtility.CreateUnityFolder(_source1_ChildPath);
         }
 
-        private void CreatePngInSourceFolder()
+        private void CreatePngInFolderSource1()
         {
-            UnityFileUtility.CreateAssetFile(UnityFileUtility.FileType.Png, _sourceChildPath, _fileName);
+            UnityFileUtility.CreateAssetFile(UnityFileUtility.FileType.Png, _source1_ChildPath, _fileName);
         }
 
-        private void DeleteFolderUseChildPath()
+        private void CreatePngInFolderSource2()
         {
-            UnityFileUtility.DeleteUnityFolder(_sourceChildPath);
+            UnityFileUtility.CreateAssetFile(UnityFileUtility.FileType.Png, _source2_ChildPath, _fileName);
+        }
+
+        private void DeleteFolderSourceAndTarget()
+        {
+            UnityFileUtility.DeleteUnityFolder(_source1_ChildPath);
+            UnityFileUtility.DeleteUnityFolder(_source2_ChildPath);
             UnityFileUtility.DeleteUnityFolder(_targetChildPath);
         }
 
         private void ShouldFileEqual(bool expected)
         {
-            Assert.AreEqual(expected, CSharpFileUtility.IsFileAreEqual(_sourcePath, _targetPath));
+            Assert.AreEqual(expected, CSharpFileUtility.IsFileAreEqual(_source1_PngFullPath, _target_PngFullPath));
         }
 
         #endregion
