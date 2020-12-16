@@ -1,5 +1,7 @@
 using System.IO;
 using NUnit.Framework;
+using UnityEditor;
+using UnityEditor.Presets;
 using UnityEngine;
 
 namespace OOOneUnityTools.Editor.Tests
@@ -106,7 +108,25 @@ namespace OOOneUnityTools.Editor.Tests
             string fullPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "png");
             CreateAssetFileWithType(UnityFileUtility.FileType.Png);
             bool extensionAreEqual = CSharpFileUtility.CheckFileExtension(fullPath, extension);
-            Assert.AreEqual(true , extensionAreEqual );
+            Assert.AreEqual(true, extensionAreEqual);
+        }
+
+        [Test]
+        public void ApplyPresetWhenFileAreValid()
+        {
+            CreateUnityFolderUseChild();
+            UnityFileUtility.CreateTestPng(_childPath, _fileName, TextureColor.white);
+            var presetPath = UnityPathUtility.GetUnityFullPath("Test111", "TestTexture2DPreset", "preset");
+            var preset = AssetDatabase.LoadAssetAtPath<Preset>(presetPath);
+            var pngPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "png");
+            var textureImporter = AssetImporter.GetAtPath(pngPath) as TextureImporter;
+            preset.ApplyTo(textureImporter);
+            textureImporter.SaveAndReimport();
+
+            TextureImporter pngImporter = AssetImporter.GetAtPath(pngPath) as TextureImporter;
+
+            var dataEquals = preset.DataEquals(pngImporter);
+            Assert.AreEqual(true, dataEquals);
         }
 
         #endregion
@@ -121,7 +141,7 @@ namespace OOOneUnityTools.Editor.Tests
         [TearDown]
         public void TearDown()
         {
-            DeleteUnityFolderUseChild();
+            // DeleteUnityFolderUseChild();
         }
 
         #endregion
