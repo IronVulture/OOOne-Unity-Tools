@@ -80,7 +80,7 @@ namespace OOOneTools.Editor.Tests
         public void CopyFile_If_Folder_Exist_And_File_NotExist()
         {
             CreateFolerUsePathSource1();
-            CreatePngInFolderSource1();
+            CreateWhitePngInFolderSource1();
             CreateFolderUseTargetPath();
             CopyFile(_source1_PngFullPath, _target_PngFullPath);
             ShouldFileSource1EqualtoTarget(true);
@@ -90,9 +90,9 @@ namespace OOOneTools.Editor.Tests
         public void Dont_CopyFile_If_FileNameAndExtension_Is_Same()
         {
             CreateFolerUsePathSource1();
-            CreatePngInFolderSource1();
+            CreateWhitePngInFolderSource1();
             CreateFolderUsePathSource2();
-            CreatePngInFolderSource2();
+            CreateBlackPngInFolderSource2();
             CreateFolderUseTargetPath();
             CopyFile(_source1_PngFullPath, _target_PngFullPath);
             CopyFile(_source2_PngFullPath, _target_PngFullPath);
@@ -157,14 +157,14 @@ namespace OOOneTools.Editor.Tests
             UnityFileUtility.CreateUnityFolder(_source1_ChildPath);
         }
 
-        private void CreatePngInFolderSource1()
+        private void CreateWhitePngInFolderSource1()
         {
             UnityFileUtility.CreateTestPng(_source1_ChildPath, _fileName, TextureColor.white);
         }
 
-        private void CreatePngInFolderSource2()
+        private void CreateBlackPngInFolderSource2()
         {
-            UnityFileUtility.CreateAssetFile(UnityFileUtility.FileType.Png, _source2_ChildPath, _fileName);
+            UnityFileUtility.CreateTestPng(_source2_ChildPath, _fileName, TextureColor.black);
         }
 
         private void DeleteFolderSourceAndTarget()
