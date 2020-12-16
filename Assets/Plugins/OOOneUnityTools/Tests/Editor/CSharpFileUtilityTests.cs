@@ -83,7 +83,7 @@ namespace OOOneTools.Editor.Tests
             CreatePngInFolderSource1();
             CreateFolderUseTargetPath();
             CopyFile(_source1_PngFullPath, _target_PngFullPath);
-            ShouldFileEqual(true);
+            ShouldFileSource1EqualtoTarget(true);
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace OOOneTools.Editor.Tests
             CreateFolderUseTargetPath();
             CopyFile(_source1_PngFullPath, _target_PngFullPath);
             CopyFile(_source2_PngFullPath, _target_PngFullPath);
-            ShouldFileEqual(true);
+            ShouldFileSource1EqualtoTarget(true);
         }
 
         [Test]
@@ -105,14 +105,14 @@ namespace OOOneTools.Editor.Tests
             CreateFolderUseTargetPath();
             CopyFile(_source1_PngFullPath, _target_PngFullPath);
             CopyFile(_sourcePathJpg, _target_JpgFullPath);
-            ShouldFileEqual(true);
+            ShouldFileSource1EqualtoTarget(true);
         }
 
         [Test]
         public void CopyFile_If_Folder_Is_NotExist()
         {
             CopyFile(_source1_PngFullPath, _target_PngFullPath);
-            ShouldFileEqual(true);
+            ShouldFileSource1EqualtoTarget(true);
         }
 
         [Test]
@@ -159,7 +159,7 @@ namespace OOOneTools.Editor.Tests
 
         private void CreatePngInFolderSource1()
         {
-            UnityFileUtility.CreateAssetFile(UnityFileUtility.FileType.Png, _source1_ChildPath, _fileName);
+            UnityFileUtility.CreateTestPng(_source1_ChildPath, _fileName, TextureColor.white);
         }
 
         private void CreatePngInFolderSource2()
@@ -174,7 +174,7 @@ namespace OOOneTools.Editor.Tests
             UnityFileUtility.DeleteUnityFolder(_targetChildPath);
         }
 
-        private void ShouldFileEqual(bool expected)
+        private void ShouldFileSource1EqualtoTarget(bool expected)
         {
             Assert.AreEqual(expected, CSharpFileUtility.IsFileAreEqual(_source1_PngFullPath, _target_PngFullPath));
         }
