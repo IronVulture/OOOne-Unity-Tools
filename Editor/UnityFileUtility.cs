@@ -121,5 +121,32 @@ namespace Plugins.OOOneUnityTools.Editor
         public static void RefreshAsset() => AssetDatabase.Refresh();
 
         #endregion
+
+        public static void CreateTestPng(string childPath, string fileName, TextureColor color)
+        {
+            var path = UnityPathUtility.GetUnityAbsoluteFullPath(childPath, fileName, GetExtension(FileType.Png));
+            var texture2D = Texture2D.normalTexture;
+            switch (color)
+            {
+                case TextureColor.black:
+                    texture2D = Texture2D.blackTexture;
+                    break;
+                case TextureColor.white:
+                    texture2D = Texture2D.whiteTexture;
+                    break;
+                default:
+                    texture2D = Texture2D.normalTexture;
+                    break;
+            }
+            var bytes = texture2D.EncodeToPNG();
+            File.WriteAllBytes(path, bytes);
+            RefreshAsset();
+        }
+    }
+
+    public enum TextureColor
+    {
+        black,
+        white
     }
 }
