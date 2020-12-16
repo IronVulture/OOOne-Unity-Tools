@@ -115,11 +115,17 @@ namespace OOOneUnityTools.Editor.Tests
         public void ApplyPresetWhenFileAreValid()
         {
             CreateUnityFolderUseChild();
+            UnityFileUtility.CreateUnityFolder("Test111");
             UnityFileUtility.CreateTestPng(_childPath, _fileName, TextureColor.white);
             var presetPath = UnityPathUtility.GetUnityFullPath("Test111", "TestTexture2DPreset", "preset");
-            var preset = AssetDatabase.LoadAssetAtPath<Preset>(presetPath);
             var pngPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "png");
             var textureImporter = AssetImporter.GetAtPath(pngPath) as TextureImporter;
+
+            var textureImporterForePreset = AssetImporter.GetAtPath(pngPath) as TextureImporter;
+            var preset = new Preset(textureImporterForePreset);
+            textureImporterForePreset.filterMode = FilterMode.Trilinear;
+
+            AssetDatabase.CreateAsset(preset, presetPath);
             preset.ApplyTo(textureImporter);
             textureImporter.SaveAndReimport();
 
