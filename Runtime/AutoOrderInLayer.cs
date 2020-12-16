@@ -1,8 +1,8 @@
-﻿namespace OOOneTools
-{
-    using System;
-    using UnityEngine;
+﻿using System;
+using UnityEngine;
 
+namespace OOOneTools
+{
     public class AutoOrderInLayer : MonoBehaviour
     {
         SpriteRenderer spriteRenderer;
@@ -16,7 +16,6 @@
             //若沒有指定座標參照物，則用自己的座標
             if (pivot == null)
                 pivot = gameObject.transform;
-
         }
 
         // Update is called once per frame

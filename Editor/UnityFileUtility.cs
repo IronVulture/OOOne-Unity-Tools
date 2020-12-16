@@ -43,7 +43,8 @@ namespace Plugins.OOOneUnityTools.Editor
                 switch (fileType)
                 {
                     case FileType.AnimatorOverride:
-                        CreateUnityAsset(childPath, fileName, typeof(AnimatorOverrideController), GetExtension(fileType));
+                        CreateUnityAsset(childPath, fileName, typeof(AnimatorOverrideController),
+                            GetExtension(fileType));
                         break;
                     case FileType.AnimationClip:
                         CreateUnityAsset(childPath, fileName, typeof(AnimationClip), GetExtension(fileType));
@@ -138,9 +139,17 @@ namespace Plugins.OOOneUnityTools.Editor
                     texture2D = Texture2D.normalTexture;
                     break;
             }
+
             var bytes = texture2D.EncodeToPNG();
             File.WriteAllBytes(path, bytes);
             RefreshAsset();
+        }
+
+        public static bool CheckFileExtension(string fullPath, string extension)
+        {
+            var fileExtension = Path.GetExtension(fullPath);
+            fileExtension = fileExtension.Replace(".", "");
+            return fileExtension == extension;
         }
     }
 

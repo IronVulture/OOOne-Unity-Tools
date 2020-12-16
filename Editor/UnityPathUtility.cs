@@ -60,7 +60,6 @@ namespace Plugins.OOOneUnityTools.Editor
 
         public static string GetCsharpUnityAbsoluteFolderPath(string childPath)
         {
-
             return CSharpFileUtility.ParseSlashToCsharp(GetUnityAbsoluteFolderPath(childPath));
         }
 
