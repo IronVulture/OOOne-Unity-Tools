@@ -26,10 +26,7 @@ namespace OOOneUnityTools.Editor
 
         public static void CreateFolderIfNotExist(string directoryName)
         {
-            if (IsFolderExist(directoryName) == false)
-            {
-                Directory.CreateDirectory(directoryName);
-            }
+            if (IsFolderExist(directoryName) == false) Directory.CreateDirectory(directoryName);
         }
 
         public static string GetExtensionFromFullPath(string fullPath)
@@ -59,6 +56,11 @@ namespace OOOneUnityTools.Editor
         {
             var newFolderPath = ParseSlashToCsharp(folderPath);
             var fullPath = GetFullPath(fileName, fileExtension, newFolderPath);
+            return IsFileInPath(fullPath);
+        }
+
+        public static bool IsFileInPath(string fullPath)
+        {
             var fileExists = File.Exists(fullPath);
             return fileExists;
         }
