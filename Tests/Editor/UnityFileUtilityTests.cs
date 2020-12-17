@@ -15,11 +15,11 @@ namespace OOOneUnityTools.Editor.Tests
         private string _fileName;
         private string _override_extension;
         private string _png_extension;
+        private string _pngFullPath;
         private string _presetChildPath;
         private string _presetFileName;
-        private string _unityFullFolderPath;
-        private string _pngFullPath;
         private string _presetFullPath;
+        private string _unityFullFolderPath;
 
         #endregion
 
@@ -125,7 +125,7 @@ namespace OOOneUnityTools.Editor.Tests
             CreateUnityFolderUseChild();
             CreatePngInChildPath();
             CreatePresetFolder(_presetChildPath);
-            UnityFileUtility.CreatePreset(_presetFullPath, _pngFullPath, UnityFileUtility.PresetType.Texture2D);
+            UnityFileUtility.CreatePreset(_presetFullPath, _pngFullPath, UnityFileUtility.FileType.Png);
             ModifyPngImporter(_pngFullPath);
 
             UnityFileUtility.SetTextureImporterSettings(_presetFullPath, _pngFullPath);
@@ -134,8 +134,6 @@ namespace OOOneUnityTools.Editor.Tests
             var pngImporter = AssetImporter.GetAtPath(_pngFullPath) as TextureImporter;
             var dataEquals = preset.DataEquals(pngImporter);
             Assert.AreEqual(true, dataEquals);
-
-
             UnityFileUtility.DeleteUnityFolder(_presetChildPath);
         }
 
@@ -146,12 +144,12 @@ namespace OOOneUnityTools.Editor.Tests
             CreateUnityFolderUseChild();
             CreatePngInChildPath();
             var beforePngPresetPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "preset");
-            UnityFileUtility.CreatePreset(beforePngPresetPath, _pngFullPath, UnityFileUtility.PresetType.Texture2D);
+            UnityFileUtility.CreatePreset(beforePngPresetPath, _pngFullPath, UnityFileUtility.FileType.Png);
 
             CreateAssetFileWithType(UnityFileUtility.FileType.AnimatorOverride);
             var animatorOverridePath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "overrideController");
             CreatePresetFolder(_presetChildPath);
-            UnityFileUtility.CreatePreset(_presetFullPath, animatorOverridePath , UnityFileUtility.PresetType.AnimatorController);
+            UnityFileUtility.CreatePreset(_presetFullPath, animatorOverridePath, UnityFileUtility.FileType.AnimatorOverride);
 
             UnityFileUtility.SetTextureImporterSettings(_presetFullPath, _childPath);
 
@@ -172,21 +170,15 @@ namespace OOOneUnityTools.Editor.Tests
             var animFullPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "anim");
             CreatePngInChildPath();
             CreatePresetFolder(_presetChildPath);
-            UnityFileUtility.CreatePreset(_presetFullPath, _pngFullPath, UnityFileUtility.PresetType.Texture2D);
+            UnityFileUtility.CreatePreset(_presetFullPath, _pngFullPath, UnityFileUtility.FileType.Png);
             var preset = AssetDatabase.LoadAssetAtPath<Preset>(_presetFullPath);
 
             UnityFileUtility.SetTextureImporterSettings(_presetFullPath, animFullPath);
 
             var animImporter = AssetImporter.GetAtPath(animFullPath);
             bool importerSettingEqualsPreset = preset.DataEquals(animImporter);
-            Assert.AreEqual( false , importerSettingEqualsPreset);
-        }
-
-        private static void ModifyPngImporter(string pngPath)
-        {
-            var importerBefore = AssetImporter.GetAtPath(pngPath) as TextureImporter;
-            importerBefore.filterMode = FilterMode.Trilinear;
-            importerBefore.SaveAndReimport();
+            Assert.AreEqual(false, importerSettingEqualsPreset);
+            UnityFileUtility.DeleteUnityFolder(_presetChildPath);
         }
 
         #endregion
@@ -231,6 +223,13 @@ namespace OOOneUnityTools.Editor.Tests
         private void DeleteUnityFolderUseChild()
         {
             UnityFileUtility.DeleteUnityFolder(_childPath);
+        }
+
+        private static void ModifyPngImporter(string pngPath)
+        {
+            var importerBefore = AssetImporter.GetAtPath(pngPath) as TextureImporter;
+            importerBefore.filterMode = FilterMode.Trilinear;
+            importerBefore.SaveAndReimport();
         }
 
         private bool NotCreateWhenFileExist(UnityFileUtility.FileType fileType, string cSharpFullPath)
