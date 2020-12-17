@@ -118,7 +118,6 @@ namespace OOOneUnityTools.Editor.Tests
         [Test]
         public void ApplyPresetWhenFileAreValid()
         {
-            // _pngPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "png");
             CreateUnityFolderUseChild();
             CreatePngInChildPath();
             var presetFullPath = "";
@@ -139,12 +138,11 @@ namespace OOOneUnityTools.Editor.Tests
         public void DontApply_Preset_When_PresetType_NotTexture()
         {
             //創建png檔，取得其importer設定並存入比對用Preset
-            // _pngPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "png");
             CreateUnityFolderUseChild();
             CreatePngInChildPath();
             ModifyPngImporter(_pngPath);
             var presetForCompare_Name = "tmpPresetName";
-             var presetBeforeFullPath = "";
+            var presetBeforeFullPath = "";
             Preset presetBefore = CreatePreset(presetForCompare_Name, _pngPath, UnityFileUtility.FileType.Png, out presetBeforeFullPath);
 
             //創建AnimatorOvderride檔案，使用其import Settings作為Preset
