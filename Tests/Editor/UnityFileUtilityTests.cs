@@ -178,6 +178,26 @@ namespace OOOneUnityTools.Editor.Tests
             Assert.AreEqual(true, DataEquals(GetUnityPathByExtension(_presetExtension), assetImporter));
         }
 
+        [Test]
+        public void Set_SecondaryTexture_When_All_Texture_Exists()
+        {
+            var mainTexturePath = "Assets/AJDJ/Cat1.png";
+            var secondaryAssetPath = "Assets/AJDJ/Cat2.png";
+            var strings = new string[1] {secondaryAssetPath};
+
+            UnityFileUtility.SetSecondaryTexture(strings, mainTexturePath);
+
+            var textureImporter = AssetImporter.GetAtPath(mainTexturePath) as TextureImporter;
+            var secondarySpriteTextures = textureImporter.secondarySpriteTextures;
+
+            var secondarySpriteTexture = secondarySpriteTextures[0];
+            var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(secondaryAssetPath);
+            var nameEqual = secondarySpriteTexture.name == "_Normal";
+            var textureEqual = secondarySpriteTexture.texture == texture2D;
+            var secondaryTextureEqual = nameEqual && textureEqual;
+            Assert.AreEqual(true, secondaryTextureEqual);
+        }
+
         #endregion
 
         #region Public Methods
