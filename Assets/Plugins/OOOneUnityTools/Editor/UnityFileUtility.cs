@@ -71,6 +71,47 @@ namespace OOOneUnityTools.Editor
             RefreshAsset();
         }
 
+        public static void CreatePreset(string targetPath, string fileFullPath, FileType fileType)
+        {
+            // string presetChildPath = unityFileUtilityTests._presetChildPath;
+            var preset = new Preset(AssetImporter.GetAtPath(fileFullPath));
+            if (fileType == FileType.Png)
+            {
+                var textureImporterForPreset = AssetImporter.GetAtPath(fileFullPath) as TextureImporter;
+                // textureImporterForPreset.filterMode = FilterMode.Trilinear;
+                preset = new Preset(textureImporterForPreset);
+            }
+            else
+            {
+                var assetImporterForPreset = AssetImporter.GetAtPath(fileFullPath);
+                preset = new Preset(assetImporterForPreset);
+            }
+            AssetDatabase.CreateAsset(preset, targetPath);
+            UnityFileUtility.RefreshAsset();
+        }
+
+        public static void CreateTestPng(string childPath, string fileName, TextureColor color)
+        {
+            var path = UnityPathUtility.GetUnityAbsoluteFullPath(childPath, fileName, GetExtension(FileType.Png));
+            var texture2D = Texture2D.normalTexture;
+            switch (color)
+            {
+                case TextureColor.black:
+                    texture2D = Texture2D.blackTexture;
+                    break;
+                case TextureColor.white:
+                    texture2D = Texture2D.whiteTexture;
+                    break;
+                default:
+                    texture2D = Texture2D.normalTexture;
+                    break;
+            }
+
+            var bytes = texture2D.EncodeToPNG();
+            File.WriteAllBytes(path, bytes);
+            RefreshAsset();
+        }
+
         public static void CreateUnityAsset(string childPath, string fileName, Type type, string extension)
         {
             Object instance = (Object) Activator.CreateInstance(type);
@@ -96,6 +137,14 @@ namespace OOOneUnityTools.Editor
             RefreshAsset();
         }
 
+        public static string GetExtension(FileType fileType)
+        {
+            if (FileExtension.ContainsKey(fileType))
+                return FileExtension[fileType];
+
+            return "";
+        }
+
         public static bool IsFileInPath(string unityFullFolderPath, string fileName, FileType fileType)
         {
             var slashToCsharp = CSharpFileUtility.ParseSlashToCsharp(unityFullFolderPath);
@@ -107,43 +156,7 @@ namespace OOOneUnityTools.Editor
             return CSharpFileUtility.IsFolderExist("Assets/" + childPath);
         }
 
-        #endregion
-
-        #region Private Methods
-
-        public static string GetExtension(FileType fileType)
-        {
-            if (FileExtension.ContainsKey(fileType))
-                return FileExtension[fileType];
-
-            return "";
-        }
-
         public static void RefreshAsset() => AssetDatabase.Refresh();
-
-        #endregion
-
-        public static void CreateTestPng(string childPath, string fileName, TextureColor color)
-        {
-            var path = UnityPathUtility.GetUnityAbsoluteFullPath(childPath, fileName, GetExtension(FileType.Png));
-            var texture2D = Texture2D.normalTexture;
-            switch (color)
-            {
-                case TextureColor.black:
-                    texture2D = Texture2D.blackTexture;
-                    break;
-                case TextureColor.white:
-                    texture2D = Texture2D.whiteTexture;
-                    break;
-                default:
-                    texture2D = Texture2D.normalTexture;
-                    break;
-            }
-
-            var bytes = texture2D.EncodeToPNG();
-            File.WriteAllBytes(path, bytes);
-            RefreshAsset();
-        }
 
 
         public static void SetTextureImporterSettings(string presetPath, string texturePath)
@@ -161,30 +174,7 @@ namespace OOOneUnityTools.Editor
 
         }
 
-        public enum PresetType
-        {
-            Texture2D,
-            AnimatorController,
-        }
-
-        public static void CreatePreset(string targetPath, string fileFullPath, UnityFileUtility.PresetType presetType)
-        {
-            // string presetChildPath = unityFileUtilityTests._presetChildPath;
-            var preset = new Preset(AssetImporter.GetAtPath(fileFullPath));
-            if (presetType == UnityFileUtility.PresetType.Texture2D)
-            {
-                var textureImporterForPreset = AssetImporter.GetAtPath(fileFullPath) as TextureImporter;
-                // textureImporterForPreset.filterMode = FilterMode.Trilinear;
-                preset = new Preset(textureImporterForPreset);
-            }
-            else
-            {
-                var assetImporterForPreset = AssetImporter.GetAtPath(fileFullPath);
-                preset = new Preset(assetImporterForPreset);
-            }
-            AssetDatabase.CreateAsset(preset, targetPath);
-            UnityFileUtility.RefreshAsset();
-        }
+        #endregion
     }
 
     public enum TextureColor
