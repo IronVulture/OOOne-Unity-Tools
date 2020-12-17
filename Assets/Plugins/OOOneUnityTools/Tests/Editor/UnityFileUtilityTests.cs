@@ -163,6 +163,25 @@ namespace OOOneUnityTools.Editor.Tests
             UnityFileUtility.DeleteUnityFolder(_presetChildPath);
         }
 
+        [Test]
+        public void DontApply_Preset_When_TargetFile_Extension_Not_Png()
+        {
+            //Arrange
+            CreateUnityFolderUseChild();
+            CreateAssetFileWithType(UnityFileUtility.FileType.AnimationClip);
+            var animFullPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "anim");
+            CreatePngInChildPath();
+            CreatePresetFolder(_presetChildPath);
+            UnityFileUtility.CreatePreset(_presetFullPath, _pngFullPath, UnityFileUtility.PresetType.Texture2D);
+            var preset = AssetDatabase.LoadAssetAtPath<Preset>(_presetFullPath);
+
+            UnityFileUtility.SetTextureImporterSettings(_presetFullPath, animFullPath);
+
+            var animImporter = AssetImporter.GetAtPath(animFullPath);
+            bool importerSettingEqualsPreset = preset.DataEquals(animImporter);
+            Assert.AreEqual( false , importerSettingEqualsPreset);
+        }
+
         private static void ModifyPngImporter(string pngPath)
         {
             var importerBefore = AssetImporter.GetAtPath(pngPath) as TextureImporter;
