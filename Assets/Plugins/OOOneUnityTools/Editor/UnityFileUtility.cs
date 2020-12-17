@@ -173,6 +173,18 @@ namespace OOOneUnityTools.Editor
             if(presetExist && targetFileExist){}
             */
         }
+
+        public static void SetTextureImporterSettings(string presetPath, string texturePath)
+        {
+            var preset = AssetDatabase.LoadAssetAtPath<Preset>(presetPath);
+            var presetType = preset.GetPresetType().GetManagedTypeName();
+            if (presetType == "UnityEditor.TextureImporter")
+            {
+                var textureImporter = AssetImporter.GetAtPath(texturePath) as TextureImporter;
+                preset.ApplyTo(textureImporter);
+                textureImporter.SaveAndReimport();
+            }
+        }
     }
 
     public enum TextureColor
