@@ -10,13 +10,10 @@ namespace OOOneUnityTools.Editor.Tests
     {
         #region Private Variables
 
-        private string _anime_extension;
         private readonly string _animeExtension = "anim";
         private string _childPath;
         private string _fileName;
-        private string _override_extension;
         private readonly string _overrideExtension = "overrideController";
-        private string _png_extension;
         private readonly string _pngExtension = "png";
         private string _pngFullPath;
         private string _presetChildPath;
@@ -35,9 +32,6 @@ namespace OOOneUnityTools.Editor.Tests
             _childPath = "QWERT";
             _fileName = "WEjhdfjgh";
             _unityFullFolderPath = $@"{Application.dataPath}\{_childPath}";
-            _anime_extension = _animeExtension;
-            _override_extension = _overrideExtension;
-            _png_extension = _pngExtension;
             _presetChildPath = "Test111";
             _presetFileName = "asdfeedd";
             _pngFullPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, _pngExtension);
