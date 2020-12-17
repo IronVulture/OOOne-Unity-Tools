@@ -23,7 +23,7 @@ public static class PropertyDrawersHelper
         return temp.ToArray();
     }
 
-    public static string[] AllNames()
+    public static int[] AllIDs()
     {
         List<NameListSO> nameListSos = new List<NameListSO>();
         var              type        = typeof(NameListSO);
@@ -35,7 +35,23 @@ public static class PropertyDrawersHelper
         }
 
         var nameListSo = nameListSos.First();
-        return nameListSo.IDNames.Select(_ => _.Name).ToArray();
+        return nameListSo.IDNames.Select(_ => _.ID).ToArray();
+    }
+
+    public static string GetName(int id)
+    {
+        List<NameListSO> nameListSos = new List<NameListSO>();
+        var              type        = typeof(NameListSO);
+        string[]         guids2      = AssetDatabase.FindAssets($"t:{type}");
+        foreach (string guid2 in guids2)
+        {
+            var assetPath = AssetDatabase.GUIDToAssetPath(guid2);
+            nameListSos.Add((NameListSO)AssetDatabase.LoadAssetAtPath(assetPath , type));
+        }
+
+        var nameListSo = nameListSos.First();
+        var idName     = nameListSo.IDNames.Find(name => name.ID == id);
+        return idName != null ? idName.Name : "";
     }
 
 #endif

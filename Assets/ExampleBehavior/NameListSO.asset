@@ -14,12 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IDNames:
   - ID: 1
-    Name: A
-  - ID: 2
-    Name: B
-  - ID: 3
     Name: C
-  - ID: 4
-    Name: S
-  - ID: 5
-    Name: E
+  - ID: 2
+    Name: A

@@ -43,7 +43,7 @@ public class StringInListDrawer : PropertyDrawer
     public override void OnGUI(Rect position , SerializedProperty property , GUIContent label)
     {
         var stringInList = attribute as StringInList;
-        var list         = stringInList.List;
+        var list         = stringInList.List ;
         if (property.propertyType == SerializedPropertyType.String)
         {
             int index = Mathf.Max(0 , Array.IndexOf(list , property.stringValue));

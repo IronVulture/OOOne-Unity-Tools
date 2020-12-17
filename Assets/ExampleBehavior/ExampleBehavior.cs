@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Linq;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 public class ExampleBehavior : MonoBehaviour
@@ -8,6 +11,14 @@ public class ExampleBehavior : MonoBehaviour
     // [StringInList("John", "Jack", "Jim")] public int PersonID;
 
     // Showing a list of loaded scenes
-    [StringInList(typeof(PropertyDrawersHelper) , "AllNames")]
-    public int SceneName;
+    // [StringInList(typeof(PropertyDrawersHelper) , "AllNames")]
+    [ValueDropdown("GetIDList")]
+    public int ID;
+
+    private IEnumerable GetIDList()
+    {
+        return PropertyDrawersHelper
+               .AllIDs()
+               .Select(id => new ValueDropdownItem(PropertyDrawersHelper.GetName(id) , id));
+    }
 }
