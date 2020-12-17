@@ -163,6 +163,19 @@ namespace OOOneUnityTools.Editor.Tests
             Assert.AreEqual(false, DataEquals(_presetFullPath, animFullPath));
         }
 
+        [Test]
+        public void DontApply_Preset_when_TargetFile_Not_Exist()
+        {
+            CreateUnityFolderUseChild();
+            CreatePngInChildPath();
+            CreatePresetFolder(_presetChildPath);
+            CreatePreset(_presetFullPath, _pngFullPath, UnityFileUtility.FileType.Png);
+            DeleteUnityFolderUseChild();
+            CreateUnityFolderUseChild();
+            SetTextureImporterSetting(_pngFullPath);
+            ShouldFileInPath(UnityFileUtility.FileType.Png, false);
+        }
+
         #endregion
 
         #region Public Methods

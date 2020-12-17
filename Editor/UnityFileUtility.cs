@@ -186,10 +186,10 @@ namespace OOOneUnityTools.Editor
 
         public static void SetTextureImporterSetting(string presetPath, string texturePath)
         {
+            if (IsFileInPath(texturePath) == false) return;
             var preset = AssetDatabase.LoadAssetAtPath<Preset>(presetPath);
             var presetType = preset.GetTargetTypeName();
             var textureFileExtenstion = CSharpFileUtility.GetExtensionFromFullPath(texturePath);
-            Debug.Log(presetType);
             if (presetType == "TextureImporter" && textureFileExtenstion == "png")
             {
                 var textureImporter = AssetImporter.GetAtPath(texturePath) as TextureImporter;
