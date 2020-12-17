@@ -131,6 +131,11 @@ namespace OOOneUnityTools.Editor
             }
         }
 
+        public static bool DataEquals(string presetPath, string assetFullPath)
+        {
+            return LoadPresetAtPath(presetPath).DataEquals(GetImporter(assetFullPath));
+        }
+
 
         public static void DeleteUnityFolder(string childPath)
         {
@@ -146,6 +151,11 @@ namespace OOOneUnityTools.Editor
             return "";
         }
 
+        public static AssetImporter GetImporter(string assetFullPath)
+        {
+            return AssetImporter.GetAtPath(assetFullPath);
+        }
+
         public static bool IsFileInPath(string unityFullFolderPath, string fileName, FileType fileType)
         {
             var slashToCsharp = CSharpFileUtility.ParseSlashToCsharp(unityFullFolderPath);
@@ -155,6 +165,11 @@ namespace OOOneUnityTools.Editor
         public static bool IsUnityFolderExist(string childPath)
         {
             return CSharpFileUtility.IsFolderExist("Assets/" + childPath);
+        }
+
+        public static Preset LoadPresetAtPath(string presetPath)
+        {
+            return AssetDatabase.LoadAssetAtPath<Preset>(presetPath);
         }
 
         public static void RefreshAsset()
