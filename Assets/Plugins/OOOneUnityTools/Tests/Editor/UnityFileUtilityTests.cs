@@ -15,10 +15,11 @@ namespace OOOneUnityTools.Editor.Tests
         private string _fileName;
         private string _override_extension;
         private string _png_extension;
-        private string _presetChildPath = "Test111";
-        private string _presetFileName = "asdfeedd";
+        private string _presetChildPath;
+        private string _presetFileName;
         private string _unityFullFolderPath;
-        private string _pngPath;
+        private string _pngFullPath;
+        private string _presetFullPath;
 
         #endregion
 
@@ -33,7 +34,10 @@ namespace OOOneUnityTools.Editor.Tests
             _anime_extension = "anim";
             _override_extension = "overrideController";
             _png_extension = "png";
-            _pngPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "png");
+            _pngFullPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "png");
+            _presetChildPath = "Test111";
+            _presetFileName = "asdfeedd";
+            _presetFullPath = UnityPathUtility.GetUnityFullPath(_presetChildPath, _presetFileName, "preset");
         }
 
         #endregion
@@ -120,17 +124,21 @@ namespace OOOneUnityTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             CreatePngInChildPath();
-            var presetFullPath = "";
-            Preset preset = CreatePreset(_presetFileName, _pngPath, UnityFileUtility.FileType.Png, out presetFullPath);
+            CreatePresetFolder(_presetChildPath);
+            CreatePreset(_presetFullPath, _pngFullPath, UnityFileUtility.PresetType.Texture2D);
+            ModifyPngImporter(_pngFullPath);
 
-            //寫入Preset之前先改寫原本png的Importer設定值
-            ModifyPngImporter(_pngPath);
 
-            UnityFileUtility.SetTextureImporterSettings(presetFullPath, _pngPath);
+            var presetFullPath = UnityPathUtility.GetUnityFullPath(_presetChildPath,_presetFileName, "preset");
+            UnityFileUtility.SetTextureImporterSettings(presetFullPath, _pngFullPath);
 
-            var pngImporter = AssetImporter.GetAtPath(_pngPath) as TextureImporter;
+
+            var preset = AssetDatabase.LoadAssetAtPath<Preset>(presetFullPath);
+            var pngImporter = AssetImporter.GetAtPath(_pngFullPath) as TextureImporter;
             var dataEquals = preset.DataEquals(pngImporter);
             Assert.AreEqual(true, dataEquals);
+
+
             UnityFileUtility.DeleteUnityFolder(_presetChildPath);
         }
 
@@ -140,23 +148,22 @@ namespace OOOneUnityTools.Editor.Tests
             //創建png檔，取得其importer設定並存入比對用Preset
             CreateUnityFolderUseChild();
             CreatePngInChildPath();
-            ModifyPngImporter(_pngPath);
-            var presetForCompare_Name = "tmpPresetName";
-            var presetBeforeFullPath = "";
-            Preset presetBefore = CreatePreset(presetForCompare_Name, _pngPath, UnityFileUtility.FileType.Png, out presetBeforeFullPath);
+            var beforePngPresetPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "preset");
+            CreatePreset(beforePngPresetPath, _pngFullPath, UnityFileUtility.PresetType.Texture2D);
 
-            //創建AnimatorOvderride檔案，使用其import Settings作為Preset
-            var animatorOverridePath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "overrideController");
             CreateAssetFileWithType(UnityFileUtility.FileType.AnimatorOverride);
-            var presetFullPath = "";
-            Preset preset = CreatePreset(_presetFileName, animatorOverridePath, UnityFileUtility.FileType.AnimatorOverride, out presetFullPath);
+            var animatorOverridePath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "overrideController");
+            CreatePresetFolder(_presetChildPath);
+            CreatePreset(_presetFullPath, animatorOverridePath , UnityFileUtility.PresetType.AnimatorController);
 
-            //把Preset寫入importer
-            UnityFileUtility.SetTextureImporterSettings(presetFullPath, _pngPath);
+
+            UnityFileUtility.SetTextureImporterSettings(_presetFullPath, _childPath);
+
 
             //取得最後的importer資訊並與原本檔案的Preset比對
-            var pngImporter = AssetImporter.GetAtPath(_pngPath) as TextureImporter;
-            var dataEquals = presetBefore.DataEquals(pngImporter);
+            var pngImporter_After = AssetImporter.GetAtPath(_pngFullPath) as TextureImporter;
+            var presetBefore = AssetDatabase.LoadAssetAtPath<Preset>(beforePngPresetPath);
+            var dataEquals = presetBefore.DataEquals(pngImporter_After);
             Assert.AreEqual(true, dataEquals);
             UnityFileUtility.DeleteUnityFolder(_presetChildPath);
         }
@@ -197,11 +204,11 @@ namespace OOOneUnityTools.Editor.Tests
             UnityFileUtility.CreateTestPng(_childPath, _fileName, TextureColor.white);
         }
 
-        private Preset CreatePreset(string presetFileName, string fileFullPath, UnityFileUtility.FileType fileType, out string presetFullPath)
+        private void CreatePreset(string targetPath, string fileFullPath, UnityFileUtility.PresetType presetType)
         {
             // string presetChildPath = unityFileUtilityTests._presetChildPath;
             var preset = new Preset(AssetImporter.GetAtPath(fileFullPath));
-            if (fileType == UnityFileUtility.FileType.Png)
+            if (presetType == UnityFileUtility.PresetType.Texture2D)
             {
                 var textureImporterForPreset = AssetImporter.GetAtPath(fileFullPath) as TextureImporter;
                 // textureImporterForPreset.filterMode = FilterMode.Trilinear;
@@ -212,11 +219,9 @@ namespace OOOneUnityTools.Editor.Tests
                 var assetImporterForPreset = AssetImporter.GetAtPath(fileFullPath);
                 preset = new Preset(assetImporterForPreset);
             }
-            var presetExtension = UnityFileUtility.GetExtension(UnityFileUtility.FileType.Preset);
-            presetFullPath = UnityPathUtility.GetUnityFullPath(_presetChildPath, presetFileName, presetExtension);
-            CreatePresetFolder(_presetChildPath);
-            AssetDatabase.CreateAsset(preset, presetFullPath);
-            return preset;
+            var presetExtension = "preset";
+            AssetDatabase.CreateAsset(preset, targetPath);
+
         }
 
         private static void CreatePresetFolder(string presetChildPath)

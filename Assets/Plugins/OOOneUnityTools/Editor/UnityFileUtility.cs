@@ -16,8 +16,7 @@ namespace OOOneUnityTools.Editor
         {
             AnimatorOverride,
             AnimationClip,
-            Png,
-            Preset
+            Png
         }
 
         #endregion
@@ -29,7 +28,6 @@ namespace OOOneUnityTools.Editor
             {FileType.AnimatorOverride, "overrideController"},
             {FileType.AnimationClip, "anim"},
             {FileType.Png, "png"},
-            {FileType.Preset, "preset"}
         };
 
         #endregion
@@ -148,42 +146,24 @@ namespace OOOneUnityTools.Editor
         }
 
 
-        public static void ApplyPresetWhenFileAreValid(string presetChildPath,
-            string presetFileName, string targetFolderPath,
-            string targetFileName, FileType fileType)
-        {
-            var presetFullPath =
-                UnityPathUtility.GetUnityFullPath(presetChildPath, presetFileName, GetExtension(FileType.Preset));
-            var targetFileFullPath = UnityPathUtility.GetUnityFullPath(targetFolderPath, targetFileName, GetExtension(fileType));
-            var importer = AssetImporter.GetAtPath(targetFileFullPath);
-            var preset = AssetDatabase.LoadAssetAtPath<Preset>(presetFullPath);
-            var presetType = preset.GetPresetType().GetManagedTypeName();
-            if (presetType == "UnityEditor.TextureImporter" && fileType == FileType.Png)
-            {
-                var textureImporter = importer as TextureImporter;
-                preset.ApplyTo(textureImporter);
-                textureImporter.SaveAndReimport();
-            }
-            //檢查preset與target是否存在
-            /*
-            var presetFolderPath = UnityPathUtility.GetUnityFolderPath(presetChildPath);
-            var targetFolderFullPath = UnityPathUtility.GetUnityFullPath(targetFolderPath);
-            bool presetExist = IsFileInPath(presetFolderPath, presetFileName, FileType.Preset);
-            bool targetFileExist = IsFileInPath(targetFolderFullPath, targetFileName, fileType);
-            if(presetExist && targetFileExist){}
-            */
-        }
-
         public static void SetTextureImporterSettings(string presetPath, string texturePath)
         {
             var preset = AssetDatabase.LoadAssetAtPath<Preset>(presetPath);
-            var presetType = preset.GetPresetType().GetManagedTypeName();
-            if (presetType == "UnityEditor.TextureImporter")
+            var presetType = preset.GetTargetTypeName();
+            Debug.Log(presetType);
+            if (presetType == "TextureImporter")
             {
                 var textureImporter = AssetImporter.GetAtPath(texturePath) as TextureImporter;
                 preset.ApplyTo(textureImporter);
                 textureImporter.SaveAndReimport();
             }
+
+        }
+
+        public enum PresetType
+        {
+            Texture2D,
+            AnimatorController,
         }
     }
 
