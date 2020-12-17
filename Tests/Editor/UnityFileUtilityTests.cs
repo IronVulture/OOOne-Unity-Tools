@@ -11,12 +11,16 @@ namespace OOOneUnityTools.Editor.Tests
         #region Private Variables
 
         private string _anime_extension;
+        private readonly string _animeExtension = "anim";
         private string _childPath;
         private string _fileName;
         private string _override_extension;
+        private readonly string _overrideExtension = "overrideController";
         private string _png_extension;
+        private readonly string _pngExtension = "png";
         private string _pngFullPath;
         private string _presetChildPath;
+        private readonly string _presetExtension = "preset";
         private string _presetFileName;
         private string _presetFullPath;
         private string _unityFullFolderPath;
@@ -31,13 +35,13 @@ namespace OOOneUnityTools.Editor.Tests
             _childPath = "QWERT";
             _fileName = "WEjhdfjgh";
             _unityFullFolderPath = $@"{Application.dataPath}\{_childPath}";
-            _anime_extension = "anim";
-            _override_extension = "overrideController";
-            _png_extension = "png";
+            _anime_extension = _animeExtension;
+            _override_extension = _overrideExtension;
+            _png_extension = _pngExtension;
             _presetChildPath = "Test111";
             _presetFileName = "asdfeedd";
-            _pngFullPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, "png");
-            _presetFullPath = UnityPathUtility.GetUnityFullPath(_presetChildPath, _presetFileName, "preset");
+            _pngFullPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, _pngExtension);
+            _presetFullPath = UnityPathUtility.GetUnityFullPath(_presetChildPath, _presetFileName, _presetExtension);
         }
 
         #endregion
@@ -113,7 +117,7 @@ namespace OOOneUnityTools.Editor.Tests
         public void CheckFileExtension()
         {
             CreateAssetFileWithType(UnityFileUtility.FileType.Png);
-            var extensionAreEqual = CSharpFileUtility.CheckFileExtension(_pngFullPath, "png");
+            var extensionAreEqual = CSharpFileUtility.CheckFileExtension(_pngFullPath, _pngExtension);
             Assert.AreEqual(true, extensionAreEqual);
         }
 
@@ -135,14 +139,14 @@ namespace OOOneUnityTools.Editor.Tests
             //創建png檔，取得其importer設定並存入比對用Preset
             CreateUnityFolderUseChild();
             CreatePngInChildPath();
-            CreatePreset(GetUnityPathByExtension("preset"), _pngFullPath, UnityFileUtility.FileType.Png);
+            CreatePreset(GetUnityPathByExtension(_presetExtension), _pngFullPath, UnityFileUtility.FileType.Png);
             CreateAssetFileWithType(UnityFileUtility.FileType.AnimatorOverride);
             CreatePresetFolder(_presetChildPath);
-            CreatePreset(_presetFullPath, GetUnityPathByExtension("overrideController"),
+            CreatePreset(_presetFullPath, GetUnityPathByExtension(_overrideExtension),
                 UnityFileUtility.FileType.AnimatorOverride);
             SetTextureImporterSetting(_childPath);
             //取得最後的importer資訊並與原本檔案的Preset比對
-            Assert.AreEqual(true, DataEquals(GetUnityPathByExtension("preset"), _pngFullPath));
+            Assert.AreEqual(true, DataEquals(GetUnityPathByExtension(_presetExtension), _pngFullPath));
         }
 
         [Test]
@@ -151,7 +155,7 @@ namespace OOOneUnityTools.Editor.Tests
             //Arrange
             CreateUnityFolderUseChild();
             CreateAssetFileWithType(UnityFileUtility.FileType.AnimationClip);
-            var animFullPath = GetUnityPathByExtension("anim");
+            var animFullPath = GetUnityPathByExtension(_animeExtension);
             CreatePngInChildPath();
             CreatePresetFolder(_presetChildPath);
             CreatePreset(_presetFullPath, _pngFullPath, UnityFileUtility.FileType.Png);
