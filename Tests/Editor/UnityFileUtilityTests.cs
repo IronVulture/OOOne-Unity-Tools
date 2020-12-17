@@ -87,7 +87,7 @@ namespace OOOneUnityTools.Editor.Tests
         {
             CreateUnityFolderUseChild();
             CreateAssetFileWithType(fileType);
-            ShouldFileInPath(fileType, true);
+            ShouldFileInPath(true, fileType);
         }
 
         [Test]
@@ -96,9 +96,9 @@ namespace OOOneUnityTools.Editor.Tests
         [TestCase(UnityFileUtility.FileType.Png)]
         public void Create_CustomFile_If_Folder_Not_Exist(UnityFileUtility.FileType fileType)
         {
-            ShouldFileInPath(fileType, false);
+            ShouldFileInPath(false, fileType);
             CreateAssetFileWithType(fileType);
-            ShouldFileInPath(fileType, true);
+            ShouldFileInPath(true, fileType);
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace OOOneUnityTools.Editor.Tests
             var extension = UnityFileUtility.GetExtension(fileType);
             var cSharpFullPath = UnityPathUtility.GetCsharpUnityAbsoluteFullPath(_childPath, _fileName, extension);
             Assert.AreEqual(true, NotCreateWhenFileExist(fileType, cSharpFullPath));
-            ShouldFileInPath(fileType, true);
+            ShouldFileInPath(true, fileType);
         }
 
         [Test]
@@ -173,7 +173,7 @@ namespace OOOneUnityTools.Editor.Tests
             DeleteUnityFolderUseChild();
             CreateUnityFolderUseChild();
             SetTextureImporterSetting(_pngFullPath);
-            ShouldFileInPath(UnityFileUtility.FileType.Png, false);
+            ShouldFileInPath(false, UnityFileUtility.FileType.Png);
         }
 
         #endregion
@@ -273,7 +273,7 @@ namespace OOOneUnityTools.Editor.Tests
             UnityFileUtility.SetTextureImporterSetting(_presetFullPath, texturePath);
         }
 
-        private void ShouldFileInPath(UnityFileUtility.FileType fileType, bool exist)
+        private void ShouldFileInPath(bool exist, UnityFileUtility.FileType fileType)
         {
             var isFileInPath = UnityFileUtility.IsFileInPath(_unityFullFolderPath, _fileName, fileType);
             Assert.AreEqual(exist, isFileInPath);
