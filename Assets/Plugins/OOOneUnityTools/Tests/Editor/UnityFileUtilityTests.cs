@@ -130,7 +130,6 @@ namespace OOOneUnityTools.Editor.Tests
         [Test]
         public void DontApply_Preset_When_PresetType_NotTexture()
         {
-            //創建png檔，取得其importer設定並存入比對用Preset
             CreateUnityFolderUseChild();
             CreatePngInChildPath();
             CreatePreset(GetUnityPathByExtension(_presetExtension), _pngFullPath, UnityFileUtility.FileType.Png);
@@ -139,14 +138,12 @@ namespace OOOneUnityTools.Editor.Tests
             CreatePreset(_presetFullPath, GetUnityPathByExtension(_overrideExtension),
                 UnityFileUtility.FileType.AnimatorOverride);
             SetTextureImporterSetting(_childPath);
-            //取得最後的importer資訊並與原本檔案的Preset比對
             Assert.AreEqual(true, DataEquals(GetUnityPathByExtension(_presetExtension), _pngFullPath));
         }
 
         [Test]
         public void DontApply_Preset_When_TargetFile_Extension_Not_Png()
         {
-            //Arrange
             CreateUnityFolderUseChild();
             CreateAssetFileWithType(UnityFileUtility.FileType.AnimationClip);
             var animFullPath = GetUnityPathByExtension(_animeExtension);
@@ -168,6 +165,17 @@ namespace OOOneUnityTools.Editor.Tests
             CreateUnityFolderUseChild();
             SetTextureImporterSetting(_pngFullPath);
             ShouldFileInPath(false, UnityFileUtility.FileType.Png);
+        }
+
+        [Test]
+        public void DontApply_Preset_when_Preset_Not_Exist()
+        {
+            CreateUnityFolderUseChild();
+            CreatePngInChildPath();
+            var assetImporter = GetImporter(_pngFullPath);
+            CreatePreset(GetUnityPathByExtension(_presetExtension), _pngFullPath, UnityFileUtility.FileType.Png);
+            SetTextureImporterSetting(_pngFullPath);
+            Assert.AreEqual(true, DataEquals(GetUnityPathByExtension(_presetExtension), assetImporter));
         }
 
         #endregion
@@ -218,6 +226,11 @@ namespace OOOneUnityTools.Editor.Tests
         private bool DataEquals(string presetPath, string assetFullPath)
         {
             return UnityFileUtility.DataEquals(presetPath, assetFullPath);
+        }
+
+        private bool DataEquals(string presetPath, AssetImporter assetImporter)
+        {
+            return UnityFileUtility.DataEquals(presetPath, assetImporter);
         }
 
         private void DeletePresetFolder()
