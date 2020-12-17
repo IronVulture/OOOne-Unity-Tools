@@ -23,11 +23,11 @@ namespace OOOneUnityTools.Editor
 
         #region Private Variables
 
-        private static readonly Dictionary<FileType, string> FileExtension = new Dictionary<FileType, string>()
+        private static readonly Dictionary<FileType, string> FileExtension = new Dictionary<FileType, string>
         {
             {FileType.AnimatorOverride, "overrideController"},
             {FileType.AnimationClip, "anim"},
-            {FileType.Png, "png"},
+            {FileType.Png, "png"}
         };
 
         #endregion
@@ -66,7 +66,7 @@ namespace OOOneUnityTools.Editor
         {
             var path = UnityPathUtility.GetUnityAbsoluteFullPath(childPath, fileName, GetExtension(FileType.Png));
             var texture2D = Texture2D.blackTexture;
-            byte[] bytes = texture2D.EncodeToPNG();
+            var bytes = texture2D.EncodeToPNG();
             File.WriteAllBytes(path, bytes);
             RefreshAsset();
         }
@@ -86,8 +86,9 @@ namespace OOOneUnityTools.Editor
                 var assetImporterForPreset = AssetImporter.GetAtPath(fileFullPath);
                 preset = new Preset(assetImporterForPreset);
             }
+
             AssetDatabase.CreateAsset(preset, targetPath);
-            UnityFileUtility.RefreshAsset();
+            RefreshAsset();
         }
 
         public static void CreateTestPng(string childPath, string fileName, TextureColor color)
@@ -114,7 +115,7 @@ namespace OOOneUnityTools.Editor
 
         public static void CreateUnityAsset(string childPath, string fileName, Type type, string extension)
         {
-            Object instance = (Object) Activator.CreateInstance(type);
+            var instance = (Object) Activator.CreateInstance(type);
             var path = UnityPathUtility.GetUnityFullPath(childPath, fileName, extension);
             AssetDatabase.CreateAsset(instance, path);
             RefreshAsset();
@@ -156,10 +157,13 @@ namespace OOOneUnityTools.Editor
             return CSharpFileUtility.IsFolderExist("Assets/" + childPath);
         }
 
-        public static void RefreshAsset() => AssetDatabase.Refresh();
+        public static void RefreshAsset()
+        {
+            AssetDatabase.Refresh();
+        }
 
 
-        public static void SetTextureImporterSettings(string presetPath, string texturePath)
+        public static void SetTextureImporterSetting(string presetPath, string texturePath)
         {
             var preset = AssetDatabase.LoadAssetAtPath<Preset>(presetPath);
             var presetType = preset.GetTargetTypeName();
@@ -171,7 +175,6 @@ namespace OOOneUnityTools.Editor
                 preset.ApplyTo(textureImporter);
                 textureImporter.SaveAndReimport();
             }
-
         }
 
         #endregion
