@@ -162,6 +162,12 @@ namespace OOOneUnityTools.Editor
             return CSharpFileUtility.IsFileInPath(slashToCsharp, fileName, GetExtension(fileType));
         }
 
+        public static bool IsFileInPath(string unityFileFullPath)
+        {
+            var slashToCsharp = CSharpFileUtility.ParseSlashToCsharp(unityFileFullPath);
+            return CSharpFileUtility.IsFileInPath(slashToCsharp);
+        }
+
         public static bool IsUnityFolderExist(string childPath)
         {
             return CSharpFileUtility.IsFolderExist("Assets/" + childPath);
