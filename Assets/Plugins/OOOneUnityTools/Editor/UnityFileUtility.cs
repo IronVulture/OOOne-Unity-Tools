@@ -165,6 +165,25 @@ namespace OOOneUnityTools.Editor
             Texture2D,
             AnimatorController,
         }
+
+        public static void CreatePreset(string targetPath, string fileFullPath, UnityFileUtility.PresetType presetType)
+        {
+            // string presetChildPath = unityFileUtilityTests._presetChildPath;
+            var preset = new Preset(AssetImporter.GetAtPath(fileFullPath));
+            if (presetType == UnityFileUtility.PresetType.Texture2D)
+            {
+                var textureImporterForPreset = AssetImporter.GetAtPath(fileFullPath) as TextureImporter;
+                // textureImporterForPreset.filterMode = FilterMode.Trilinear;
+                preset = new Preset(textureImporterForPreset);
+            }
+            else
+            {
+                var assetImporterForPreset = AssetImporter.GetAtPath(fileFullPath);
+                preset = new Preset(assetImporterForPreset);
+            }
+            AssetDatabase.CreateAsset(preset, targetPath);
+            UnityFileUtility.RefreshAsset();
+        }
     }
 
     public enum TextureColor
