@@ -187,6 +187,22 @@ namespace OOOneUnityTools.Editor
             AssetDatabase.Refresh();
         }
 
+        public static void SetSecondaryTexture(string[] nameList, string[] texturePathList, string mainTexturePath)
+        {
+            var importer = GetImporter(mainTexturePath) as TextureImporter;
+            var secondarySpriteTextures = new SecondarySpriteTexture[texturePathList.Length];
+            for (var i = 0; i < texturePathList.Length; i++)
+            {
+                var texturePath = texturePathList[i];
+                var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
+                var secondarySpriteTexture = new SecondarySpriteTexture {name = nameList[i], texture = texture2D};
+                secondarySpriteTextures[i] = secondarySpriteTexture;
+            }
+
+            importer.secondarySpriteTextures = secondarySpriteTextures;
+            importer.SaveAndReimport();
+        }
+
 
         public static void SetTextureImporterSetting(string presetPath, string texturePath)
         {

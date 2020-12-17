@@ -179,23 +179,33 @@ namespace OOOneUnityTools.Editor.Tests
         }
 
         [Test]
-        public void Set_SecondaryTexture_When_All_Texture_Exists()
+        [TestCase("_Normal")]
+        [TestCase("_Normal", "_Rim")]
+        public void Set_SecondaryTexture_When_All_Texture_Exists(params string[] secTextureNameList)
         {
             var mainTexturePath = "Assets/AJDJ/Cat1.png";
             var secondaryAssetPath = "Assets/AJDJ/Cat2.png";
-            var strings = new string[1] {secondaryAssetPath};
+            var texturePathList = new string[secTextureNameList.Length];
 
-            UnityFileUtility.SetSecondaryTexture(strings, mainTexturePath);
+            for (var i = 0; i < secTextureNameList.Length; i++)
+                texturePathList[i] = secondaryAssetPath;
+
+            var nameList = new string[2] {"_Normal", "_Rim"};
+            UnityFileUtility.SetSecondaryTexture(nameList, texturePathList, mainTexturePath);
 
             var textureImporter = AssetImporter.GetAtPath(mainTexturePath) as TextureImporter;
             var secondarySpriteTextures = textureImporter.secondarySpriteTextures;
 
-            var secondarySpriteTexture = secondarySpriteTextures[0];
             var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(secondaryAssetPath);
-            var nameEqual = secondarySpriteTexture.name == "_Normal";
-            var textureEqual = secondarySpriteTexture.texture == texture2D;
-            var secondaryTextureEqual = nameEqual && textureEqual;
-            Assert.AreEqual(true, secondaryTextureEqual);
+            for (var i = 0; i < secTextureNameList.Length; i++)
+            {
+                var secondarySpriteTexture = secondarySpriteTextures[i];
+                var nameEqual = secondarySpriteTexture.name == secTextureNameList[i];
+                var textureEqual = secondarySpriteTexture.texture == texture2D;
+                var secondaryTextureEqual = nameEqual && textureEqual;
+                Assert.AreEqual(secTextureNameList[i], secondarySpriteTexture.name);
+                Assert.AreEqual(true, secondaryTextureEqual);
+            }
         }
 
         #endregion
