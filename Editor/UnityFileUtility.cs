@@ -133,9 +133,13 @@ namespace OOOneUnityTools.Editor
 
         public static bool DataEquals(string presetPath, string assetFullPath)
         {
-            return LoadPresetAtPath(presetPath).DataEquals(GetImporter(assetFullPath));
+            return DataEquals(presetPath, GetImporter(assetFullPath));
         }
 
+        public static bool DataEquals(string presetPath, AssetImporter assetImporter)
+        {
+            return LoadPresetAtPath(presetPath).DataEquals(assetImporter);
+        }
 
         public static void DeleteUnityFolder(string childPath)
         {
@@ -188,6 +192,8 @@ namespace OOOneUnityTools.Editor
         {
             if (IsFileInPath(texturePath) == false) return;
             var preset = AssetDatabase.LoadAssetAtPath<Preset>(presetPath);
+            if (preset == null) return;
+
             var presetType = preset.GetTargetTypeName();
             var textureFileExtenstion = CSharpFileUtility.GetExtensionFromFullPath(texturePath);
             if (presetType == "TextureImporter" && textureFileExtenstion == "png")
