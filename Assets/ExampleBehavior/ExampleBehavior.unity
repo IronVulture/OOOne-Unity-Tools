@@ -219,9 +219,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c2fa6d885f81f74a95e796323ee5c14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Animal: Cat
-  PersonID: 0
-  SceneName: SampleScence
+  SceneName: 3
 --- !u!1 &1900725046
 GameObject:
   m_ObjectHideFlags: 0

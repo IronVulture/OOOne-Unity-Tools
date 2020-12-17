@@ -8,6 +8,6 @@ public class ExampleBehavior : MonoBehaviour
     // [StringInList("John", "Jack", "Jim")] public int PersonID;
 
     // Showing a list of loaded scenes
-    [StringInList(typeof(PropertyDrawersHelper) , "AllSceneNames")]
+    [StringInList(typeof(PropertyDrawersHelper) , "AllNames")]
     public int SceneName;
 }
