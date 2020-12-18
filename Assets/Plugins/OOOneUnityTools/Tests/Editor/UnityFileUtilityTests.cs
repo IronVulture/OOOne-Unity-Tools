@@ -217,15 +217,15 @@ namespace OOOneUnityTools.Editor.Tests
             _secTextureNameList = secTextureNameList;
             _secondaryAssetPaths = new string[secTextureNameList.Length];
             CreateUnityFolderUseChild();
-
             CreateMainTexture();
             SetSecondaryPaths();
             _secondaryAssetPaths[0] = "123";
-            var returnBool =
+            var success =
                 UnityFileUtility.SetSecondaryTexture(_mainTexFullPath, GetSecTextureDatas(), out var messages);
 
             var expectedErrorList = new List<string>();
-            expectedErrorList.Add("123");
+            expectedErrorList.Add("Name:_Normal Path:123");
+
             for (var i = 0; i < messages.Count; i++)
             {
                 var message = messages[i];
@@ -233,7 +233,37 @@ namespace OOOneUnityTools.Editor.Tests
             }
 
             Assert.AreEqual(messages.Count, 1);
-            Assert.AreEqual(false, returnBool);
+            Assert.AreEqual(false, success);
+            ShouldSecTextureEqual();
+            ResetMainImporterSecTexture();
+        }
+
+        [Test]
+        [TestCase("_Normal")]
+        [TestCase("_Normal", "_Rim")]
+        public void Dont_Set_SecondaryTexture_When_SecondaryTextureName_Is_Empty_Return_Fail(
+            params string[] secTextureNameList)
+        {
+            _secTextureNameList = secTextureNameList;
+            _secondaryAssetPaths = new string[secTextureNameList.Length];
+            CreateUnityFolderUseChild();
+            CreateMainTexture();
+            SetSecondaryPaths();
+            _secondaryAssetPaths[0] = "123";
+            _secTextureNameList[0] = "";
+            var success =
+                UnityFileUtility.SetSecondaryTexture(_mainTexFullPath, GetSecTextureDatas(), out var messages);
+            var expectedErrorList = new List<string>();
+            expectedErrorList.Add("Name: Path:123");
+
+            for (var i = 0; i < messages.Count; i++)
+            {
+                var message = messages[i];
+                Assert.AreEqual(expectedErrorList[i], message);
+            }
+
+            Assert.AreEqual(false, success);
+            Assert.AreEqual(1, messages.Count);
             ShouldSecTextureEqual();
             ResetMainImporterSecTexture();
         }
