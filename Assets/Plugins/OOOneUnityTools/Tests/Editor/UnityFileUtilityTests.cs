@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
 using UnityEditor;
@@ -36,6 +37,13 @@ namespace OOOneUnityTools.Editor.Tests
             _presetFileName = "asdfeedd";
             _pngFullPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, _pngExtension);
             _presetFullPath = UnityPathUtility.GetUnityFullPath(_presetChildPath, _presetFileName, _presetExtension);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            DeleteUnityFolderUseChild();
+            DeletePresetFolder();
         }
 
         #endregion
@@ -185,13 +193,16 @@ namespace OOOneUnityTools.Editor.Tests
         {
             var mainTexturePath = "Assets/AJDJ/Cat1.png";
             var secondaryAssetPath = "Assets/AJDJ/Cat2.png";
-            var texturePathList = new string[secTextureNameList.Length];
 
+            var secTextureDatas = new List<SecTextureData>();
             for (var i = 0; i < secTextureNameList.Length; i++)
-                texturePathList[i] = secondaryAssetPath;
+            {
+                var secTextureName = secTextureNameList[i];
+                var secTextureData = new SecTextureData {AssetPath = secondaryAssetPath, Name = secTextureName};
+                secTextureDatas.Add(secTextureData);
+            }
 
-            var nameList = new string[2] {"_Normal", "_Rim"};
-            UnityFileUtility.SetSecondaryTexture(nameList, texturePathList, mainTexturePath);
+            UnityFileUtility.SetSecondaryTexture(mainTexturePath, secTextureDatas);
 
             var textureImporter = AssetImporter.GetAtPath(mainTexturePath) as TextureImporter;
             var secondarySpriteTextures = textureImporter.secondarySpriteTextures;
@@ -206,6 +217,8 @@ namespace OOOneUnityTools.Editor.Tests
                 Assert.AreEqual(secTextureNameList[i], secondarySpriteTexture.name);
                 Assert.AreEqual(true, secondaryTextureEqual);
             }
+
+            textureImporter.secondarySpriteTextures = new SecondarySpriteTexture[0];
         }
 
         #endregion
@@ -215,13 +228,6 @@ namespace OOOneUnityTools.Editor.Tests
         public static void ShouldEqualResult(string expected, string result)
         {
             Assert.AreEqual(expected, result);
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            DeleteUnityFolderUseChild();
-            DeletePresetFolder();
         }
 
         #endregion

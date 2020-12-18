@@ -8,6 +8,16 @@ using Object = UnityEngine.Object;
 
 namespace OOOneUnityTools.Editor
 {
+    public class SecTextureData
+    {
+        #region Public Variables
+
+        public string AssetPath;
+        public string Name;
+
+        #endregion
+    }
+
     public class UnityFileUtility
     {
         #region Public Variables
@@ -187,15 +197,19 @@ namespace OOOneUnityTools.Editor
             AssetDatabase.Refresh();
         }
 
-        public static void SetSecondaryTexture(string[] nameList, string[] texturePathList, string mainTexturePath)
+        public static void SetSecondaryTexture(string mainTexturePath, List<SecTextureData> secTextureDatas)
         {
             var importer = GetImporter(mainTexturePath) as TextureImporter;
-            var secondarySpriteTextures = new SecondarySpriteTexture[texturePathList.Length];
-            for (var i = 0; i < texturePathList.Length; i++)
+            var secondarySpriteTextures = new SecondarySpriteTexture[secTextureDatas.Count];
+            for (var i = 0; i < secTextureDatas.Count; i++)
             {
-                var texturePath = texturePathList[i];
+                var secTextureData = secTextureDatas[i];
+                var texturePath = secTextureData.AssetPath;
                 var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
-                var secondarySpriteTexture = new SecondarySpriteTexture {name = nameList[i], texture = texture2D};
+                var secondarySpriteTexture = new SecondarySpriteTexture
+                {
+                    name = secTextureData.Name, texture = texture2D
+                };
                 secondarySpriteTextures[i] = secondarySpriteTexture;
             }
 
