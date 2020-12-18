@@ -22,6 +22,7 @@ namespace OOOneUnityTools.Editor.Tests
         private string _presetFileName;
         private string _presetFullPath;
         private string _unityFullFolderPath;
+        private TextureImporter _mainTextureTextureImporter;
 
         #endregion
 
@@ -204,8 +205,8 @@ namespace OOOneUnityTools.Editor.Tests
 
             UnityFileUtility.SetSecondaryTexture(mainTexturePath, secTextureDatas);
 
-            var textureImporter = AssetImporter.GetAtPath(mainTexturePath) as TextureImporter;
-            var secondarySpriteTextures = textureImporter.secondarySpriteTextures;
+            _mainTextureTextureImporter = AssetImporter.GetAtPath(mainTexturePath) as TextureImporter;
+            var secondarySpriteTextures = _mainTextureTextureImporter.secondarySpriteTextures;
 
             var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(secondaryAssetPath);
             for (var i = 0; i < secTextureNameList.Length; i++)
@@ -218,7 +219,7 @@ namespace OOOneUnityTools.Editor.Tests
                 Assert.AreEqual(true, secondaryTextureEqual);
             }
 
-            textureImporter.secondarySpriteTextures = new SecondarySpriteTexture[0];
+            ResetMainImporterSecTexture();
         }
 
         #endregion
@@ -309,6 +310,11 @@ namespace OOOneUnityTools.Editor.Tests
             var modifyTimeAfter = File.GetLastWriteTime(cSharpFullPath);
             var modifyTimeIsEqual = modifyTimeAfter == modifyTimeBefore;
             return modifyTimeIsEqual && isCreated == false;
+        }
+
+        private void ResetMainImporterSecTexture()
+        {
+            _mainTextureTextureImporter.secondarySpriteTextures = new SecondarySpriteTexture[0];
         }
 
         private void SetTextureImporterSetting(string texturePath)
