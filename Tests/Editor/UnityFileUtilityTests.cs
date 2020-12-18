@@ -202,15 +202,6 @@ namespace OOOneUnityTools.Editor.Tests
 
         #endregion
 
-        #region Public Methods
-
-        public static void ShouldEqualResult(string expected, string result)
-        {
-            Assert.AreEqual(expected, result);
-        }
-
-        #endregion
-
         #region Private Methods
 
         private bool CreateAssetFileWithType(UnityFileUtility.FileType fileType)
