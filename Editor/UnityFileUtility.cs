@@ -208,9 +208,9 @@ namespace OOOneUnityTools.Editor
                 var secTextureData = secTextureDatas[i];
                 var texturePath = secTextureData.AssetPath;
                 var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
-                if (texture2D == null)
+                if (texture2D == null || secTextureData.Name == string.Empty)
                 {
-                    message.Add($"{texturePath}");
+                    message.Add($"Name:{secTextureData.Name} Path:{texturePath}");
                     continue;
                 }
 
@@ -221,14 +221,14 @@ namespace OOOneUnityTools.Editor
                 secondarySpriteTextures[i] = secondarySpriteTexture;
             }
 
-            var sucesss = message.Count == 0;
-            if (sucesss)
+            var success = message.Count == 0;
+            if (success)
             {
                 importer.secondarySpriteTextures = secondarySpriteTextures;
                 importer.SaveAndReimport();
             }
 
-            return sucesss;
+            return success;
         }
 
 
