@@ -220,20 +220,10 @@ namespace OOOneUnityTools.Editor.Tests
             CreateMainTexture();
             SetSecondaryPaths();
             _secondaryAssetPaths[0] = "123";
-            var success =
-                UnityFileUtility.SetSecondaryTexture(_mainTexFullPath, GetSecTextureDatas(), out var messages);
+            var success = UnityFileUtility.SetSecondaryTexture(_mainTexFullPath, GetSecTextureDatas(),
+                out var messages);
 
-            var expectedErrorList = new List<string>();
-            expectedErrorList.Add("Name:_Normal Path:123");
-
-            for (var i = 0; i < messages.Count; i++)
-            {
-                var message = messages[i];
-                Assert.AreEqual(expectedErrorList[i], message);
-            }
-
-            Assert.AreEqual(messages.Count, 1);
-            Assert.AreEqual(false, success);
+            ShouldReturnCorrectMessage(messages, success, "_Normal", "123");
             ShouldSecTextureEqual();
             ResetMainImporterSecTexture();
         }
@@ -251,19 +241,11 @@ namespace OOOneUnityTools.Editor.Tests
             SetSecondaryPaths();
             _secondaryAssetPaths[0] = "123";
             _secTextureNameList[0] = "";
+
             var success =
                 UnityFileUtility.SetSecondaryTexture(_mainTexFullPath, GetSecTextureDatas(), out var messages);
-            var expectedErrorList = new List<string>();
-            expectedErrorList.Add("Name: Path:123");
 
-            for (var i = 0; i < messages.Count; i++)
-            {
-                var message = messages[i];
-                Assert.AreEqual(expectedErrorList[i], message);
-            }
-
-            Assert.AreEqual(false, success);
-            Assert.AreEqual(1, messages.Count);
+            ShouldReturnCorrectMessage(messages, success, "", "123");
             ShouldSecTextureEqual();
             ResetMainImporterSecTexture();
         }
@@ -398,6 +380,23 @@ namespace OOOneUnityTools.Editor.Tests
         private void ShouldFolderExist(bool expected, string path)
         {
             Assert.AreEqual(expected, UnityFileUtility.IsUnityFolderExist(path));
+        }
+
+        private static void ShouldReturnCorrectMessage(List<string> messages, bool success, string expectedName,
+            string expectedPath)
+        {
+            var expectedErrorList = new List<string>();
+
+            expectedErrorList.Add($"Name:{expectedName} Path:{expectedPath}");
+
+            for (var i = 0; i < messages.Count; i++)
+            {
+                var message = messages[i];
+                Assert.AreEqual(expectedErrorList[i], message);
+            }
+
+            Assert.AreEqual(messages.Count, 1);
+            Assert.AreEqual(false, success);
         }
 
         private void ShouldSecTextureEqual()
