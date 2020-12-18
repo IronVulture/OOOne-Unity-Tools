@@ -27,7 +27,7 @@ namespace OOOneUnityTools.Editor.Tests
         private string _presetFileName;
         private string _presetFullPath;
         private string _unityFullFolderPath;
-        private TextureImporter _mainTextureTextureImporter;
+        private TextureImporter _mainTextureImporter;
 
         #endregion
 
@@ -203,7 +203,37 @@ namespace OOOneUnityTools.Editor.Tests
             CreateUnityFolderUseChild();
             CreateMainTexture();
             SetSecondaryPaths();
-            SetSecondaryTexture(GetSecTextureDatas());
+            UnityFileUtility.SetSecondaryTexture(_mainTexFullPath, GetSecTextureDatas(), out var message);
+            ShouldSecTextureEqual();
+            ResetMainImporterSecTexture();
+        }
+
+        [Test]
+        [TestCase("_Normal")]
+        [TestCase("_Normal", "_Rim")]
+        public void Dont_Set_SecondaryTexture_When_SecondaryTexture_Not_Exist_And_Return_Error_Message(
+            params string[] secTextureNameList)
+        {
+            _secTextureNameList = secTextureNameList;
+            _secondaryAssetPaths = new string[secTextureNameList.Length];
+            CreateUnityFolderUseChild();
+
+            CreateMainTexture();
+            SetSecondaryPaths();
+            _secondaryAssetPaths[0] = "123";
+            var returnBool =
+                UnityFileUtility.SetSecondaryTexture(_mainTexFullPath, GetSecTextureDatas(), out var messages);
+
+            var expectedErrorList = new List<string>();
+            expectedErrorList.Add("123");
+            for (var i = 0; i < messages.Count; i++)
+            {
+                var message = messages[i];
+                Assert.AreEqual(expectedErrorList[i], message);
+            }
+
+            Assert.AreEqual(messages.Count, 1);
+            Assert.AreEqual(false, returnBool);
             ShouldSecTextureEqual();
             ResetMainImporterSecTexture();
         }
@@ -309,7 +339,7 @@ namespace OOOneUnityTools.Editor.Tests
 
         private void ResetMainImporterSecTexture()
         {
-            _mainTextureTextureImporter.secondarySpriteTextures = new SecondarySpriteTexture[0];
+            _mainTextureImporter.secondarySpriteTextures = new SecondarySpriteTexture[0];
         }
 
         private void SetSecondaryPaths()
@@ -322,11 +352,6 @@ namespace OOOneUnityTools.Editor.Tests
                 var secTexFullPath = UnityPathUtility.GetUnityFullPath(_childPath, secTextureFileName, _pngExtension);
                 _secondaryAssetPaths[i] = secTexFullPath;
             }
-        }
-
-        private void SetSecondaryTexture(List<SecTextureData> secTextureDatas)
-        {
-            UnityFileUtility.SetSecondaryTexture(_mainTexFullPath, secTextureDatas);
         }
 
         private void SetTextureImporterSetting(string texturePath)
@@ -347,15 +372,16 @@ namespace OOOneUnityTools.Editor.Tests
 
         private void ShouldSecTextureEqual()
         {
-            _mainTextureTextureImporter = AssetImporter.GetAtPath(_mainTexFullPath) as TextureImporter;
-            var secondarySpriteTextures = _mainTextureTextureImporter.secondarySpriteTextures;
-            for (var i = 0; i < _secTextureNameList.Length; i++)
+            _mainTextureImporter = AssetImporter.GetAtPath(_mainTexFullPath) as TextureImporter;
+            var secondarySpriteTextures = _mainTextureImporter.secondarySpriteTextures;
+            for (var i = 0; i < _mainTextureImporter.secondarySpriteTextures.Length; i++)
             {
                 var secTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(_secondaryAssetPaths[i]);
                 var secondarySpriteTexture = secondarySpriteTextures[i];
                 var nameEqual = secondarySpriteTexture.name == _secTextureNameList[i];
                 var textureEqual = secondarySpriteTexture.texture == secTexture;
                 var secondaryTextureEqual = nameEqual && textureEqual;
+                Assert.NotNull(secondarySpriteTexture.texture);
                 Assert.AreEqual(true, secondaryTextureEqual);
             }
         }

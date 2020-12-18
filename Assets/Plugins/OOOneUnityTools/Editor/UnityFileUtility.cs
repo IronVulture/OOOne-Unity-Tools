@@ -197,15 +197,23 @@ namespace OOOneUnityTools.Editor
             AssetDatabase.Refresh();
         }
 
-        public static void SetSecondaryTexture(string mainTexFullPath, List<SecTextureData> secTextureDatas)
+        public static bool SetSecondaryTexture(string mainTexFullPath, List<SecTextureData> secTextureDatas,
+            out List<string> message)
         {
             var importer = GetImporter(mainTexFullPath) as TextureImporter;
             var secondarySpriteTextures = new SecondarySpriteTexture[secTextureDatas.Count];
+            message = new List<string>();
             for (var i = 0; i < secTextureDatas.Count; i++)
             {
                 var secTextureData = secTextureDatas[i];
                 var texturePath = secTextureData.AssetPath;
                 var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(texturePath);
+                if (texture2D == null)
+                {
+                    message.Add($"{texturePath}");
+                    continue;
+                }
+
                 var secondarySpriteTexture = new SecondarySpriteTexture
                 {
                     name = secTextureData.Name, texture = texture2D
@@ -213,8 +221,14 @@ namespace OOOneUnityTools.Editor
                 secondarySpriteTextures[i] = secondarySpriteTexture;
             }
 
-            importer.secondarySpriteTextures = secondarySpriteTextures;
-            importer.SaveAndReimport();
+            var sucesss = message.Count == 0;
+            if (sucesss)
+            {
+                importer.secondarySpriteTextures = secondarySpriteTextures;
+                importer.SaveAndReimport();
+            }
+
+            return sucesss;
         }
 
 
