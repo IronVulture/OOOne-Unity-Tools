@@ -197,9 +197,9 @@ namespace OOOneUnityTools.Editor
             AssetDatabase.Refresh();
         }
 
-        public static void SetSecondaryTexture(string mainTexturePath, List<SecTextureData> secTextureDatas)
+        public static void SetSecondaryTexture(string mainTexFullPath, List<SecTextureData> secTextureDatas)
         {
-            var importer = GetImporter(mainTexturePath) as TextureImporter;
+            var importer = GetImporter(mainTexFullPath) as TextureImporter;
             var secondarySpriteTextures = new SecondarySpriteTexture[secTextureDatas.Count];
             for (var i = 0; i < secTextureDatas.Count; i++)
             {

@@ -11,9 +11,14 @@ namespace OOOneUnityTools.Editor.Tests
     {
         #region Private Variables
 
+        private static string[] _secondaryAssetPaths;
+        private static string[] _secTextureNameList;
         private readonly string _animeExtension = "anim";
+
         private string _childPath;
         private string _fileName;
+        private readonly string _mainTexFileName = "mainTex";
+        private string _mainTexFullPath;
         private readonly string _overrideExtension = "overrideController";
         private readonly string _pngExtension = "png";
         private string _pngFullPath;
@@ -38,6 +43,7 @@ namespace OOOneUnityTools.Editor.Tests
             _presetFileName = "asdfeedd";
             _pngFullPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, _pngExtension);
             _presetFullPath = UnityPathUtility.GetUnityFullPath(_presetChildPath, _presetFileName, _presetExtension);
+            _mainTexFullPath = UnityPathUtility.GetUnityFullPath(_childPath, _mainTexFileName, _pngExtension);
         }
 
         [TearDown]
@@ -192,22 +198,13 @@ namespace OOOneUnityTools.Editor.Tests
         [TestCase("_Normal", "_Rim")]
         public void Set_SecondaryTexture_When_All_Texture_Exists(params string[] secTextureNameList)
         {
+            _secTextureNameList = secTextureNameList;
+            _secondaryAssetPaths = new string[secTextureNameList.Length];
             CreateUnityFolderUseChild();
-            var mainTexFileName = "mainTex";
-            var secTex1FileName = "secTex1";
-            var secTex2FileName = "secTex2";
-            UnityFileUtility.CreateTestPng(_childPath, mainTexFileName, TextureColor.black);
-            UnityFileUtility.CreateTestPng(_childPath, secTex1FileName, TextureColor.white);
-            UnityFileUtility.CreateTestPng(_childPath, secTex2FileName, TextureColor.white);
-            var mainTexFullPath = UnityPathUtility.GetUnityFullPath(_childPath, mainTexFileName, _pngExtension);
-            var secTex1FullPath = UnityPathUtility.GetUnityFullPath(_childPath, secTex1FileName, _pngExtension);
-            var secTex2FullPath = UnityPathUtility.GetUnityFullPath(_childPath, secTex2FileName, _pngExtension);
-
-            string[] secondaryAssetPath = {secTex1FullPath, secTex2FullPath};
-            var secTextureDatas = GetSecTextureDatas(secTextureNameList, secondaryAssetPath);
-
-            UnityFileUtility.SetSecondaryTexture(mainTexFullPath, secTextureDatas);
-            ShouldSecTextureEqual(secTextureNameList, mainTexFullPath, secondaryAssetPath);
+            CreateMainTexture();
+            SetSecondaryPaths();
+            SetSecondaryTexture(GetSecTextureDatas());
+            ShouldSecTextureEqual();
             ResetMainImporterSecTexture();
         }
 
@@ -218,6 +215,11 @@ namespace OOOneUnityTools.Editor.Tests
         private bool CreateAssetFileWithType(UnityFileUtility.FileType fileType)
         {
             return UnityFileUtility.CreateAssetFile(fileType, _childPath, _fileName);
+        }
+
+        private void CreateMainTexture()
+        {
+            UnityFileUtility.CreateTestPng(_childPath, _mainTexFileName, TextureColor.black);
         }
 
         private void CreatePngInChildPath()
@@ -265,13 +267,13 @@ namespace OOOneUnityTools.Editor.Tests
             return UnityFileUtility.GetImporter(assetFullPath);
         }
 
-        private static List<SecTextureData> GetSecTextureDatas(string[] secTextureNameList, string[] secondaryAssetPath)
+        private static List<SecTextureData> GetSecTextureDatas()
         {
             var secTextureDatas = new List<SecTextureData>();
-            for (var i = 0; i < secTextureNameList.Length; i++)
+            for (var i = 0; i < _secTextureNameList.Length; i++)
             {
-                var secTextureName = secTextureNameList[i];
-                var secTextureData = new SecTextureData {AssetPath = secondaryAssetPath[i], Name = secTextureName};
+                var secTextureName = _secTextureNameList[i];
+                var secTextureData = new SecTextureData {AssetPath = _secondaryAssetPaths[i], Name = secTextureName};
                 secTextureDatas.Add(secTextureData);
             }
 
@@ -310,6 +312,23 @@ namespace OOOneUnityTools.Editor.Tests
             _mainTextureTextureImporter.secondarySpriteTextures = new SecondarySpriteTexture[0];
         }
 
+        private void SetSecondaryPaths()
+        {
+            var texturesCount = _secTextureNameList.Length;
+            for (var i = 0; i < texturesCount; i++)
+            {
+                var secTextureFileName = $"secTex{i}";
+                UnityFileUtility.CreateTestPng(_childPath, secTextureFileName, TextureColor.white);
+                var secTexFullPath = UnityPathUtility.GetUnityFullPath(_childPath, secTextureFileName, _pngExtension);
+                _secondaryAssetPaths[i] = secTexFullPath;
+            }
+        }
+
+        private void SetSecondaryTexture(List<SecTextureData> secTextureDatas)
+        {
+            UnityFileUtility.SetSecondaryTexture(_mainTexFullPath, secTextureDatas);
+        }
+
         private void SetTextureImporterSetting(string texturePath)
         {
             UnityFileUtility.SetTextureImporterSetting(_presetFullPath, texturePath);
@@ -326,16 +345,15 @@ namespace OOOneUnityTools.Editor.Tests
             Assert.AreEqual(expected, UnityFileUtility.IsUnityFolderExist(path));
         }
 
-        private void ShouldSecTextureEqual(string[] secTextureNameList, string mainTexturePath,
-            string[] secondaryAssetPath)
+        private void ShouldSecTextureEqual()
         {
-            _mainTextureTextureImporter = AssetImporter.GetAtPath(mainTexturePath) as TextureImporter;
+            _mainTextureTextureImporter = AssetImporter.GetAtPath(_mainTexFullPath) as TextureImporter;
             var secondarySpriteTextures = _mainTextureTextureImporter.secondarySpriteTextures;
-            for (var i = 0; i < secTextureNameList.Length; i++)
+            for (var i = 0; i < _secTextureNameList.Length; i++)
             {
-                var secTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(secondaryAssetPath[i]);
+                var secTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(_secondaryAssetPaths[i]);
                 var secondarySpriteTexture = secondarySpriteTextures[i];
-                var nameEqual = secondarySpriteTexture.name == secTextureNameList[i];
+                var nameEqual = secondarySpriteTexture.name == _secTextureNameList[i];
                 var textureEqual = secondarySpriteTexture.texture == secTexture;
                 var secondaryTextureEqual = nameEqual && textureEqual;
                 Assert.AreEqual(true, secondaryTextureEqual);
