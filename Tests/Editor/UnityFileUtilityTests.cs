@@ -194,31 +194,9 @@ namespace OOOneUnityTools.Editor.Tests
         {
             var mainTexturePath = "Assets/AJDJ/Cat1.png";
             var secondaryAssetPath = "Assets/AJDJ/Cat2.png";
-
-            var secTextureDatas = new List<SecTextureData>();
-            for (var i = 0; i < secTextureNameList.Length; i++)
-            {
-                var secTextureName = secTextureNameList[i];
-                var secTextureData = new SecTextureData {AssetPath = secondaryAssetPath, Name = secTextureName};
-                secTextureDatas.Add(secTextureData);
-            }
-
+            var secTextureDatas = GetSecTextureDatas(secTextureNameList, secondaryAssetPath);
             UnityFileUtility.SetSecondaryTexture(mainTexturePath, secTextureDatas);
-
-            _mainTextureTextureImporter = AssetImporter.GetAtPath(mainTexturePath) as TextureImporter;
-            var secondarySpriteTextures = _mainTextureTextureImporter.secondarySpriteTextures;
-
-            var texture2D = AssetDatabase.LoadAssetAtPath<Texture2D>(secondaryAssetPath);
-            for (var i = 0; i < secTextureNameList.Length; i++)
-            {
-                var secondarySpriteTexture = secondarySpriteTextures[i];
-                var nameEqual = secondarySpriteTexture.name == secTextureNameList[i];
-                var textureEqual = secondarySpriteTexture.texture == texture2D;
-                var secondaryTextureEqual = nameEqual && textureEqual;
-                Assert.AreEqual(secTextureNameList[i], secondarySpriteTexture.name);
-                Assert.AreEqual(true, secondaryTextureEqual);
-            }
-
+            ShouldSecTextureEqual(secTextureNameList, mainTexturePath, secondaryAssetPath);
             ResetMainImporterSecTexture();
         }
 
@@ -285,6 +263,19 @@ namespace OOOneUnityTools.Editor.Tests
             return UnityFileUtility.GetImporter(assetFullPath);
         }
 
+        private static List<SecTextureData> GetSecTextureDatas(string[] secTextureNameList, string secondaryAssetPath)
+        {
+            var secTextureDatas = new List<SecTextureData>();
+            for (var i = 0; i < secTextureNameList.Length; i++)
+            {
+                var secTextureName = secTextureNameList[i];
+                var secTextureData = new SecTextureData {AssetPath = secondaryAssetPath, Name = secTextureName};
+                secTextureDatas.Add(secTextureData);
+            }
+
+            return secTextureDatas;
+        }
+
         private string GetUnityPathByExtension(string extension)
         {
             return UnityPathUtility.GetUnityFullPath(_childPath, _fileName, extension);
@@ -331,6 +322,22 @@ namespace OOOneUnityTools.Editor.Tests
         private void ShouldFolderExist(bool expected, string path)
         {
             Assert.AreEqual(expected, UnityFileUtility.IsUnityFolderExist(path));
+        }
+
+        private void ShouldSecTextureEqual(string[] secTextureNameList, string mainTexturePath,
+            string secondaryAssetPath)
+        {
+            _mainTextureTextureImporter = AssetImporter.GetAtPath(mainTexturePath) as TextureImporter;
+            var secondarySpriteTextures = _mainTextureTextureImporter.secondarySpriteTextures;
+            var secTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(secondaryAssetPath);
+            for (var i = 0; i < secTextureNameList.Length; i++)
+            {
+                var secondarySpriteTexture = secondarySpriteTextures[i];
+                var nameEqual = secondarySpriteTexture.name == secTextureNameList[i];
+                var textureEqual = secondarySpriteTexture.texture == secTexture;
+                var secondaryTextureEqual = nameEqual && textureEqual;
+                Assert.AreEqual(true, secondaryTextureEqual);
+            }
         }
 
         #endregion
