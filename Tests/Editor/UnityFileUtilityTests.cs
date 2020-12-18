@@ -199,10 +199,7 @@ namespace OOOneUnityTools.Editor.Tests
         public void Set_SecondaryTexture_When_All_Texture_Exists(params string[] secTextureNameList)
         {
             _secTextureNameList = secTextureNameList;
-            _secondaryAssetPaths = new string[secTextureNameList.Length];
-            CreateUnityFolderUseChild();
-            CreateMainTexture();
-            SetSecondaryPaths();
+            ArrangeMainTexture_SecondaryPath();
             UnityFileUtility.SetSecondaryTexture(_mainTexFullPath, GetSecTextureDatas(), out var message);
             ShouldSecTextureEqual();
             ResetMainImporterSecTexture();
@@ -215,10 +212,7 @@ namespace OOOneUnityTools.Editor.Tests
             params string[] secTextureNameList)
         {
             _secTextureNameList = secTextureNameList;
-            _secondaryAssetPaths = new string[secTextureNameList.Length];
-            CreateUnityFolderUseChild();
-            CreateMainTexture();
-            SetSecondaryPaths();
+            ArrangeMainTexture_SecondaryPath();
             _secondaryAssetPaths[0] = "123";
             var success = UnityFileUtility.SetSecondaryTexture(_mainTexFullPath, GetSecTextureDatas(),
                 out var messages);
@@ -235,10 +229,7 @@ namespace OOOneUnityTools.Editor.Tests
             params string[] secTextureNameList)
         {
             _secTextureNameList = secTextureNameList;
-            _secondaryAssetPaths = new string[secTextureNameList.Length];
-            CreateUnityFolderUseChild();
-            CreateMainTexture();
-            SetSecondaryPaths();
+            ArrangeMainTexture_SecondaryPath();
             _secondaryAssetPaths[0] = "123";
             _secTextureNameList[0] = "";
 
@@ -257,10 +248,7 @@ namespace OOOneUnityTools.Editor.Tests
             params string[] secTextureNameList)
         {
             _secTextureNameList = secTextureNameList;
-            _secondaryAssetPaths = new string[secTextureNameList.Length];
-            CreateUnityFolderUseChild();
-            CreateMainTexture();
-            SetSecondaryPaths();
+            ArrangeMainTexture_SecondaryPath();
             _secondaryAssetPaths[0] = "123";
             _secTextureNameList[0] = "";
             var secTextureDatas = new List<SecTextureData>();
@@ -279,10 +267,7 @@ namespace OOOneUnityTools.Editor.Tests
             params string[] secTextureNameList)
         {
             _secTextureNameList = secTextureNameList;
-            _secondaryAssetPaths = new string[secTextureNameList.Length];
-            CreateUnityFolderUseChild();
-            CreateMainTexture();
-            SetSecondaryPaths();
+            ArrangeMainTexture_SecondaryPath();
             var secTextureDatas = new List<SecTextureData>();
 
             var success =
@@ -295,6 +280,14 @@ namespace OOOneUnityTools.Editor.Tests
         #endregion
 
         #region Private Methods
+
+        private void ArrangeMainTexture_SecondaryPath()
+        {
+            _secondaryAssetPaths = new string[_secTextureNameList.Length];
+            CreateUnityFolderUseChild();
+            CreateMainTexture();
+            SetSecondaryPaths();
+        }
 
         private bool CreateAssetFileWithType(UnityFileUtility.FileType fileType)
         {
