@@ -221,7 +221,7 @@ namespace OOOneUnityTools.Editor
                 secondarySpriteTextures[i] = secondarySpriteTexture;
             }
 
-            var success = message.Count == 0;
+            var success = message.Count == 0 && secTextureDatas.Count > 0;
             if (success)
             {
                 importer.secondarySpriteTextures = secondarySpriteTextures;

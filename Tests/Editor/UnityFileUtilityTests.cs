@@ -250,6 +250,28 @@ namespace OOOneUnityTools.Editor.Tests
             ResetMainImporterSecTexture();
         }
 
+        [Test]
+        [TestCase("_Normal")]
+        [TestCase("_Normal", "_Rim")]
+        public void Dont_Set_SecondaryTexture_When_SecondaryTexture_Count_Is_Zero(
+            params string[] secTextureNameList)
+        {
+            _secTextureNameList = secTextureNameList;
+            _secondaryAssetPaths = new string[secTextureNameList.Length];
+            CreateUnityFolderUseChild();
+            CreateMainTexture();
+            SetSecondaryPaths();
+            _secondaryAssetPaths[0] = "123";
+            _secTextureNameList[0] = "";
+            var secTextureDatas = new List<SecTextureData>();
+
+            var success =
+                UnityFileUtility.SetSecondaryTexture(_mainTexFullPath, secTextureDatas, out var messages);
+
+            ShouldFailAndMessageEmpty(messages, success);
+            ResetMainImporterSecTexture();
+        }
+
         #endregion
 
         #region Private Methods
@@ -369,6 +391,17 @@ namespace OOOneUnityTools.Editor.Tests
         private void SetTextureImporterSetting(string texturePath)
         {
             UnityFileUtility.SetTextureImporterSetting(_presetFullPath, texturePath);
+        }
+
+        private void ShouldFailAndMessageEmpty(List<string> messages, bool success)
+        {
+            var messageIsEmpty = messages.Count == 0;
+            Assert.AreEqual(true, messageIsEmpty);
+            Assert.AreEqual(false, success);
+            _mainTextureImporter = GetImporter(_mainTexFullPath) as TextureImporter;
+            var mainTexSecTextureAmount = _mainTextureImporter.secondarySpriteTextures.Length;
+            var secondTexturesAreZero = mainTexSecTextureAmount == 0;
+            Assert.AreEqual(true, secondTexturesAreZero);
         }
 
         private void ShouldFileInPath(bool exist, UnityFileUtility.FileType fileType)
