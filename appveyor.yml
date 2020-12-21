@@ -17,7 +17,7 @@ install:
   - echo %WYAMVERSION%
   # Get and unzip the latest version of Wyam
   - ps: Start-FileDownload "https://github.com/Wyamio/Wyam/releases/download/$env:WYAMVERSION/Wyam-$env:WYAMVERSION.zip" -FileName "..\DocBuilder\Wyam\Wyam.zip"
-  - 7z x ..\DocBuilder\Wyam\Wyam.zip -o..\Wyam -r
+  - 7z x ..\DocBuilder\Wyam\Wyam.zip -o..\DocBuilder\Wyam -r
 
 build_script:
   - dotnet ..\DocBuilder\Wyam\Wyam.dll --output ..\output 
