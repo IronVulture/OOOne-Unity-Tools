@@ -16,7 +16,7 @@ install:
   - set /P WYAMVERSION=< ..\DocBuilder\Wyam\wyamversion.txt
   - echo %WYAMVERSION%
   # Get and unzip the latest version of Wyam
-  - ps: Start-FileDownload "https://github.com/Wyamio/Wyam/releases/download/$env:WYAMVERSION/Wyam-$env:WYAMVERSION.zip" -FileName "..\Wyam\Wyam.zip"
+  - ps: Start-FileDownload "https://github.com/Wyamio/Wyam/releases/download/$env:WYAMVERSION/Wyam-$env:WYAMVERSION.zip" -FileName "..\DocBuilder\Wyam\Wyam.zip"
   - 7z x ..\DocBuilder\Wyam\Wyam.zip -o..\Wyam -r
 
 build_script:
