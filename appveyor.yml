@@ -20,7 +20,7 @@ install:
   - 7z x ..\DocBuilder\Wyam\Wyam.zip -o..\DocBuilder\Wyam -r
 
 build_script:
-  - dotnet ..\DocBuilder\Wyam\Wyam.dll --output ..\output  --config ..\DocBuilder\config.wyam --input ..\DocBuilder
+  - dotnet ..\DocBuilder\Wyam\Wyam.dll --output ..\output  --config .\DocBuilder\config.wyam --input .\DocBuilder
 
 on_success:
   # Switch branches to gh-pages, clean the folder, copy everything in from the Wyam output, and commit/push
