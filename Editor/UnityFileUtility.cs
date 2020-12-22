@@ -253,6 +253,11 @@ namespace OOOneUnityTools.Editor
         {
             bool success = false;
             message = "";
+            if (IsFileInPath(targetFileFullPath) == false)
+            {
+                message = $"要重新命名的檔案{targetFileFullPath}不存在";
+                return success;
+            }
             int subStringStart = targetFileFullPath.IndexOf("/") + 1;
             int subStringLength = targetFileFullPath.LastIndexOf("/") - subStringStart;
             var folderPath = targetFileFullPath.Substring(subStringStart, subStringLength);

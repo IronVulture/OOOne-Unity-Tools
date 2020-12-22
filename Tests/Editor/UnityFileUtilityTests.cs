@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework;
@@ -293,7 +294,7 @@ namespace OOOneUnityTools.Editor.Tests
             string filePath_From_GUID_Before = AssetDatabase.GUIDToAssetPath(GUID_Before);
 
             bool filePathCorrect = filePath_From_GUID_Before == _filePathAfter;
-            Assert.AreEqual( true ,  filePathCorrect);
+            Assert.AreEqual(true, filePathCorrect);
         }
 
         [Test]
@@ -307,13 +308,22 @@ namespace OOOneUnityTools.Editor.Tests
             var success = UnityFileUtility.RenameFile(_pngFullPath, _newFileName, out var message);
 
             string GUID_After = AssetDatabase.AssetPathToGUID(_filePathAfter);
-
-            Assert.AreEqual(false, success);
             string expectedMessage = $"目標路徑{_filePathAfter}已存在同名檔案";
-            bool messageCorrect = expectedMessage == message;
-            Assert.AreEqual( true ,  messageCorrect);
+
+            ShouldReturnCorrectMessage(success, expectedMessage, message);
             bool GUID_Equal = GUID_Before == GUID_After;
-            Assert.AreEqual( false ,  GUID_Equal);
+            Assert.AreEqual(false, GUID_Equal);
+        }
+
+        [Test]
+        public void Dont_RenameFile_When_TargetFile_Not_Exist()
+        {
+            CreateUnityFolderUseChild();
+
+            var success = UnityFileUtility.RenameFile(_pngFullPath, _newFileName, out var message);
+
+            string expectedMessage = $"要重新命名的檔案{_pngFullPath}不存在";
+            ShouldReturnCorrectMessage(success, expectedMessage, message);
         }
 
         #endregion
@@ -481,6 +491,12 @@ namespace OOOneUnityTools.Editor.Tests
             }
 
             Assert.AreEqual(messages.Count, 1);
+            Assert.AreEqual(false, success);
+        }
+        private static void ShouldReturnCorrectMessage(bool success, string expectedMessage, string message)
+        {
+            bool messageCorrect = message == expectedMessage;
+            Assert.AreEqual(true, messageCorrect);
             Assert.AreEqual(false, success);
         }
 
