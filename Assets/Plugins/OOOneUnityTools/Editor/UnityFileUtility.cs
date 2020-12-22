@@ -249,10 +249,25 @@ namespace OOOneUnityTools.Editor
             }
         }
 
-        public static void RenameFile(string targetFileFullPath, string newFileName)
+        public static bool RenameFile(string targetFileFullPath, string newFileName, out string message)
         {
+            bool success = false;
+            message = "";
+            int subStringStart = targetFileFullPath.IndexOf("/") + 1;
+            int subStringLength = targetFileFullPath.LastIndexOf("/") - subStringStart;
+            var folderPath = targetFileFullPath.Substring(subStringStart, subStringLength);
+            var fileExtension = targetFileFullPath.Substring(targetFileFullPath.LastIndexOf(".")+1);
+            var newFilePath = UnityPathUtility.GetUnityFullPath(folderPath, newFileName, fileExtension);
+            bool newFileExist = IsFileInPath(newFilePath);
+            if (newFileExist)
+            {
+                message = $"目標路徑{newFilePath}已存在同名檔案";
+                return success;
+            }
+            success = true;
             AssetDatabase.RenameAsset(targetFileFullPath, newFileName);
             AssetDatabase.Refresh();
+            return success;
         }
 
         #endregion

@@ -29,6 +29,7 @@ namespace OOOneUnityTools.Editor.Tests
         private string _unityFullFolderPath;
         private TextureImporter _mainTextureImporter;
         private string _newFileName;
+        private string _filePathAfter;
 
         #endregion
 
@@ -39,7 +40,8 @@ namespace OOOneUnityTools.Editor.Tests
         {
             _childPath = "QWERT";
             _fileName = "WEjhdfjgh";
-            _newFileName = "newName8917249872";
+            _newFileName = "newName8917";
+            _filePathAfter = UnityPathUtility.GetUnityFullPath(_childPath, _newFileName, _pngExtension);
             _unityFullFolderPath = $@"{Application.dataPath}\{_childPath}";
             _presetChildPath = "Test111";
             _presetFileName = "asdfeedd";
@@ -286,13 +288,32 @@ namespace OOOneUnityTools.Editor.Tests
 
             string GUID_Before = AssetDatabase.AssetPathToGUID(_pngFullPath);
 
-            UnityFileUtility.RenameFile(_pngFullPath, _newFileName);
+            UnityFileUtility.RenameFile(_pngFullPath, _newFileName, out var message);
 
-            string filePathAfter = UnityPathUtility.GetUnityFullPath(_childPath, _newFileName, _pngExtension);
             string filePath_From_GUID_Before = AssetDatabase.GUIDToAssetPath(GUID_Before);
 
-            bool filePathCorrect = filePath_From_GUID_Before == filePathAfter;
+            bool filePathCorrect = filePath_From_GUID_Before == _filePathAfter;
             Assert.AreEqual( true ,  filePathCorrect);
+        }
+
+        [Test]
+        public void Dont_RenameFile_When_SameNameFile_Exist()
+        {
+            CreateAssetFileWithType(UnityFileUtility.FileType.Png);
+            UnityFileUtility.CreateTestPng(_childPath, _newFileName, TextureColor.white);
+
+            string GUID_Before = AssetDatabase.AssetPathToGUID(_pngFullPath);
+
+            var success = UnityFileUtility.RenameFile(_pngFullPath, _newFileName, out var message);
+
+            string GUID_After = AssetDatabase.AssetPathToGUID(_filePathAfter);
+
+            Assert.AreEqual(false, success);
+            string expectedMessage = $"目標路徑{_filePathAfter}已存在同名檔案";
+            bool messageCorrect = expectedMessage == message;
+            Assert.AreEqual( true ,  messageCorrect);
+            bool GUID_Equal = GUID_Before == GUID_After;
+            Assert.AreEqual( false ,  GUID_Equal);
         }
 
         #endregion
