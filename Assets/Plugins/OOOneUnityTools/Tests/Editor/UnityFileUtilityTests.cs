@@ -31,6 +31,7 @@ namespace OOOneUnityTools.Editor.Tests
         private TextureImporter _mainTextureImporter;
         private string _newFileName;
         private string _filePathAfter;
+        private string _expectedMessage;
 
         #endregion
 
@@ -308,27 +309,30 @@ namespace OOOneUnityTools.Editor.Tests
             var success = UnityFileUtility.RenameFile(_pngFullPath, _newFileName, out var message);
 
             string GUID_After = AssetDatabase.AssetPathToGUID(_filePathAfter);
-            string expectedMessage = $"目標路徑{_filePathAfter}已存在同名檔案";
+            _expectedMessage = $"目標路徑{_filePathAfter}已存在同名檔案";
 
-            ShouldReturnCorrectMessage(success, expectedMessage, message);
-            bool GUID_Equal = GUID_Before == GUID_After;
-            Assert.AreEqual(false, GUID_Equal);
+            ShouldReturnCorrectMessage(success, _expectedMessage, message);
+            Should_GUID_Equal(false, GUID_Before, GUID_After);
         }
 
         [Test]
         public void Dont_RenameFile_When_TargetFile_Not_Exist()
         {
             CreateUnityFolderUseChild();
-
             var success = UnityFileUtility.RenameFile(_pngFullPath, _newFileName, out var message);
-
-            string expectedMessage = $"要重新命名的檔案{_pngFullPath}不存在";
-            ShouldReturnCorrectMessage(success, expectedMessage, message);
+            _expectedMessage = $"要重新命名的檔案{_pngFullPath}不存在";
+            ShouldReturnCorrectMessage(success, _expectedMessage, message);
         }
 
         #endregion
 
         #region Private Methods
+
+        private static void Should_GUID_Equal(bool expected, string GUID_Before, string GUID_After)
+        {
+            bool GUID_Equal = GUID_Before == GUID_After;
+            Assert.AreEqual(expected, GUID_Equal);
+        }
 
         private void ArrangeMainTexture_SecondaryPath()
         {
@@ -493,6 +497,7 @@ namespace OOOneUnityTools.Editor.Tests
             Assert.AreEqual(messages.Count, 1);
             Assert.AreEqual(false, success);
         }
+
         private static void ShouldReturnCorrectMessage(bool success, string expectedMessage, string message)
         {
             bool messageCorrect = message == expectedMessage;
