@@ -249,6 +249,12 @@ namespace OOOneUnityTools.Editor
             }
         }
 
+        public static void RenameFile(string targetFileFullPath, string newFileName)
+        {
+            AssetDatabase.RenameAsset(targetFileFullPath, newFileName);
+            AssetDatabase.Refresh();
+        }
+
         #endregion
     }
 
