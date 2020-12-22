@@ -28,6 +28,7 @@ namespace OOOneUnityTools.Editor.Tests
         private string _presetFullPath;
         private string _unityFullFolderPath;
         private TextureImporter _mainTextureImporter;
+        private string _newFileName;
 
         #endregion
 
@@ -38,6 +39,7 @@ namespace OOOneUnityTools.Editor.Tests
         {
             _childPath = "QWERT";
             _fileName = "WEjhdfjgh";
+            _newFileName = "newName8917249872";
             _unityFullFolderPath = $@"{Application.dataPath}\{_childPath}";
             _presetChildPath = "Test111";
             _presetFileName = "asdfeedd";
@@ -275,6 +277,22 @@ namespace OOOneUnityTools.Editor.Tests
 
             ShouldFailAndMessageEmpty(messages, success);
             ResetMainImporterSecTexture();
+        }
+
+        [Test]
+        public void RenameFile()
+        {
+            CreateAssetFileWithType(UnityFileUtility.FileType.Png);
+
+            string GUID_Before = AssetDatabase.AssetPathToGUID(_pngFullPath);
+
+            UnityFileUtility.RenameFile(_pngFullPath, _newFileName);
+
+            string filePathAfter = UnityPathUtility.GetUnityFullPath(_childPath, _newFileName, _pngExtension);
+            string filePath_From_GUID_Before = AssetDatabase.GUIDToAssetPath(GUID_Before);
+
+            bool filePathCorrect = filePath_From_GUID_Before == filePathAfter;
+            Assert.AreEqual( true ,  filePathCorrect);
         }
 
         #endregion
