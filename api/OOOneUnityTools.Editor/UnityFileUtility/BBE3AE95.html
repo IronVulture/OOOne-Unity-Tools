@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/OOOne-Unity-Tools/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/OOOne-Unity-Tools/assets/img/favicon.ico" type="image/x-icon">
-        <title>001 Unity Tools Docs - API - UnityFileUtility.DataEquals(string, AssetImporter) Method</title>
+        <title>001 Unity Tools Docs - API - UnityFileUtility.RenameFile(string, string, string) Method</title>
         <link href="/OOOne-Unity-Tools/assets/css/highlight.css" rel="stylesheet">
         <link href="/OOOne-Unity-Tools/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/OOOne-Unity-Tools/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -147,7 +147,7 @@
 				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/FDBF4863">CreateUnityAsset<wbr>(string, <wbr>string, <wbr>Type, <wbr>string)<wbr></a></li>
 				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/3D37BF5B">CreateUnityFolder<wbr>(string)<wbr></a></li>
 				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/EA7E2401">DataEquals<wbr>(string, <wbr>string)<wbr></a></li>
-				<li class="selected"><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/9F506B6D">DataEquals<wbr>(string, <wbr>AssetImporter)<wbr></a></li>
+				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/9F506B6D">DataEquals<wbr>(string, <wbr>AssetImporter)<wbr></a></li>
 				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/57AD9B76">DeleteUnityFolder<wbr>(string)<wbr></a></li>
 				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/0D86008E">GetExtension<wbr>(UnityFileUtility<wbr>.FileType)<wbr></a></li>
 				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/9C0AFC1C">GetImporter<wbr>(string)<wbr></a></li>
@@ -156,7 +156,7 @@
 				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/4B018C66">IsUnityFolderExist<wbr>(string)<wbr></a></li>
 				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/53D480BC">LoadPresetAtPath<wbr>(string)<wbr></a></li>
 				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/D9249BC6">RefreshAsset<wbr>()<wbr></a></li>
-				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/BBE3AE95">RenameFile<wbr>(string, <wbr>string, <wbr>string)<wbr></a></li>
+				<li class="selected"><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/BBE3AE95">RenameFile<wbr>(string, <wbr>string, <wbr>string)<wbr></a></li>
 				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/A3CD4B36">SetSecondaryTexture<wbr>(string, <wbr>List<wbr>&lt;<wbr>Sec<wbr>Texture<wbr>Data&gt;<wbr>, <wbr>List<wbr>&lt;string&gt;<wbr>)<wbr></a></li>
 				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility/945E26AD">Set<wbr>Texture<wbr>Importer<wbr>Setting<wbr>(string, <wbr>string)<wbr></a></li>
 
@@ -174,7 +174,7 @@
 
 <section class="content-header">
 			<h3><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility">UnityFileUtility</a>.</h3>
-	<h1>DataEquals<wbr>(string, <wbr>AssetImporter)<wbr> <small>Method</small></h1>
+	<h1>RenameFile<wbr>(string, <wbr>string, <wbr>string)<wbr> <small>Method</small></h1>
 </section>
 <section class="content">
 	
@@ -195,7 +195,7 @@
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public static bool DataEquals(string presetPath, AssetImporter assetImporter)</code></pre>
+	<pre><code>public static bool RenameFile(string targetFileFullPath, string newFileName, out string message)</code></pre>
 
 
 
@@ -213,13 +213,18 @@
 					</tr>
 				</thead>
 					<tbody><tr>
-						<td>presetPath</td>
+						<td>targetFileFullPath</td>
 						<td>string</td>
 						<td></td>
 					</tr>
 					<tr>
-						<td>assetImporter</td>
-						<td>AssetImporter</td>
+						<td>newFileName</td>
+						<td>string</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>message</td>
+						<td>string</td>
 						<td></td>
 					</tr>
 			</tbody></table>
