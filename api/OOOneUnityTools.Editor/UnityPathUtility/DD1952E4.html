@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/OOOne-Unity-Tools/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/OOOne-Unity-Tools/assets/img/favicon.ico" type="image/x-icon">
-        <title>001 Unity Tools Docs - API - UnityPathUtilityTests.GetUnityAbsoluteFolderPath() Method</title>
+        <title>001 Unity Tools Docs - API - UnityPathUtility.GetChildPathFromUnityFullPath(string) Method</title>
         <link href="/OOOne-Unity-Tools/assets/css/highlight.css" rel="stylesheet">
         <link href="/OOOne-Unity-Tools/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/OOOne-Unity-Tools/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -72,7 +72,7 @@
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Attributes">Attributes</a></p>
+<p><a href="#Parameters">Parameters</a></p>
 <p><a href="#ReturnValue">Return Value</a></p>
 <hr class="infobar-hidden">
 </div>
@@ -133,20 +133,22 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests">OOOneUnityTools<wbr>.Editor<wbr>.Tests</a></li>
+		<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor">OOOneUnityTools<wbr>.Editor</a></li>
 		<li class="header">Type</li>
-		<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityPathUtilityTests">Unity<wbr>Path<wbr>Utility<wbr>Tests</a></li>
+		<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility">UnityPathUtility</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Method Members</li>
-				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityPathUtilityTests/793B3AF5">Get<wbr>Child<wbr>Path<wbr>From<wbr>Unity<wbr>Full<wbr>Path<wbr>()<wbr></a></li>
-				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityPathUtilityTests/BDDCAF37">Get<wbr>File<wbr>Extension<wbr>From<wbr>Full<wbr>Path<wbr>()<wbr></a></li>
-				<li class="selected"><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityPathUtilityTests/ED7A3272">Get<wbr>Unity<wbr>Absolute<wbr>Folder<wbr>Path<wbr>()<wbr></a></li>
-				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityPathUtilityTests/CAF25C6F">Get<wbr>Unity<wbr>Absolute<wbr>Full<wbr>Path<wbr>()<wbr></a></li>
-				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityPathUtilityTests/967E7092">GetUnityAbsolutePath<wbr>()<wbr></a></li>
-				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityPathUtilityTests/047BD273">GetUnityFolderPath<wbr>()<wbr></a></li>
-				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityPathUtilityTests/EA7B9371">GetUnityFullPath<wbr>()<wbr></a></li>
-				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityPathUtilityTests/D6FA3B97">GetUnityPath<wbr>()<wbr></a></li>
-				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityPathUtilityTests/735B9673">SetUp<wbr>()<wbr></a></li>
+				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility/38C490ED">GetAbsolutePath<wbr>()<wbr></a></li>
+				<li class="selected"><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility/DD1952E4">Get<wbr>Child<wbr>Path<wbr>From<wbr>Unity<wbr>Full<wbr>Path<wbr>(string)<wbr></a></li>
+				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility/98FF8211">Get<wbr>Csharp<wbr>Unity<wbr>Absolute<wbr>Folder<wbr>Path<wbr>(string)<wbr></a></li>
+				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility/15BC40E2">Get<wbr>Csharp<wbr>Unity<wbr>Absolute<wbr>Full<wbr>Path<wbr>(string, <wbr>string, <wbr>string)<wbr></a></li>
+				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility/496296F5">Get<wbr>File<wbr>Extension<wbr>From<wbr>Full<wbr>Path<wbr>(string)<wbr></a></li>
+				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility/A46DB409">Get<wbr>Unity<wbr>Absolute<wbr>Folder<wbr>Path<wbr>(string)<wbr></a></li>
+				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility/43CA6AED">Get<wbr>Unity<wbr>Absolute<wbr>Full<wbr>Path<wbr>(string, <wbr>string, <wbr>string)<wbr></a></li>
+				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility/E89919EE">GetUnityFolderPath<wbr>(string)<wbr></a></li>
+				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility/B1ECCDA0">GetUnityFullPath<wbr>(string, <wbr>string, <wbr>string)<wbr></a></li>
+				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility/AB6D9CD8">GetUnityFullPath<wbr>(string)<wbr></a></li>
+				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility/336A1D71">GetUnityPath<wbr>()<wbr></a></li>
 
 
                     </ul>
@@ -161,8 +163,8 @@
 
 
 <section class="content-header">
-			<h3><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityPathUtilityTests">Unity<wbr>Path<wbr>Utility<wbr>Tests</a>.</h3>
-	<h1>Get<wbr>Unity<wbr>Absolute<wbr>Folder<wbr>Path<wbr>()<wbr> <small>Method</small></h1>
+			<h3><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility">UnityPathUtility</a>.</h3>
+	<h1>Get<wbr>Child<wbr>Path<wbr>From<wbr>Unity<wbr>Full<wbr>Path<wbr>(string)<wbr> <small>Method</small></h1>
 </section>
 <section class="content">
 	
@@ -173,40 +175,41 @@
 				<dl class="dl-horizontal">	
 						
 						<dt>Namespace</dt>
-						<dd><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests">OOOneUnityTools<wbr>.Editor<wbr>.Tests</a></dd>
+						<dd><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor">OOOneUnityTools<wbr>.Editor</a></dd>
 					
 						<dt>Containing Type</dt>
-						<dd><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityPathUtilityTests">Unity<wbr>Path<wbr>Utility<wbr>Tests</a></dd>		
+						<dd><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility">UnityPathUtility</a></dd>		
 					
 				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>[Test]
-public static void GetUnityAbsoluteFolderPath()</code></pre>
+	<pre><code>public static string GetChildPathFromUnityFullPath(string unityFullPath)</code></pre>
 
 
 
-	<h1 id="Attributes">Attributes</h1>
+
+
+	<h1 id="Parameters">Parameters</h1>
 	<div class="box">
 		<div class="box-body no-padding table-responsive">
-			<table class="table table-striped table-hover two-cols">
+			<table class="table table-striped table-hover three-cols">
 				<thead>
 					<tr>
+						<th>Name</th>
 						<th>Type</th>
 						<th>Description</th>
 					</tr>
 				</thead>
 					<tbody><tr>
-						<td>Test</td>
+						<td>unityFullPath</td>
+						<td>string</td>
 						<td></td>
 					</tr>
 			</tbody></table>
 		</div>
 	</div>	
-
-
 
 	<h1 id="ReturnValue">Return Value</h1>
 	<div class="box">
@@ -219,7 +222,7 @@ public static void GetUnityAbsoluteFolderPath()</code></pre>
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td>void</td>
+					<td>string</td>
 					<td></td>
 				</tr>
 			</tbody></table>
