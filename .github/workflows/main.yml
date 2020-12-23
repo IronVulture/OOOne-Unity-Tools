@@ -1,0 +1,219 @@
+name: Actions 😎
+
+on:
+  pull_request: {}
+  push: { branches: [master] }
+
+env:
+  UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+
+jobs:
+  readmeWorkflow:
+    name: Readme Workflow ✨
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      # Cache
+      - uses: actions/cache@v1.1.0
+        with:
+          path: Library
+          key: Library-test-project-WebGL
+
+      # Test
+      - name: Run tests
+        uses: webbertakken/unity-test-runner@v1.3
+        with:
+          unityVersion: 2020.1.2f1
+
+      # Build
+      - name: Build project
+        uses: webbertakken/unity-builder@v0.10
+        with:
+          unityVersion: 2020.1.2f1
+          targetPlatform: WebGL
+
+      # Output
+      - uses: actions/upload-artifact@v1
+        with:
+          name: Build
+          path: build
+
+  #
+  # End of readme workflow.
+  #
+  # Below is a test of most combinations, for testing integrity.
+  #
+
+  requestManualActivationFile:
+    name: Request manual activation file 🔑
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        unityVersion:
+          - 2020.1.2f1
+    steps:
+      # Checkout repository
+      - uses: actions/checkout@v2
+
+      # Request manual activation file
+      - uses: webbertakken/unity-request-manual-activation-file@v1.1
+        id: getManualLicenseFile
+        with:
+          unityVersion: ${{ matrix.unityVersion }}
+
+      # Upload artifact (Unity_v20XX.X.XXXX.alf)
+      - uses: actions/upload-artifact@v1
+        with:
+          name: Manual Activation File
+          path: ${{ steps.getManualLicenseFile.outputs.filePath }}
+
+  requestActivation:
+    name: Request activation ✔
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: webbertakken/unity-activate@v1.2
+
+  activateAndThenReturnLicense:
+    name: returnLicense 🎈
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: webbertakken/unity-activate@v1.2
+      - uses: webbertakken/unity-return-license@v1
+
+  testRunnerInEditMode:
+    name: Test in editmode 📝
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repository (required to test local actions)
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      # Cache
+      - uses: actions/cache@v1.1.0
+        with:
+          path: Library
+          key: Library-test-project-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-test-project-
+            Library-
+      # Configure test runner
+      - uses: webbertakken/unity-test-runner@v1.3
+        id: testRunner
+        with:
+          testMode: editmode
+
+      # Upload artifact
+      - uses: actions/upload-artifact@v1
+        with:
+          name: Test results (edit mode)
+          path: ${{ steps.testRunner.outputs.artifactsPath }}
+
+  testRunnerInPlayMode:
+    name: Test in playmode 📺
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repository (required to test local actions)
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      # Cache
+      - uses: actions/cache@v1.1.0
+        with:
+          path: Library
+          key: Library-test-project-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-test-project-
+            Library-
+      # Configure test runner
+      - uses: webbertakken/unity-test-runner@v1.3
+        id: testRunner
+        with:
+          testMode: playmode
+
+      # Upload artifact
+      - uses: actions/upload-artifact@v1
+        with:
+          name: Test results (play mode)
+          path: ${{ steps.testRunner.outputs.artifactsPath }}
+
+  testRunnerInAllModes:
+    name: Test all modes ✨
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repository (required to test local actions)
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+
+      # Cache
+      - uses: actions/cache@v1.1.0
+        with:
+          path: Library
+          key: Library-test-project-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-test-project-
+            Library-
+      # Configure test runner
+      - uses: webbertakken/unity-test-runner@v1.3
+        id: testRunner
+        with:
+          testMode: all
+
+      # Upload artifacts
+      - uses: actions/upload-artifact@v1
+        with:
+          name: Test results (all modes)
+          path: ${{ steps.testRunner.outputs.artifactsPath }}
+
+  #
+  # Complete advanced workflow
+  #
+
+  buildAndTestForSomePlatforms:
+    name: Build for ${{ matrix.targetPlatform }} on version ${{ matrix.unityVersion }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        unityVersion:
+          - 2020.1.2f1
+        targetPlatform:
+          - StandaloneWindows64 # Build a Windows 64-bit standalone.
+          -
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          lfs: true
+      - uses: actions/cache@v1.1.0
+        with:
+          path: Library
+          key: Library-${{ matrix.targetPlatform }}
+          restore-keys: |
+            Library-
+            Library-
+      - uses: webbertakken/unity-test-runner@v1.3
+        id: testRunner
+        with:
+          unityVersion: ${{ matrix.unityVersion }}
+      - uses: actions/upload-artifact@v1
+        with:
+          name: Test results (all modes)
+          path: ${{ steps.testRunner.outputs.artifactsPath }}
+      - uses: webbertakken/unity-builder@v0.10
+        with:
+          unityVersion: ${{ matrix.unityVersion }}
+          targetPlatform: ${{ matrix.targetPlatform }}
+      - uses: actions/upload-artifact@v1
+        with:
+          name: Build
+          path: build
