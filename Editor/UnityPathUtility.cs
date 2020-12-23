@@ -66,5 +66,13 @@ namespace OOOneUnityTools.Editor
         {
             return CSharpFileUtility.ParseSlashToCsharp(GetUnityAbsoluteFullPath(childPath, fileName, extension));
         }
+
+        public static string GetChildPathFromUnityFullPath(string unityFullPath)
+        {
+            int subStringStart = unityFullPath.IndexOf("/") + 1;
+            int subStringLength = unityFullPath.LastIndexOf("/") - subStringStart;
+            var childPath = unityFullPath.Substring(subStringStart, subStringLength);
+            return childPath;
+        }
     }
 }

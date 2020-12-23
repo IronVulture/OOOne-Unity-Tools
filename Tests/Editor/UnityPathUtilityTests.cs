@@ -9,6 +9,7 @@ namespace OOOneUnityTools.Editor.Tests
 
         private static string _childPath;
         private static string _fileName;
+        private readonly string _pngExtension = "png";
 
         #endregion
 
@@ -67,6 +68,17 @@ namespace OOOneUnityTools.Editor.Tests
             var expected = $"Assets/{_childPath}/{_fileName}.{extension}";
             ShouldEqualResult(expected,
                 UnityPathUtility.GetUnityFullPath(_childPath, _fileName, extension));
+        }
+
+        [Test]
+        public void GetChildPathFromUnityFullPath()
+        {
+            var expected = _childPath;
+            var unityFullPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, _pngExtension);
+
+            var resultPath = UnityPathUtility.GetChildPathFromUnityFullPath(unityFullPath);
+
+            ShouldEqualResult(expected, resultPath);
         }
 
         #endregion
