@@ -40,7 +40,7 @@ jobs:
       - uses: webbertakken/unity-test-runner@v1.3
         id: testRunner
         with:
-          customParameters: '-nographics'
+          customParameters: -nographics
           unityVersion: ${{ matrix.unityVersion }}
 
       - uses: actions/upload-artifact@v1
