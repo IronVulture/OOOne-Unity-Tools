@@ -260,7 +260,7 @@ namespace OOOneUnityTools.Editor
                 return success;
             }
             var folderPath = UnityPathUtility.GetChildPathFromUnityFullPath(targetFileFullPath);
-            var fileExtension = targetFileFullPath.Substring(targetFileFullPath.LastIndexOf(".")+1);
+            var fileExtension = UnityPathUtility.GetFileExtensionFromFullPath(targetFileFullPath);
             var newFilePath = UnityPathUtility.GetUnityFullPath(folderPath, newFileName, fileExtension);
             bool newFileExist = IsFileInPath(newFilePath);
             if (newFileExist)
