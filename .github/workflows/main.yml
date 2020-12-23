@@ -37,7 +37,7 @@ jobs:
 
 
       # TestRun
-      - uses: webbertakken/unity-test-runner@v1.3
+      - uses: webbertakken/unity-test-runner@main
         id: testRunner
         with:
           customParameters: -nographics
@@ -53,6 +53,7 @@ jobs:
       # Build&Upload
       - uses: webbertakken/unity-builder@v0.10
         with:
+          customParameters: -nographics
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
       - uses: actions/upload-artifact@v1
