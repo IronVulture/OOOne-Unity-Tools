@@ -4,10 +4,6 @@ on:
   pull_request: {}
   push: { branches: [develop] }
 
-env:
-  UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-  UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-  UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
 
 jobs:
   buildAndTestForSomePlatforms:
@@ -23,6 +19,7 @@ jobs:
         targetPlatform:
           - StandaloneWindows64 # Build a Windows 64-bit standalone.
 
+    # Checkout&Cache
     steps:
       - uses: actions/checkout@v2
         with:
@@ -34,19 +31,34 @@ jobs:
           restore-keys: |
             Library-
             Library-
+
+
+      # TestRun
       - uses: webbertakken/unity-test-runner@v1.3
+        env:
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
         id: testRunner
         with:
           unityVersion: ${{ matrix.unityVersion }}
+
       - uses: actions/upload-artifact@v1
         with:
           name: Test results (all modes)
           path: ${{ steps.testRunner.outputs.artifactsPath }}
+
+
+
+      # Build
       - uses: webbertakken/unity-builder@v0.10
         with:
+          env:
+            UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+            UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+            UNITY_SERIAL: ${{ secrets.UNITY_SERIAL }}
           unityVersion: ${{ matrix.unityVersion }}
           targetPlatform: ${{ matrix.targetPlatform }}
-          customParameters: '-myParameter myValue -myBoolean -ThirdParameter andItsValue'
       - uses: actions/upload-artifact@v1
         with:
           name: Build
