@@ -74,5 +74,11 @@ namespace OOOneUnityTools.Editor
             var childPath = unityFullPath.Substring(subStringStart, subStringLength);
             return childPath;
         }
+
+        public static string GetFileExtensionFromFullPath(string targetFileFullPath)
+        {
+            var fileExtension = targetFileFullPath.Substring(targetFileFullPath.LastIndexOf(".") + 1);
+            return fileExtension;
+        }
     }
 }
