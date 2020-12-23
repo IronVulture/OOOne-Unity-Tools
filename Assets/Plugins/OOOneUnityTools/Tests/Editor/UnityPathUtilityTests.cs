@@ -75,9 +75,7 @@ namespace OOOneUnityTools.Editor.Tests
         {
             var expected = _childPath;
             var unityFullPath = UnityPathUtility.GetUnityFullPath(_childPath, _fileName, _pngExtension);
-
             var resultPath = UnityPathUtility.GetChildPathFromUnityFullPath(unityFullPath);
-
             ShouldEqualResult(expected, resultPath);
         }
 
