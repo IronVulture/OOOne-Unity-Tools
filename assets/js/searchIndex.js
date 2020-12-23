@@ -39,34 +39,20 @@ var searchModule = function() {
     a(
         {
             id:0,
-            title:"TextureColor",
-            content:"TextureColor",
+            title:"UnityFileUtilityTests",
+            content:"UnityFileUtilityTests",
             description:'',
             tags:''
         },
         {
-            url:'/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/TextureColor',
-            title:"TextureColor",
+            url:'/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityFileUtilityTests',
+            title:"UnityFileUtilityTests",
             description:""
         }
     );
     a(
         {
             id:1,
-            title:"AutoOrderInLayer",
-            content:"AutoOrderInLayer",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/OOOne-Unity-Tools/api/OOOneUnityTools/AutoOrderInLayer',
-            title:"AutoOrderInLayer",
-            description:""
-        }
-    );
-    a(
-        {
-            id:2,
             title:"TestRunnerEditor",
             content:"TestRunnerEditor",
             description:'',
@@ -80,49 +66,7 @@ var searchModule = function() {
     );
     a(
         {
-            id:3,
-            title:"SecTextureData",
-            content:"SecTextureData",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/SecTextureData',
-            title:"SecTextureData",
-            description:""
-        }
-    );
-    a(
-        {
-            id:4,
-            title:"CSharpFileUtilityTests",
-            content:"CSharpFileUtilityTests",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/CSharpFileUtilityTests',
-            title:"CSharpFileUtilityTests",
-            description:""
-        }
-    );
-    a(
-        {
-            id:5,
-            title:"UnityFileUtility",
-            content:"UnityFileUtility",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility',
-            title:"UnityFileUtility",
-            description:""
-        }
-    );
-    a(
-        {
-            id:6,
+            id:2,
             title:"UnityPathUtility",
             content:"UnityPathUtility",
             description:'',
@@ -136,7 +80,35 @@ var searchModule = function() {
     );
     a(
         {
-            id:7,
+            id:3,
+            title:"TextureColor",
+            content:"TextureColor",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/TextureColor',
+            title:"TextureColor",
+            description:""
+        }
+    );
+    a(
+        {
+            id:4,
+            title:"AutoOrderInLayer",
+            content:"AutoOrderInLayer",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/OOOne-Unity-Tools/api/OOOneUnityTools/AutoOrderInLayer',
+            title:"AutoOrderInLayer",
+            description:""
+        }
+    );
+    a(
+        {
+            id:5,
             title:"UnityFileUtility FileType",
             content:"UnityFileUtility FileType",
             description:'',
@@ -145,6 +117,34 @@ var searchModule = function() {
         {
             url:'/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/FileType',
             title:"UnityFileUtility.FileType",
+            description:""
+        }
+    );
+    a(
+        {
+            id:6,
+            title:"UnityFileUtility",
+            content:"UnityFileUtility",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility',
+            title:"UnityFileUtility",
+            description:""
+        }
+    );
+    a(
+        {
+            id:7,
+            title:"UnityShaderUtilityTests",
+            content:"UnityShaderUtilityTests",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityShaderUtilityTests',
+            title:"UnityShaderUtilityTests",
             description:""
         }
     );
@@ -165,6 +165,20 @@ var searchModule = function() {
     a(
         {
             id:9,
+            title:"SecTextureData",
+            content:"SecTextureData",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/SecTextureData',
+            title:"SecTextureData",
+            description:""
+        }
+    );
+    a(
+        {
+            id:10,
             title:"UnityShaderUtility",
             content:"UnityShaderUtility",
             description:'',
@@ -178,7 +192,21 @@ var searchModule = function() {
     );
     a(
         {
-            id:10,
+            id:11,
+            title:"CSharpFileUtilityTests",
+            content:"CSharpFileUtilityTests",
+            description:'',
+            tags:''
+        },
+        {
+            url:'/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/CSharpFileUtilityTests',
+            title:"CSharpFileUtilityTests",
+            description:""
+        }
+    );
+    a(
+        {
+            id:12,
             title:"CSharpFileUtility",
             content:"CSharpFileUtility",
             description:'',
@@ -187,34 +215,6 @@ var searchModule = function() {
         {
             url:'/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/CSharpFileUtility',
             title:"CSharpFileUtility",
-            description:""
-        }
-    );
-    a(
-        {
-            id:11,
-            title:"UnityShaderUtilityTests",
-            content:"UnityShaderUtilityTests",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityShaderUtilityTests',
-            title:"UnityShaderUtilityTests",
-            description:""
-        }
-    );
-    a(
-        {
-            id:12,
-            title:"UnityFileUtilityTests",
-            content:"UnityFileUtilityTests",
-            description:'',
-            tags:''
-        },
-        {
-            url:'/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityFileUtilityTests',
-            title:"UnityFileUtilityTests",
             description:""
         }
     );
