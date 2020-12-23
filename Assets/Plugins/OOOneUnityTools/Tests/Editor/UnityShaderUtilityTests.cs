@@ -35,5 +35,15 @@ namespace OOOneUnityTools.Editor.Tests
 
             Assert.AreEqual(expectedResult, texturePropNames);
         }
+        [Test]
+        [TestCase("Assets/testShaderFolder/noSuchShader.shadergraph")]
+        public void Return_EmptyList_If_No_TargetShader(string shaderPath)
+        {
+            List<string> expectedResult = new List<string>();
+
+            List<string> texturePropNames = UnityShaderUtility.GetTexturePropertyNames(shaderPath);
+
+            Assert.AreEqual(expectedResult, texturePropNames);
+        }
     }
 }

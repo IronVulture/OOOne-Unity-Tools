@@ -9,8 +9,12 @@ namespace OOOneUnityTools.Editor
     {
         public static List<string> GetTexturePropertyNames(string shaderFullPath)
         {
-            var shader = AssetDatabase.LoadAssetAtPath<Shader>(shaderFullPath);
             List<string> texturePropertyNames = new List<string>();
+            var shader = AssetDatabase.LoadAssetAtPath<Shader>(shaderFullPath);
+            if (shader == null)
+            {
+                return texturePropertyNames;
+            }
             int propertyCount = shader.GetPropertyCount();
             for (int i = 0; i < propertyCount; i++)
             {
