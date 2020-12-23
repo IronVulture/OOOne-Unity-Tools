@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/OOOne-Unity-Tools/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/OOOne-Unity-Tools/assets/img/favicon.ico" type="image/x-icon">
-        <title>001 Unity Tools Docs - API - SecTextureData Class</title>
+        <title>001 Unity Tools Docs - API - UnityShaderUtilityTests.Return_EmptyList_If_No_TextureProperty(string) Method</title>
         <link href="/OOOne-Unity-Tools/assets/css/highlight.css" rel="stylesheet">
         <link href="/OOOne-Unity-Tools/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
         <link href="/OOOne-Unity-Tools/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
@@ -72,7 +72,9 @@
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Syntax">Syntax</a></p>
-<p><a href="#fields">Fields</a></p>
+<p><a href="#Attributes">Attributes</a></p>
+<p><a href="#Parameters">Parameters</a></p>
+<p><a href="#ReturnValue">Return Value</a></p>
 <hr class="infobar-hidden">
 </div>
 
@@ -132,16 +134,14 @@
                     <ul class="sidebar-menu">
                         
 			<li class="header">Namespace</li>
-		<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor">OOOneUnityTools<wbr>.Editor</a></li>
+		<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests">OOOneUnityTools<wbr>.Editor<wbr>.Tests</a></li>
+		<li class="header">Type</li>
+		<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityShaderUtilityTests">Unity<wbr>Shader<wbr>Utility<wbr>Tests</a></li>
 		<li role="separator" class="divider"></li>
-			<li class="header">Class Types</li>
-				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/CSharpFileUtility">CSharpFileUtility</a></li>
-				<li class="selected"><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/SecTextureData">SecTextureData</a></li>
-				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityFileUtility">UnityFileUtility</a></li>
-				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityPathUtility">UnityPathUtility</a></li>
-				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/UnityShaderUtility">UnityShaderUtility</a></li>
-			<li class="header">Enum Types</li>
-				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/TextureColor">TextureColor</a></li>
+			<li class="header">Method Members</li>
+				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityShaderUtilityTests/64531ADC">Get<wbr>Texture<wbr>Property<wbr>Names<wbr>(string)<wbr></a></li>
+				<li><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityShaderUtilityTests/338B2006">Return_<wbr>Empty<wbr>List_<wbr>If_<wbr>No_<wbr>Target<wbr>Shader<wbr>(string)<wbr></a></li>
+				<li class="selected"><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityShaderUtilityTests/F1F49AD0">Return_<wbr>Empty<wbr>List_<wbr>If_<wbr>No_<wbr>Texture<wbr>Property<wbr>(string)<wbr></a></li>
 
 
                     </ul>
@@ -156,88 +156,94 @@
 
 
 <section class="content-header">
-	<h1>SecTextureData <small>Class</small></h1>
+			<h3><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityShaderUtilityTests">Unity<wbr>Shader<wbr>Utility<wbr>Tests</a>.</h3>
+	<h1>Return_<wbr>Empty<wbr>List_<wbr>If_<wbr>No_<wbr>Texture<wbr>Property<wbr>(string)<wbr> <small>Method</small></h1>
 </section>
 <section class="content">
 	
 	
 	
 		<div class="panel panel-default">
-  			<div class="panel-body">
-				<div class="row">
-					<div class="col-md-6">
-						<dl class="dl-horizontal">		
-
-								<dt>Namespace</dt>
-								<dd><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor">OOOneUnityTools<wbr>.Editor</a></dd>
-											
-							
-								<dt>Base Types</dt>
-								<dd>
-									<ul class="list-unstyled">										
-											<li>object</li>								
-									</ul>
-								</dd>				
-							
-							
-						</dl>
-					</div>		
-					<div class="col-md-6">
-						<div class="mermaid">
-							graph BT
-	Type--&gt;Base0["object"]
-	Type["SecTextureData"]
-class Type type-node
-
-						</div>
-					</div>
-				</div>
+  			<div class="panel-body">	
+				<dl class="dl-horizontal">	
+						
+						<dt>Namespace</dt>
+						<dd><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests">OOOneUnityTools<wbr>.Editor<wbr>.Tests</a></dd>
+					
+						<dt>Containing Type</dt>
+						<dd><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor.Tests/UnityShaderUtilityTests">Unity<wbr>Shader<wbr>Utility<wbr>Tests</a></dd>		
+					
+				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public class SecTextureData</code></pre>
+	<pre><code>[Test]
+[TestCase("Assets/testShaderFolder/testNoTexGraph.shadergraph")]
+public void Return_EmptyList_If_No_TextureProperty(string shaderPath)</code></pre>
 
 
 
+	<h1 id="Attributes">Attributes</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>Test</td>
+						<td></td>
+					</tr>
+					<tr>
+						<td>TestCase</td>
+						<td></td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
 
 
+	<h1 id="Parameters">Parameters</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover three-cols">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+					<tbody><tr>
+						<td>shaderPath</td>
+						<td>string</td>
+						<td></td>
+					</tr>
+			</tbody></table>
+		</div>
+	</div>	
 
-
-
-
-			<h1 id="fields">Fields</h1>
-			<div class="box">
-				<div class="box-body no-padding table-responsive">
-					<table class="table table-striped table-hover three-cols">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Constant Value</th>
-								<th>Summary</th>
-							</tr>
-						</thead>
-							<tbody><tr>
-								<td><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/SecTextureData/FC2D2065">AssetPath</a></td>
-								<td></td>
-								<td>
-									<div></div>
-								</td>
-							</tr>
-							<tr>
-								<td><a href="/OOOne-Unity-Tools/api/OOOneUnityTools.Editor/SecTextureData/FBB9067F">Name</a></td>
-								<td></td>
-								<td>
-									<div></div>
-								</td>
-							</tr>
-					</tbody></table>
-				</div>
-			</div>
-		
-
-
-
+	<h1 id="ReturnValue">Return Value</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Type</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody><tr>
+					<td>void</td>
+					<td></td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>	
 
 
 	
