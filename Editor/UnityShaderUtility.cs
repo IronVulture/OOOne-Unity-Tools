@@ -14,6 +14,7 @@ namespace OOOneUnityTools.Editor
             int propertyCount = shader.GetPropertyCount();
             for (int i = 0; i < propertyCount; i++)
             {
+                //注意：Texture3D和CubeMap都算是Texture
                 if (shader.GetPropertyType(i) == ShaderPropertyType.Texture)
                 {
                     texturePropertyNames.Add(shader.GetPropertyName(i));
